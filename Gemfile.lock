@@ -1,6 +1,15 @@
+GIT
+  remote: https://github.com/ausaccessfed/aaf-gumboot
+  revision: 2860212a551849f4a1a1c60215d828203b825817
+  branch: develop
+  specs:
+    aaf-gumboot (0.0.1)
+      accession (~> 1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
+    accession (1.0.0)
     actionmailer (4.2.6)
       actionpack (= 4.2.6)
       actionview (= 4.2.6)
@@ -266,6 +275,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aaf-gumboot!
   byebug
   coffee-rails (~> 4.0.0)
   database_cleaner
