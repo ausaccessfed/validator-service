@@ -14,3 +14,9 @@ development:
 test:
   <<: *default
   database: validator_test
+
+production:
+  <<: *default
+  username: <%= ENV['VALIDATOR_DB_USERNAME'] %>
+  password: <%= ENV['VALIDATOR_DB_PASSWORD'] %>
+  database: <%= ENV['VALIDATOR_DB_NAME'] %>
