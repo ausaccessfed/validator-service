@@ -1,25 +1,22 @@
 default: &default
   adapter: mysql2
-  encoding: utf8
-  collation: utf8_bin
-  username: val_service
+  username: validator_app
   password: password
   host: 127.0.0.1
   pool: 5
-  timeout: 5000
+  encoding: utf8
+  collation: utf8_bin
 
 development:
   <<: *default
-  database: val_service_development
+  database: validator_development
 
 test:
   <<: *default
-  database:
-    <%= if ENV['TEST_ENV_NUMBER']
-          "test#{ENV['TEST_ENV_NUMBER']}"
-        else
-          'val_service_test'
-        end %>
-  username: <%= ENV['MYSQL_USER'] || 'val_service' %>
-  password: <%= ENV['MYSQL_PASSWORD'] || 'password' %>
-  host: localhost
+  database: validator_test
+
+production:
+  <<: *default
+  username: <%= ENV['EXAMPLE_DB_USERNAME'] %>
+  password: <%= ENV['EXAMPLE_DB_PASSWORD'] %>
+  database: <%= ENV['EXAMPLE_DB_NAME'] %>
