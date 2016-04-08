@@ -3,5 +3,6 @@ Rails:
 
 AllCops:
   Exclude:
+    - db/migrate/*
     - db/schema.rb
   TargetRubyVersion: 2.3
