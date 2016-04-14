@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414034957) do
+ActiveRecord::Schema.define(version: 20160414041353) do
 
   create_table "api_subjects", force: :cascade do |t|
     t.string   "x509_cn",      limit: 255,   null: false
@@ -21,6 +21,12 @@ ActiveRecord::Schema.define(version: 20160414034957) do
     t.boolean  "enabled",                    null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "subjects", force: :cascade do |t|
