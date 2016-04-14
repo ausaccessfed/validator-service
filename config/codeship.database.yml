@@ -1,0 +1,22 @@
+default: &default
+  adapter: mysql2
+  username: validator_app
+  password: password
+  host: 127.0.0.1
+  pool: 5
+  encoding: utf8
+  collation: utf8_bin
+
+development:
+  <<: *default
+  database: validator_development
+
+test:
+  <<: *default
+  database: validator_test
+
+production:
+  <<: *default
+  username: <%= ENV['VALIDATOR_DB_USERNAME'] %>
+  password: <%= ENV['VALIDATOR_DB_PASSWORD'] %>
+  database: <%= ENV['VALIDATOR_DB_NAME'] %>
