@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414054436) do
+ActiveRecord::Schema.define(version: 20160414055927) do
 
   create_table "api_subject_roles", force: :cascade do |t|
     t.integer "role_id",        limit: 4, null: false
@@ -41,6 +41,11 @@ ActiveRecord::Schema.define(version: 20160414054436) do
     t.string   "name",       limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "subject_roles", force: :cascade do |t|
+    t.integer "role_id",    limit: 4, null: false
+    t.integer "subject_id", limit: 4, null: false
   end
 
   create_table "subjects", force: :cascade do |t|
