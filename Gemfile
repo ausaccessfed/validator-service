@@ -23,7 +23,6 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'capybara', require: false
   gem 'poltergeist', require: false
-  gem 'phantomjs', require: 'phantomjs/poltergeist'
   gem 'guard', require: false
   gem 'guard-bundler', require: false
   gem 'guard-rubocop', require: false

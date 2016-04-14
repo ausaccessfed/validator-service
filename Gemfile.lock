@@ -148,7 +148,6 @@ GEM
       shellany (~> 0.0)
     parser (2.3.0.7)
       ast (~> 2.2)
-    phantomjs (2.1.1.0)
     poltergeist (1.9.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -294,7 +293,6 @@ DEPENDENCIES
   guard-rspec
   guard-rubocop
   mysql2
-  phantomjs
   poltergeist
   rails (= 4.2.6)
   rspec-rails (~> 3.4.2)
