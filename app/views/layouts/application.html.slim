@@ -1,0 +1,37 @@
+doctype html
+html lang='en'
+  head
+    link rel='icon' type='image/png' href=image_path('favicon.png')
+    meta charset='utf-8'
+    meta name='viewport' content='width=device-width, initial-scale=1.0'
+
+    title Rails Test App
+
+    = csrf_meta_tags
+
+    = javascript_include_tag 'application'
+    = stylesheet_link_tag 'application', media: 'all'
+
+    = disable_animations if Rails.env.test? || params[:disable_animations]
+  body
+    = aaf_header(title: 'AAF Validator Service', environment: 'Rails') do
+      = nav_bar do
+        = nav_first_item('Dashboard', '/')
+
+        = nav_collapsing_items do
+          - Faker::Lorem.words(7).each do |word|
+            = nav_item(word.titleize, "/#{word}")
+
+    section class='content'
+      main= yield
+
+    == aaf_footer do
+      = logged_in_user(@subject)
+
+      p 
+        //' AAF Lipstick
+        //strong= Lipstick::VERSION
+        //br
+
+        ' Developed by the
+        a(href='http://www.aaf.edu.au') Australian Access Federation

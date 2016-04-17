@@ -4,6 +4,8 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env)
 
+require 'torba/rails'
+
 # ValidatorService Module
 module ValidatorService
   # Main Rails Application Class
