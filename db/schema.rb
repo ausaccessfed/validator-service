@@ -11,12 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414055927) do
+ActiveRecord::Schema.define(version: 20160418052637) do
 
   create_table "api_subject_roles", force: :cascade do |t|
     t.integer "role_id",        limit: 4, null: false
     t.integer "api_subject_id", limit: 4, null: false
   end
+
+  add_index "api_subject_roles", ["api_subject_id"], name: "fk_rails_4bb3279f7c", using: :btree
+  add_index "api_subject_roles", ["role_id"], name: "fk_rails_3c99dcce56", using: :btree
 
   create_table "api_subjects", force: :cascade do |t|
     t.string   "x509_cn",      limit: 255,   null: false
@@ -48,6 +51,9 @@ ActiveRecord::Schema.define(version: 20160414055927) do
     t.integer "subject_id", limit: 4, null: false
   end
 
+  add_index "subject_roles", ["role_id"], name: "fk_rails_775c958b0f", using: :btree
+  add_index "subject_roles", ["subject_id"], name: "fk_rails_452c5fd0e8", using: :btree
+
   create_table "subjects", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
     t.string   "mail",       limit: 255, null: false
@@ -57,4 +63,9 @@ ActiveRecord::Schema.define(version: 20160414055927) do
     t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "api_subject_roles", "api_subjects"
+  add_foreign_key "api_subject_roles", "roles"
+  add_foreign_key "permissions", "roles"
+  add_foreign_key "subject_roles", "roles"
+  add_foreign_key "subject_roles", "subjects"
 end
