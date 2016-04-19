@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 20160418052637) do
     t.datetime "updated_at",                 null: false
   end
 
+  add_index "api_subjects", ["x509_cn"], name: "index_api_subjects_on_x509_cn", unique: true, using: :btree
+
   create_table "permissions", force: :cascade do |t|
     t.string   "value",      limit: 255, null: false
     t.integer  "role_id",    limit: 4,   null: false

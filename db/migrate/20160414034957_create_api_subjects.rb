@@ -7,6 +7,7 @@ class CreateAPISubjects < ActiveRecord::Migration
       t.string :contact_mail, null: false
       t.boolean :enabled, null: false
       t.timestamps null: false
+      t.index [:x509_cn], unique: true
     end
   end
 end
