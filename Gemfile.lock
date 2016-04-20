@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/ausaccessfed/aaf-gumboot
-  revision: a4d2596af1be8053fc001dfb8f690df318e210a2
-  branch: develop
+  revision: a4ce94f2225b1ddd9331fc16cfbce98471aecbb9
+  branch: feature/foreign_keys
   specs:
     aaf-gumboot (0.0.1)
       accession (~> 1.0)
