@@ -10,5 +10,8 @@ require 'torba/rails'
 module ValidatorService
   # Main Rails Application Class
   class Application < Rails::Application
+    config.autoload_paths << Rails.root.join('lib')
+    config.shib_rack.receiver = 'Authentication::SubjectReceiver'
+    config.shib_rack.error_handler = 'Authentication::ErrorHandler'
   end
 end

@@ -12,6 +12,9 @@ gem 'aaf-lipstick',
 gem 'slim-rails'
 gem 'sass-rails'
 gem 'torba-rails'
+gem 'shib-rack',
+    git: 'https://github.com/ausaccessfed/shib-rack',
+    branch: 'develop'
 
 gem 'unicorn', require: false
 gem 'god', require: false
