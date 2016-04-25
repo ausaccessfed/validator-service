@@ -5,7 +5,5 @@ ValidatorService::Application.routes.draw do
   root to: 'welcome#index'
   get '/welcome' => 'welcome#index'
 
-  Rails.application.routes.draw do
-    mount ShibRack::Engine => '/auth'
-  end
+  mount ShibRack::Engine => '/auth'
 end
