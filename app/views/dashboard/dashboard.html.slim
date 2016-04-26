@@ -1,0 +1,16 @@
+h1.display-3 Hi
+
+p.lead You're logged in.
+
+p Here are your details:
+
+table.table
+  tr
+    td: strong Subject ID
+    td
+      pre: code= @subject.id
+      em= '(Not a user attribute, just a local identifier for the data.)'
+  - @subject.attributes.each do |k, v|
+    tr
+      td: strong= k
+      td: pre: code= Array(v).join("\n")

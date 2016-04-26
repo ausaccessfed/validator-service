@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418052637) do
+ActiveRecord::Schema.define(version: 20160426020832) do
+
+  create_table "affiliations", force: :cascade do |t|
+    t.integer  "subject_id", limit: 4,   null: false
+    t.string   "value",      limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "api_subject_roles", force: :cascade do |t|
     t.integer "role_id",        limit: 4, null: false
@@ -48,6 +55,13 @@ ActiveRecord::Schema.define(version: 20160418052637) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "scoped_affiliations", force: :cascade do |t|
+    t.integer  "subject_id", limit: 4,   null: false
+    t.string   "value",      limit: 255, null: false
+    t.string   "scope",      limit: 255, null: false
+    t.datetime "created_at",             null: false
+  end
+
   create_table "subject_roles", force: :cascade do |t|
     t.integer "role_id",    limit: 4, null: false
     t.integer "subject_id", limit: 4, null: false
@@ -57,12 +71,20 @@ ActiveRecord::Schema.define(version: 20160418052637) do
   add_index "subject_roles", ["subject_id"], name: "fk_rails_452c5fd0e8", using: :btree
 
   create_table "subjects", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.string   "mail",       limit: 255, null: false
-    t.boolean  "enabled",                null: false
-    t.boolean  "complete",               null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",                   limit: 255, null: false
+    t.string   "mail",                   limit: 255, null: false
+    t.boolean  "enabled",                            null: false
+    t.boolean  "complete",                           null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "shared_token",           limit: 255, null: false
+    t.string   "targeted_id",            limit: 255, null: false
+    t.string   "principal_name",         limit: 255, null: false
+    t.string   "display_name",           limit: 255, null: false
+    t.string   "cn",                     limit: 255, null: false
+    t.string   "o",                      limit: 255, null: false
+    t.string   "home_organization",      limit: 255, null: false
+    t.string   "home_organization_type", limit: 255, null: false
   end
 
   add_foreign_key "api_subject_roles", "api_subjects"
