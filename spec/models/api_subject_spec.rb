@@ -42,7 +42,7 @@ RSpec.describe APISubject, type: :model do
             res << permission.value
           end
         end
-
+        expect(res).not_to be_empty
         expect(api_subject.permissions).to eq res
       end
     end
