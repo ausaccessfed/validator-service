@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# Model for the subject_role table
+# Class defining SubjectRole model
 class SubjectRole < ActiveRecord::Base
   include Accession::Principal
 

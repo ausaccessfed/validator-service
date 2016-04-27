@@ -1,5 +1,7 @@
 # frozen_string_literal: true
+# Extends the Authentication model
 module Authentication
+  # Class extending the subject receiver for shib-rack
   class SubjectReceiver
     include ShibRack::DefaultReceiver
     include ShibRack::AttributeMapping
@@ -13,7 +15,9 @@ module Authentication
                      mail:                   'HTTP_MAIL',
                      o:                      'HTTP_O',
                      home_organization:      'HTTP_HOMEORGANIZATION',
-                     home_organization_type: 'HTTP_HOMEORGANIZATIONTYPE'
+                     home_organization_type: 'HTTP_HOMEORGANIZATIONTYPE',
+                     enabled: true,
+                     completed: true
 
     map_multi_value  affiliation:            'HTTP_EDUPERSONAFFILIATION',
                      scoped_affiliation:     'HTTP_EDUPERSONSCOPEDAFFILIATION'
@@ -22,11 +26,6 @@ module Authentication
       Subject.transaction do
         identifier = attrs.slice(:targeted_id)
         subject = Subject.find_or_initialize_by(identifier)
-
-        # This is a temporary hack
-        subject.enabled = true
-        subject.complete = true
-
         ensure_subject_match(subject, attrs)
         subject.save(validate: false)
         update_affiliations(subject, attrs)
