@@ -1,0 +1,67 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+require 'gumboot/shared_examples/subjects'
+
+RSpec.describe Subject, type: :model do
+  include_examples 'Subjects'
+
+  context 'subject#permissions' do
+    let(:subject) { FactoryGirl.create(:subject) }
+    let(:permission) { FactoryGirl.create(:permission) }
+    let(:role) { FactoryGirl.create(:role) }
+
+    it 'subject with no permissions' do
+      expect(subject.permissions).to eq []
+    end
+
+    it 'subject with one role and permission' do
+      role.permissions << permission
+      subject.roles << role
+
+      expect(subject.permissions).to eq [
+        subject.roles.first.permissions.first.value
+      ]
+    end
+
+    context 'subjects with multiple roles and permissions' do
+      before do
+        rand(10).times do
+          r = FactoryGirl.create(:role)
+          rand(10).times do
+            r.permissions << FactoryGirl.create(:permission)
+          end
+          subject.roles << r
+        end
+      end
+
+      it 'subject has multiple roles with multiple permissions' do
+        res = []
+        subject.roles.each do |result|
+          result.permissions.each do |permission|
+            res << permission.value
+          end
+        end
+
+        expect(subject.permissions).to eq res
+      end
+    end
+  end
+
+  context 'subject#functioning?' do
+    let(:subject) { FactoryGirl.create(:subject) }
+    context 'subject is functioning' do
+      it 'is functioning' do
+        expect(subject.functioning?).to eq true
+      end
+    end
+
+    context 'subject is not functioning' do
+      before { subject.enabled = false }
+      it 'is not functioning' do
+        expect(subject.functioning?).to eq false
+      end
+    end
+  end
+end
