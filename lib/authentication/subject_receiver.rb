@@ -15,9 +15,7 @@ module Authentication
                      mail:                   'HTTP_MAIL',
                      o:                      'HTTP_O',
                      home_organization:      'HTTP_HOMEORGANIZATION',
-                     home_organization_type: 'HTTP_HOMEORGANIZATIONTYPE',
-                     enabled: true,
-                     completed: true
+                     home_organization_type: 'HTTP_HOMEORGANIZATIONTYPE'
 
     map_multi_value  affiliation:            'HTTP_EDUPERSONAFFILIATION',
                      scoped_affiliation:     'HTTP_EDUPERSONSCOPEDAFFILIATION'
@@ -26,11 +24,15 @@ module Authentication
       Subject.transaction do
         identifier = attrs.slice(:targeted_id)
         subject = Subject.find_or_initialize_by(identifier)
+
+        # This is a temporary hack
+        subject.enabled = true
+        subject.complete = true
+
         ensure_subject_match(subject, attrs)
-        subject.save(validate: false)
+        subject.update!(attrs.except(:affiliation, :scoped_affiliation))
         update_affiliations(subject, attrs)
         update_scoped_affiliations(subject, attrs)
-        subject.update!(attrs.except(:affiliation, :scoped_affiliation))
 
         subject
       end
