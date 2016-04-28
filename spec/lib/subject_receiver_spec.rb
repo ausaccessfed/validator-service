@@ -23,7 +23,6 @@ RSpec.describe Authentication::SubjectReceiver do
          .to change(Subject, :count).by(0)
       end
     end
-
   end
 
   describe '#finish' do
