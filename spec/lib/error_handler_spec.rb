@@ -6,7 +6,7 @@ RSpec.describe Authentication::ErrorHandler do
 
   describe '#handle' do
     it 'Exception to be raised' do
-      expect { error_handler.handle(nil, nil)}.to raise_error
+      expect { error_handler.handle(nil, nil) }.to raise_error
     end
   end
 end
