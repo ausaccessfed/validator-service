@@ -7,8 +7,8 @@ RSpec.describe Authentication::SubjectReceiver do
   describe '#subject' do
     let(:attrs) { attributes_for(:subject) }
     before do
-      subject_receiver.stub(:update_affiliations)
-      subject_receiver.stub(:update_scoped_affiliations)
+      allow(subject_receiver).to receive(:update_affiliations).and_return nil
+      allow(subject_receiver).to receive(:update_scoped_affiliations).and_return nil
     end
 
     context 'creating subject' do
