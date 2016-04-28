@@ -29,7 +29,6 @@ module Authentication
         subject.enabled = true
         subject.complete = true
 
-        ensure_subject_match(subject, attrs)
         subject.update!(attrs.except(:affiliation, :scoped_affiliation))
         update_affiliations(subject, attrs)
         update_scoped_affiliations(subject, attrs)
