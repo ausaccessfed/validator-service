@@ -8,7 +8,8 @@ RSpec.describe Authentication::SubjectReceiver do
     let(:attrs) { attributes_for(:subject) }
     before do
       allow(subject_receiver).to receive(:update_affiliations).and_return nil
-      allow(subject_receiver).to receive(:update_scoped_affiliations).and_return nil
+      allow(subject_receiver).to receive(:update_scoped_affiliations)
+        .and_return nil
     end
 
     context 'creating subject' do
@@ -20,7 +21,7 @@ RSpec.describe Authentication::SubjectReceiver do
       it 'does not create a new subject if one already exists' do
         Subject.create(attrs)
         expect { subject_receiver.subject({}, attrs) }
-         .to change(Subject, :count).by(0)
+          .to change(Subject, :count).by(0)
       end
     end
   end
@@ -46,9 +47,9 @@ RSpec.describe Authentication::SubjectReceiver do
 
     it 'raises an error if the shared_token does not match' do
       subject.shared_token = SecureRandom.urlsafe_base64(20)
-      expect {
+      expect do
         subject_receiver.ensure_subject_match(subject, attrs)
-      }.to raise_error('Subject mismatch')
+      end.to raise_error('Subject mismatch')
     end
 
     it 'returns nil if the subject has not been persisted' do
@@ -62,11 +63,10 @@ RSpec.describe Authentication::SubjectReceiver do
     let(:attrs) { build(:shib_attrs) }
 
     it 'creates a new affiliation record for each attribute' do
-      expect {
+      expect do
         subject_receiver.update_affiliations(subject, attrs)
-      }.to change(subject.affiliations, :count).by(2)
+      end.to change(subject.affiliations, :count).by(2)
     end
-
   end
 
   describe '#update_scoped_affiliations' do
@@ -74,10 +74,9 @@ RSpec.describe Authentication::SubjectReceiver do
     let(:attrs) { build(:shib_attrs) }
 
     it 'creates a new scoped affiliation record for each attribute' do
-      expect {
+      expect do
         subject_receiver.update_scoped_affiliations(subject, attrs)
-      }.to change(subject.scoped_affiliations, :count).by(2)
+      end.to change(subject.scoped_affiliations, :count).by(2)
     end
   end
-
 end
