@@ -17,11 +17,24 @@ RSpec.describe Authentication::SubjectReceiver do
         expect { subject_receiver.subject({}, attrs) }
           .to change(Subject, :count).by(1)
       end
+    end
 
+    context 'updates an existing subject' do
+      before { Subject.create(attrs) }
       it 'does not create a new subject if one already exists' do
-        Subject.create(attrs)
         expect { subject_receiver.subject({}, attrs) }
           .to change(Subject, :count).by(0)
+      end
+      it 'updates the existing subject with the new attributes' do
+        attrs[:o] = Faker::Company.name
+        expect(subject_receiver.subject({}, attrs).o).to eql attrs[:o]
+      end
+    end
+
+    context 'should slice the targeted_id of the subject that is created' do
+      let(:result) { subject_receiver.subject({}, attrs) }
+      it 'returns the correct targeted_id' do
+        expect(result[:targeted_id]).to eql(attrs.slice(:targeted_id).values[0])
       end
     end
   end
