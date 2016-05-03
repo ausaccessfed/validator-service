@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
-if Rails.env.production?
-  abort('The Rails environment is running in production mode!')
-end
+env = Rails.env
+abort('The Rails environment is running in production mode!') unless env.test?
+
 require 'spec_helper'
 require 'rspec/rails'
 require 'factory_girl_rails'

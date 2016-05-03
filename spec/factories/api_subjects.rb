@@ -7,4 +7,15 @@ FactoryGirl.define do
     contact_mail { Faker::Internet.email }
     enabled { true }
   end
+
+  trait :authorized do
+    transient { permission '*' }
+
+    after(:create) do |api_subject, attrs|
+      role = create :role
+      permission = create :permission, value: attrs.permission, role: role
+      role.permissions << permission
+      role.api_subjects << api_subject
+    end
+  end
 end

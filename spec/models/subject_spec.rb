@@ -27,10 +27,10 @@ RSpec.describe Subject, type: :model do
 
     context 'subjects with multiple roles and permissions' do
       before do
-        rand(10).times do
-          r = FactoryGirl.create(:role)
-          rand(10).times do
-            r.permissions << FactoryGirl.create(:permission)
+        rand(1..10).times do
+          r = FactoryGirl.build(:role)
+          rand(1..10).times do
+            r.permissions << FactoryGirl.build(:permission)
           end
           subject.roles << r
         end
