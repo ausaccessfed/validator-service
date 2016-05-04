@@ -6,7 +6,6 @@ module ApplicationHelper
   include Lipstick::Helpers::FormHelper
 
   def application_version
-    return ValidatorService::Application::VERSION
+    ValidatorService::Application::VERSION
   end
-
 end
