@@ -28,12 +28,9 @@ html lang='en'
     == aaf_footer do
       = logged_in_user(@subject)
 
-      p 
-        // This appears to be broken, despite being shipped with lipstick
-        // Will need to investigate further
-        //' AAF Lipstick
-        //strong= Lipstick::VERSION
-        //br
+      p
+        strong= Lipstick::VERSION
+        br
 
         ' Developed by the
         a(href='http://www.aaf.edu.au') Australian Access Federation
