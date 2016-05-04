@@ -16,7 +16,7 @@ html lang='en'
   body
     = aaf_header(title: 'AAF Validator Service', environment: 'Rails') do
       = nav_bar do
-        = nav_first_item('Dashboard', '/')
+        = nav_first_item('Welcome', '/')
 
         = nav_collapsing_items do
           - Faker::Lorem.words(7).each do |word|
