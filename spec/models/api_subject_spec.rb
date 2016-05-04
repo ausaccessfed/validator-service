@@ -26,9 +26,9 @@ RSpec.describe APISubject, type: :model do
 
     context 'api subjects with multiple roles and permissions' do
       before do
-        rand(10).times do
+        rand(1..10).times do
           r = FactoryGirl.create(:role)
-          rand(10).times do
+          rand(1..10).times do
             r.permissions << FactoryGirl.create(:permission)
           end
           api_subject.roles << r
