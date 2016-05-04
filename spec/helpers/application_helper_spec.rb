@@ -9,7 +9,7 @@ describe ApplicationHelper, type: :helper do
       expect(application_version).to eql ValidatorService::Application::VERSION
     end
     it 'conforms to the semver format' do
-      expect(/\d*.\d*.\d*/.match(application_version)).to be_truthy
+      expect(/^\d+.\d+.\d+([-+]\S+)?$/.match(application_version)).to be_truthy
     end
   end
 end
