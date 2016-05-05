@@ -6,7 +6,12 @@ gem 'mysql2'
 
 gem 'valhammer'
 gem 'accession'
-gem 'aaf-lipstick'
+gem 'aaf-lipstick',
+    git: 'https://github.com/ausaccessfed/aaf-lipstick',
+    branch: 'develop'
+gem 'slim-rails'
+gem 'sass-rails'
+gem 'torba-rails'
 
 gem 'unicorn', require: false
 gem 'god', require: false
