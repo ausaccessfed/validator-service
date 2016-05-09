@@ -8,17 +8,7 @@ FactoryGirl.define do
   factory :subject do
     name { Faker::Name.name }
     mail { Faker::Internet.email }
-
-    shared_token { SecureRandom.urlsafe_base64(20) }
     targeted_id { "#{idp}!#{sp}!#{SecureRandom.uuid}" }
-    principal_name { name }
-    display_name { name }
-    cn { name }
-    o { Faker::Company.name }
-    home_organization { 'ernser.example.edu' }
-    home_organization_type do
-      'urn:mace:terena.org:schac:homeOrganizationType:au:university'
-    end
 
     enabled { true }
     complete { true }
