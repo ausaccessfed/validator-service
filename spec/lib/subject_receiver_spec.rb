@@ -43,8 +43,10 @@ RSpec.describe Authentication::SubjectReceiver do
     let(:snapshot) { FactoryGirl.create(:snapshot) }
     it 'creates a new AttributeValue record for each attr passed in' do
       expect do
-        subject_receiver.update_snapshot_attribute_values(snapshot, attrs.except(:affiliation, :scoped_affiliation))
-      end.to change(AttributeValue, :count).by(attrs.count-2)
+        subject_receiver.update_snapshot_attribute_values(
+          snapshot,
+          attrs.except(:affiliation, :scoped_affiliation))
+      end.to change(AttributeValue, :count).by(attrs.count - 2)
     end
   end
 
@@ -54,5 +56,4 @@ RSpec.describe Authentication::SubjectReceiver do
       expect(result).to eql([302, { 'Location' => '/dashboard' }, []])
     end
   end
-
 end

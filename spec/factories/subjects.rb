@@ -3,7 +3,6 @@ FactoryGirl.define do
   idp_domain = Faker::Internet.domain_name
   idp = "https://idp.#{idp_domain}/idp/shibboleth"
   sp = "https://sp.#{Faker::Internet.domain_name}/shibboleth"
-  name = Faker::Name.name
 
   factory :subject do
     name { Faker::Name.name }
@@ -14,8 +13,10 @@ FactoryGirl.define do
     complete { true }
 
     trait :receiver_attrs do
-      affiliation { ["staff", "member"] }
-      scoped_affiliation { ["staff@ernser.example.edu", "member@ernser.example.edu"] }
+      affiliation { %w('staff' 'member') }
+      scoped_affiliation do
+        %w('staff@ernser.example.edu' 'member@ernser.example.edu')
+      end
     end
 
     trait :authorized do
