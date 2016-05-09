@@ -36,10 +36,10 @@ ActiveRecord::Schema.define(version: 20160509010754) do
   add_index "api_subjects", ["x509_cn"], name: "index_api_subjects_on_x509_cn", unique: true, using: :btree
 
   create_table "attribute_values", force: :cascade do |t|
-    t.string   "value",            limit: 255, null: false
-    t.integer  "aaf_attribute_id", limit: 4
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.string   "value",                   limit: 255, null: false
+    t.integer  "federation_attribute_id", limit: 4
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "federation_attributes", force: :cascade do |t|

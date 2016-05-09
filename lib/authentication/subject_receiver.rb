@@ -41,8 +41,8 @@ module Authentication
           snapshot,
           attrs.except(:affiliation, :scoped_affiliation))
 
-        update_snapshot_affiliations(snapshot, attrs)
-        update_snapshot_scoped_affiliations(snapshot, attrs)
+        # update_snapshot_affiliations(snapshot, attrs)
+        # update_snapshot_scoped_affiliations(snapshot, attrs)
 
         subject
       end
@@ -57,7 +57,7 @@ module Authentication
         fed_attr = FederationAttribute.find_or_create_by!(name: k)
         snapshot.attribute_values << AttributeValue.create(
           value: v,
-          aaf_attribute_id: fed_attr.id)
+          federation_attribute_id: fed_attr.id)
       end
     end
 
@@ -67,7 +67,7 @@ module Authentication
         singular: false)
       snapshot.attribute_values << AttributeValue.create(
         value: attrs[:affiliation],
-        aaf_attribute_id: fed_attr.id)
+        federation_attribute_id: fed_attr.id)
     end
 
     def update_snapshot_scoped_affiliations(snapshot, attrs)
@@ -76,7 +76,7 @@ module Authentication
         singular: false)
       snapshot.attribute_values << AttributeValue.create(
         value: attrs[:scoped_affiliation],
-        aaf_attribute_id: fed_attr.id)
+        federation_attribute_id: fed_attr.id)
     end
   end
 end

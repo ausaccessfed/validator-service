@@ -9,5 +9,5 @@ table.table
       em= '(Not a user attribute, just a local identifier for the data.)'
   - @subject.snapshots.last.attribute_values.each do |av|
     tr
-      td: strong= av.aaf_attribute.name
+      td: strong= av.federation_attribute.name
       td: pre: code= av.value
