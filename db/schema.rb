@@ -11,18 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426020832) do
+ActiveRecord::Schema.define(version: 20160509010754) do
 
-  create_table "affiliations", force: :cascade do |t|
-    t.integer  "subject_id", limit: 4,   null: false
-    t.string   "value",      limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "aaf_attributes", force: :cascade do |t|
+    t.string  "name",                    limit: 255,                  null: false
+    t.string  "regexp",                  limit: 255
+    t.boolean "regexp_triggers_failure",               default: true, null: false
+    t.text    "description",             limit: 65535
+    t.string  "documentation_url",       limit: 255
+    t.boolean "singular",                              default: true, null: false
   end
 
   create_table "api_subject_roles", force: :cascade do |t|
-    t.integer "role_id",        limit: 4, null: false
-    t.integer "api_subject_id", limit: 4, null: false
+    t.integer  "role_id",        limit: 4, null: false
+    t.integer  "api_subject_id", limit: 4, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "api_subject_roles", ["api_subject_id"], name: "fk_rails_4bb3279f7c", using: :btree
@@ -40,6 +44,13 @@ ActiveRecord::Schema.define(version: 20160426020832) do
 
   add_index "api_subjects", ["x509_cn"], name: "index_api_subjects_on_x509_cn", unique: true, using: :btree
 
+  create_table "attribute_values", force: :cascade do |t|
+    t.string   "value",            limit: 255, null: false
+    t.integer  "aaf_attribute_id", limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
   create_table "permissions", force: :cascade do |t|
     t.string   "value",      limit: 255, null: false
     t.integer  "role_id",    limit: 4,   null: false
@@ -55,36 +66,37 @@ ActiveRecord::Schema.define(version: 20160426020832) do
     t.datetime "updated_at",             null: false
   end
 
-  create_table "scoped_affiliations", force: :cascade do |t|
-    t.integer  "subject_id", limit: 4,   null: false
-    t.string   "value",      limit: 255, null: false
-    t.string   "scope",      limit: 255, null: false
-    t.datetime "created_at",             null: false
+  create_table "snapshot_attribute_values", force: :cascade do |t|
+    t.integer  "snapshot_id",        limit: 4, null: false
+    t.integer  "attribute_value_id", limit: 4, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  create_table "snapshots", force: :cascade do |t|
+    t.integer  "subject_id", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "subject_roles", force: :cascade do |t|
-    t.integer "role_id",    limit: 4, null: false
-    t.integer "subject_id", limit: 4, null: false
+    t.integer  "role_id",    limit: 4, null: false
+    t.integer  "subject_id", limit: 4, null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   add_index "subject_roles", ["role_id"], name: "fk_rails_775c958b0f", using: :btree
   add_index "subject_roles", ["subject_id"], name: "fk_rails_452c5fd0e8", using: :btree
 
   create_table "subjects", force: :cascade do |t|
-    t.string   "name",                   limit: 255, null: false
-    t.string   "mail",                   limit: 255, null: false
-    t.boolean  "enabled",                            null: false
-    t.boolean  "complete",                           null: false
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "shared_token",           limit: 255, null: false
-    t.string   "targeted_id",            limit: 255, null: false
-    t.string   "principal_name",         limit: 255, null: false
-    t.string   "display_name",           limit: 255, null: false
-    t.string   "cn",                     limit: 255, null: false
-    t.string   "o",                      limit: 255, null: false
-    t.string   "home_organization",      limit: 255, null: false
-    t.string   "home_organization_type", limit: 255, null: false
+    t.string   "name",        limit: 255, null: false
+    t.string   "mail",        limit: 255, null: false
+    t.boolean  "enabled",                 null: false
+    t.boolean  "complete",                null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "targeted_id", limit: 255, null: false
   end
 
   add_foreign_key "api_subject_roles", "api_subjects"

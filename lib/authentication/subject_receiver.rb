@@ -6,16 +6,16 @@ module Authentication
     include ShibRack::DefaultReceiver
     include ShibRack::AttributeMapping
 
-    map_single_value shared_token:           'HTTP_AUEDUPERSONSHAREDTOKEN',
-                     targeted_id:            'HTTP_TARGETED_ID',
-                     principal_name:         'HTTP_PRINCIPALNAME',
-                     name:                   'HTTP_DISPLAYNAME',
-                     display_name:           'HTTP_DISPLAYNAME',
-                     cn:                     'HTTP_CN',
-                     mail:                   'HTTP_MAIL',
-                     o:                      'HTTP_O',
-                     home_organization:      'HTTP_HOMEORGANIZATION',
-                     home_organization_type: 'HTTP_HOMEORGANIZATIONTYPE'
+    map_single_value  targeted_id:            'HTTP_TARGETED_ID',
+                      shared_token:           'HTTP_AUEDUPERSONSHAREDTOKEN',
+                      principal_name:         'HTTP_PRINCIPALNAME',
+                      name:                   'HTTP_DISPLAYNAME',
+                      display_name:           'HTTP_DISPLAYNAME',
+                      cn:                     'HTTP_CN',
+                      mail:                   'HTTP_MAIL',
+                      o:                      'HTTP_O',
+                      home_organization:      'HTTP_HOMEORGANIZATION',
+                      home_organization_type: 'HTTP_HOMEORGANIZATIONTYPE'
 
     map_multi_value  affiliation:            'HTTP_EDUPERSONAFFILIATION',
                      scoped_affiliation:     'HTTP_EDUPERSONSCOPEDAFFILIATION'
@@ -25,13 +25,23 @@ module Authentication
         identifier = attrs.slice(:targeted_id)
         subject = Subject.find_or_initialize_by(identifier)
 
-        # This is a temporary hack
         subject.enabled = true
         subject.complete = true
+        snapshot = Snapshot.new
+        subject.snapshots << snapshot
 
-        subject.update!(attrs.except(:affiliation, :scoped_affiliation))
-        update_affiliations(subject, attrs)
-        update_scoped_affiliations(subject, attrs)
+        subject.update!(
+          targeted_id: attrs[:targeted_id],
+          name: attrs[:name],
+          mail: attrs[:mail],
+        )
+
+        update_snapshot_attribute_values(snapshot, attrs.except(
+          :affiliation,
+          :scoped_affiliation)
+        )
+        update_snapshot_affiliations(snapshot, attrs)
+        update_snapshot_scoped_affiliations(snapshot, attrs)
 
         subject
       end
@@ -41,31 +51,22 @@ module Authentication
       redirect_to('/dashboard')
     end
 
-    def ensure_subject_match(subject, attrs)
-      return unless subject.persisted?
-      raise('Subject mismatch') if subject.shared_token != attrs[:shared_token]
-    end
-
-    def update_affiliations(subject, attrs)
-      touched = []
-
-      attrs[:affiliation].each do |value|
-        touched << subject.affiliations.find_or_create_by!(value: value)
+    def update_snapshot_attribute_values(snapshot, attrs)
+      attrs.each do |k, v|
+        aaf_attr = AafAttribute.find_or_create_by!(name: k)
+        snapshot.attribute_values << AttributeValue.create(value: v, aaf_attribute_id: aaf_attr.id)
       end
-
-      subject.affiliations.where.not(id: touched.map(&:id)).destroy_all
     end
 
-    def update_scoped_affiliations(subject, attrs)
-      touched = []
-
-      attrs[:scoped_affiliation].each do |full_value|
-        value, scope = full_value.split('@')
-        touched << subject.scoped_affiliations
-                   .find_or_create_by!(value: value, scope: scope)
-      end
-
-      subject.scoped_affiliations.where.not(id: touched.map(&:id)).destroy_all
+    def update_snapshot_affiliations(snapshot, attrs)
+      aaf_attr = AafAttribute.find_or_create_by!(name: 'affiliation', singular: false)
+      snapshot.attribute_values << AttributeValue.create(value: attrs[:affiliation], aaf_attribute_id: aaf_attr.id)
     end
+
+    def update_snapshot_scoped_affiliations(snapshot, attrs)
+      aaf_attr = AafAttribute.find_or_create_by!(name: 'scoped_affiliation', singular: false)
+      snapshot.attribute_values << AttributeValue.create(value: attrs[:scoped_affiliation], aaf_attribute_id: aaf_attr.id)
+    end
+
   end
 end

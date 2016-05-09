@@ -9,6 +9,8 @@ class Subject < ActiveRecord::Base
   has_many :affiliations
   has_many :scoped_affiliations
 
+  has_many :snapshots
+
   valhammer
 
   def permissions
