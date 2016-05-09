@@ -1,6 +1,6 @@
 class CreateAttributes < ActiveRecord::Migration
   def change
-    create_table :aaf_attributes do |t|
+    create_table :federation_attributes do |t|
       t.string :name, null: false
       t.string :regexp
       t.boolean :regexp_triggers_failure, default:true, null: false

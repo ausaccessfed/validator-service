@@ -13,15 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20160509010754) do
 
-  create_table "aaf_attributes", force: :cascade do |t|
-    t.string  "name",                    limit: 255,                  null: false
-    t.string  "regexp",                  limit: 255
-    t.boolean "regexp_triggers_failure",               default: true, null: false
-    t.text    "description",             limit: 65535
-    t.string  "documentation_url",       limit: 255
-    t.boolean "singular",                              default: true, null: false
-  end
-
   create_table "api_subject_roles", force: :cascade do |t|
     t.integer  "role_id",        limit: 4, null: false
     t.integer  "api_subject_id", limit: 4, null: false
@@ -49,6 +40,15 @@ ActiveRecord::Schema.define(version: 20160509010754) do
     t.integer  "aaf_attribute_id", limit: 4
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+  end
+
+  create_table "federation_attributes", force: :cascade do |t|
+    t.string  "name",                    limit: 255,                  null: false
+    t.string  "regexp",                  limit: 255
+    t.boolean "regexp_triggers_failure",               default: true, null: false
+    t.text    "description",             limit: 65535
+    t.string  "documentation_url",       limit: 255
+    t.boolean "singular",                              default: true, null: false
   end
 
   create_table "permissions", force: :cascade do |t|

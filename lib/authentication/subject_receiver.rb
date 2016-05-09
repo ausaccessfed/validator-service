@@ -54,29 +54,29 @@ module Authentication
 
     def update_snapshot_attribute_values(snapshot, attrs)
       attrs.each do |k, v|
-        aaf_attr = AafAttribute.find_or_create_by!(name: k)
+        fed_attr = FederationAttribute.find_or_create_by!(name: k)
         snapshot.attribute_values << AttributeValue.create(
           value: v,
-          aaf_attribute_id: aaf_attr.id)
+          aaf_attribute_id: fed_attr.id)
       end
     end
 
     def update_snapshot_affiliations(snapshot, attrs)
-      aaf_attr = AafAttribute.find_or_create_by!(
+      fed_attr = FederationAttribute.find_or_create_by!(
         name: 'affiliation',
         singular: false)
       snapshot.attribute_values << AttributeValue.create(
         value: attrs[:affiliation],
-        aaf_attribute_id: aaf_attr.id)
+        aaf_attribute_id: fed_attr.id)
     end
 
     def update_snapshot_scoped_affiliations(snapshot, attrs)
-      aaf_attr = AafAttribute.find_or_create_by!(
+      fed_attr = FederationAttribute.find_or_create_by!(
         name: 'scoped_affiliation',
         singular: false)
       snapshot.attribute_values << AttributeValue.create(
         value: attrs[:scoped_affiliation],
-        aaf_attribute_id: aaf_attr.id)
+        aaf_attribute_id: fed_attr.id)
     end
   end
 end
