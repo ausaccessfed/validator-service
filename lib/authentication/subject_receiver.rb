@@ -27,13 +27,14 @@ module Authentication
 
         subject.enabled = true
         subject.complete = true
+        
         snapshot = Snapshot.new
         subject.snapshots << snapshot
 
         subject.update!(
           targeted_id: attrs[:targeted_id],
           name: attrs[:name],
-          mail: attrs[:mail],
+          mail: attrs[:mail]
         )
 
         update_snapshot_attribute_values(snapshot, attrs.except(
