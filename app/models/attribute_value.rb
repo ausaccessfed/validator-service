@@ -7,5 +7,4 @@ class AttributeValue < ActiveRecord::Base
   belongs_to :federation_attribute
 
   valhammer
-
 end

@@ -6,5 +6,4 @@ class Snapshot < ActiveRecord::Base
   belongs_to :subject
 
   valhammer
-
 end

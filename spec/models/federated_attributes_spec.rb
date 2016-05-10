@@ -2,7 +2,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Federation Attributes', type: :model do
-
   let(:federation_attribute) { build :federation_attribute }
 
   it { expect(federation_attribute).to be_valid }
@@ -21,5 +20,4 @@ RSpec.describe 'Federation Attributes', type: :model do
     federation_attribute.singular = nil
     expect(federation_attribute).not_to be_valid
   end
-
 end
