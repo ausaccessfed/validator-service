@@ -14,13 +14,13 @@ FactoryGirl.define do
     cn { name }
     mail { Faker::Internet.email }
     o { Faker::Company.name }
-    home_organization { 'ernser.example.edu' }
+    home_organization { Faker::Internet.domain_name }
     home_organization_type do
-      'urnmaceterena.orgschachomeOrganizationTypeauuniversity'
+      'urn:mace:terena.org:schac:homeOrganizationType:au:university'
     end
     affiliation { %w('staff' 'member') }
     scoped_affiliation do
-      %w('staff@ernser.example.edu' 'member@ernser.example.edu')
+      %w(Faker::Internet.email, Faker::Internet.email)
     end
     initialize_with { attributes }
   end
