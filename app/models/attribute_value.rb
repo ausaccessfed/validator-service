@@ -5,4 +5,7 @@ class AttributeValue < ActiveRecord::Base
   has_many :snapshots, through: :snapshot_attribute_values
 
   belongs_to :federation_attribute
+
+  valhammer
+
 end
