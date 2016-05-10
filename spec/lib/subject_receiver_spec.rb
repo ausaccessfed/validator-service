@@ -50,6 +50,30 @@ RSpec.describe Authentication::SubjectReceiver do
     end
   end
 
+  describe '#update_snapshot_affiliations' do
+    let(:attrs) { build(:shib_attrs) }
+    let(:snapshot) { FactoryGirl.create(:snapshot) }
+    it 'Creates 2 AttributeValues for affiliation values in the factory' do
+      expect do
+        subject_receiver.update_snapshot_affiliations(
+          snapshot,
+          attrs)
+      end.to change(AttributeValue, :count).by(2)
+    end
+  end
+
+  describe '#update_snapshot_scoped_affiliations' do
+    let(:attrs) { build(:shib_attrs) }
+    let(:snapshot) { FactoryGirl.create(:snapshot) }
+    it 'Creates 2 AttributeValues for scoped_affiliation values in factory' do
+      expect do
+        subject_receiver.update_snapshot_scoped_affiliations(
+          snapshot,
+          attrs)
+      end.to change(AttributeValue, :count).by(2)
+    end
+  end
+
   describe '#finish' do
     let(:result) { subject_receiver.finish({}) }
     it 'redirects to the dashboard page after a successful login' do
