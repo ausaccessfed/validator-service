@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Attribute Values', type: :model do
-  let(:attribute_value) { build :attribute_value}
+  let(:attribute_value) { build :attribute_value }
 
   it { expect(attribute_value).to be_valid }
 
