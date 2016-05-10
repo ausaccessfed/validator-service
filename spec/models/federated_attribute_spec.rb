@@ -16,7 +16,7 @@ RSpec.describe 'Federation Attributes', type: :model do
     expect(federation_attribute).not_to be_valid
   end
 
-  it 'is invalid without a singular' do
+  it 'is invalid without a singular value' do
     federation_attribute.singular = nil
     expect(federation_attribute).not_to be_valid
   end
