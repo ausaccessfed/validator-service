@@ -15,12 +15,10 @@ RSpec.describe Authentication::SubjectReceiver do
     end
 
     context 'updates an existing subject' do
-      before { @sub = Subject.create(attributes_for(:subject)) }
-
+      let(:subject) { Subject.create(attributes_for(:subject)) }
       it 'does not create a new subject if one already exists' do
         attrs = attributes_for(:subject, :receiver_attrs)
-        attrs[:targeted_id] = @sub.targeted_id
-
+        attrs[:targeted_id] = subject.targeted_id
         expect { subject_receiver.subject({}, attrs) }
           .to change(Subject, :count).by(0)
       end
@@ -40,7 +38,7 @@ RSpec.describe Authentication::SubjectReceiver do
 
   describe '#update_snapshot_attribute_values' do
     let(:attrs) { build(:shib_attrs) }
-    let(:snapshot) { FactoryGirl.create(:snapshot) }
+    let(:snapshot) { create(:snapshot) }
     it 'creates a new AttributeValue record for each attr passed in' do
       expect do
         subject_receiver.update_snapshot_attribute_values(
@@ -52,7 +50,7 @@ RSpec.describe Authentication::SubjectReceiver do
 
   describe '#update_snapshot_affiliations' do
     let(:attrs) { build(:shib_attrs) }
-    let(:snapshot) { FactoryGirl.create(:snapshot) }
+    let(:snapshot) { create(:snapshot) }
     it 'Creates 2 AttributeValues for affiliation values in the factory' do
       expect do
         subject_receiver.update_snapshot_affiliations(
@@ -64,7 +62,7 @@ RSpec.describe Authentication::SubjectReceiver do
 
   describe '#update_snapshot_scoped_affiliations' do
     let(:attrs) { build(:shib_attrs) }
-    let(:snapshot) { FactoryGirl.create(:snapshot) }
+    let(:snapshot) { create(:snapshot) }
     it 'Creates 2 AttributeValues for scoped_affiliation values in factory' do
       expect do
         subject_receiver.update_snapshot_scoped_affiliations(
