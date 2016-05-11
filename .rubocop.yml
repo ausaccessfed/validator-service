@@ -1,7 +1,5 @@
 Rails:
   Enabled: true
-Metrics/MethodLength:
-  Enabled: false
 AllCops:
   Exclude:
     - db/migrate/*

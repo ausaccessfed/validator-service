@@ -22,34 +22,39 @@ module Authentication
 
     def subject(_env, attrs)
       Subject.transaction do
-        identifier = attrs.slice(:targeted_id)
-        subject = Subject.find_or_initialize_by(identifier)
-
-        subject.enabled = true
-        subject.complete = true
-
-        snapshot = Snapshot.new
-        subject.snapshots << snapshot
-
-        subject.update!(
-          targeted_id: attrs[:targeted_id],
-          name: attrs[:name],
-          mail: attrs[:mail]
-        )
-
-        update_snapshot_attribute_values(
-          snapshot,
-          attrs.except(:affiliation, :scoped_affiliation))
-
-        update_snapshot_affiliations(snapshot, attrs)
-        update_snapshot_scoped_affiliations(snapshot, attrs)
-
+        subject = create_subject(attrs)
+        create_snapshot(subject, attrs)
         subject
       end
     end
 
     def finish(_env)
       redirect_to('/dashboard')
+    end
+
+    def create_subject(attrs)
+      identifier = attrs.slice(:targeted_id)
+      subject = Subject.find_or_initialize_by(identifier)
+      subject.enabled = true
+      subject.complete = true
+      subject.update!(
+        targeted_id: attrs[:targeted_id],
+        name: attrs[:name],
+        mail: attrs[:mail]
+      )
+      subject
+    end
+
+    def create_snapshot(subject, attrs)
+      snapshot = Snapshot.new
+      subject.snapshots << Snapshot.new
+
+      update_snapshot_attribute_values(
+        snapshot,
+        attrs.except(:affiliation, :scoped_affiliation))
+
+      update_snapshot_affiliations(snapshot, attrs)
+      update_snapshot_scoped_affiliations(snapshot, attrs)
     end
 
     def update_snapshot_attribute_values(snapshot, attrs)
