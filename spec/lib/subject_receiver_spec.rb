@@ -56,7 +56,7 @@ RSpec.describe Authentication::SubjectReceiver do
         subject_receiver.update_snapshot_affiliations(
           snapshot,
           attrs)
-      end.to change(AttributeValue, :count).by(2)
+      end.to change(AttributeValue, :count).by(attrs[:affiliation].length)
     end
   end
 
@@ -68,7 +68,8 @@ RSpec.describe Authentication::SubjectReceiver do
         subject_receiver.update_snapshot_scoped_affiliations(
           snapshot,
           attrs)
-      end.to change(AttributeValue, :count).by(2)
+      end.to change(AttributeValue, :count)
+        .by(attrs[:scoped_affiliation].length)
     end
   end
 
