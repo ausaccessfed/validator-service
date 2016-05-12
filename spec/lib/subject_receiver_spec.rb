@@ -5,7 +5,7 @@ RSpec.describe Authentication::SubjectReceiver do
   let(:subject_receiver) { Authentication::SubjectReceiver.new }
 
   describe '#subject' do
-    let(:attrs) { attributes_for(:subject, :receiver_attrs) }
+    let(:attrs) { build(:shib_attrs) }
 
     context 'creating subject' do
       it 'creates a new subject based on attrs' do
@@ -17,7 +17,7 @@ RSpec.describe Authentication::SubjectReceiver do
     context 'updates an existing subject' do
       let(:subject) { Subject.create(attributes_for(:subject)) }
       it 'does not create a new subject if one already exists' do
-        attrs = attributes_for(:subject, :receiver_attrs)
+        attrs = build(:shib_attrs)
         attrs[:targeted_id] = subject.targeted_id
         expect { subject_receiver.subject({}, attrs) }
           .to change(Subject, :count).by(0)

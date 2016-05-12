@@ -12,13 +12,6 @@ FactoryGirl.define do
     enabled { true }
     complete { true }
 
-    trait :receiver_attrs do
-      affiliation { %w('staff' 'member') }
-      scoped_affiliation do
-        %w('staff@ernser.example.edu' 'member@ernser.example.edu')
-      end
-    end
-
     trait :authorized do
       transient { permission '*' }
 
