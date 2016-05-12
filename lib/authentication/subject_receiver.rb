@@ -49,7 +49,7 @@ module Authentication
         attrs.except(:affiliation, :scoped_affiliation))
       snapshot = update_snapshot_affiliations(snapshot, attrs)
       snapshot = update_snapshot_scoped_affiliations(snapshot, attrs)
-      snapshot.save!
+      snapshot
     end
 
     def update_snapshot_attribute_values(snapshot, attrs)

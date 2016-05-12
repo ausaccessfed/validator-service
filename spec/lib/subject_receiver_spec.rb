@@ -8,8 +8,7 @@ RSpec.describe Authentication::SubjectReceiver do
     let(:attrs) { build(:shib_attrs) }
 
     context 'creating subject and associated records' do
-
-      let(:subject){ subject_receiver.subject({}, attrs) }
+      let(:subject) { subject_receiver.subject({}, attrs) }
 
       it 'persists a subject record' do
         expect(subject).to be_persisted
@@ -53,6 +52,16 @@ RSpec.describe Authentication::SubjectReceiver do
       it 'returns the correct targeted_id' do
         expect(result[:targeted_id]).to eql(attrs.slice(:targeted_id).values[0])
       end
+    end
+  end
+
+  describe '#create_snapshot' do
+    let(:attrs) { build(:shib_attrs) }
+    let(:subject) { Subject.create(attributes_for(:subject)) }
+    let(:snapshot) { subject_receiver.create_snapshot(subject, attrs) }
+
+    it 'has the correct subject' do
+      expect(snapshot.subject).to eql subject
     end
   end
 
