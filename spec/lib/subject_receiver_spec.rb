@@ -7,10 +7,30 @@ RSpec.describe Authentication::SubjectReceiver do
   describe '#subject' do
     let(:attrs) { build(:shib_attrs) }
 
-    context 'creating subject' do
-      it 'creates a new subject based on attrs' do
-        expect { subject_receiver.subject({}, attrs) }
-          .to change(Subject, :count).by(1)
+    context 'creating subject and associated records' do
+
+      let(:subject){ subject_receiver.subject({}, attrs) }
+
+      it 'persists a subject record' do
+        expect(subject).to be_persisted
+      end
+
+      describe 'create a subject record with the correct attributes' do
+        it 'has the correct identifier' do
+          expect(subject.targeted_id).to eql attrs[:targeted_id]
+        end
+        it 'has the correct name' do
+          expect(subject.name).to eql attrs[:name]
+        end
+        it 'has the correct email' do
+          expect(subject.mail).to eql attrs[:mail]
+        end
+        it 'is enabled' do
+          expect(subject.enabled).to eql true
+        end
+        it 'is complete' do
+          expect(subject.enabled).to eql true
+        end
       end
     end
 
