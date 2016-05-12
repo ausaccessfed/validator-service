@@ -28,10 +28,6 @@ module Authentication
       end
     end
 
-    def finish(_env)
-      redirect_to('/dashboard')
-    end
-
     def create_subject(attrs)
       identifier = attrs.slice(:targeted_id)
       subject = Subject.find_or_initialize_by(identifier)
@@ -47,14 +43,12 @@ module Authentication
 
     def create_snapshot(subject, attrs)
       snapshot = Snapshot.new
-      subject.snapshots << Snapshot.new
-
-      update_snapshot_attribute_values(
+      subject.snapshots << snapshot
+      snapshot = update_snapshot_attribute_values(
         snapshot,
         attrs.except(:affiliation, :scoped_affiliation))
-
-      update_snapshot_affiliations(snapshot, attrs)
-      update_snapshot_scoped_affiliations(snapshot, attrs)
+      snapshot = update_snapshot_affiliations(snapshot, attrs)
+      snapshot.save!
     end
 
     def update_snapshot_attribute_values(snapshot, attrs)
@@ -64,6 +58,7 @@ module Authentication
           value: v,
           federation_attribute_id: fed_attr.id)
       end
+      snapshot
     end
 
     def update_snapshot_affiliations(snapshot, attrs)
@@ -76,6 +71,7 @@ module Authentication
           value: affiliation,
           federation_attribute_id: fed_attr.id)
       end
+      snapshot
     end
 
     def update_snapshot_scoped_affiliations(snapshot, attrs)
@@ -88,6 +84,11 @@ module Authentication
           value: scoped_affiliation,
           federation_attribute_id: fed_attr.id)
       end
+      snapshot
+    end
+
+    def finish(_env)
+      redirect_to('/dashboard')
     end
   end
 end

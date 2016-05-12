@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 FactoryGirl.define do
-  idp_domain = 'arcs.org.au' # Faker::Internet.domain_name
+  idp_domain = Faker::Internet.domain_name
   idp = "https://idp.#{idp_domain}/idp/shibboleth"
   sp = "https://sp.#{Faker::Internet.domain_name}/shibboleth"
   name = Faker::Name.name
@@ -36,8 +36,17 @@ FactoryGirl.define do
     end
     scoped_affiliation do
       scoped_affiliations = []
+      valid_affiliations = [
+        'faculty',
+        'student',
+        'staff',
+        'employee',
+        'member',
+        'affiliate',
+        'alum',
+        'library-walk-in']
       rand(2...10).times do
-        scoped_affiliations << Faker::Internet.email
+        scoped_affiliations << "#{valid_affiliations.sample}@#{idp_domain}"
       end
       scoped_affiliations
     end
