@@ -51,9 +51,14 @@ RSpec.describe Authentication::SubjectReceiver do
   describe '#create_snapshot' do
     let(:attrs) { build(:shib_attrs) }
     let(:subject) { Subject.create(attributes_for(:subject)) }
-    let(:snapshot) { subject_receiver.create_snapshot(subject, attrs) }
 
-    it 'has the correct subject' do
+    it 'creates a new snapshot' do
+      expect do
+        subject_receiver.create_snapshot(subject, attrs)
+      end.to change(Snapshot, :count).by(1)
+    end
+    it 'has the correct snapshot' do
+      snapshot = subject_receiver.create_snapshot(subject, attrs)
       expect(snapshot.subject).to eql subject
     end
   end
