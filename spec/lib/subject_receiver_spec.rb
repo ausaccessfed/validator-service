@@ -70,12 +70,21 @@ RSpec.describe Authentication::SubjectReceiver do
   describe '#update_snapshot_attribute_values' do
     let(:attrs) { build(:shib_attrs) }
     let(:snapshot) { create(:snapshot) }
-    it 'creates a new AttributeValue record for each attr passed in' do
-      expect do
-        subject_receiver.update_snapshot_attribute_values(
-          snapshot,
-          attrs.except(:affiliation, :scoped_affiliation))
-      end.to change(AttributeValue, :count).by(attrs.count - 2)
+    let(:updated_snapshot) do
+      subject_receiver.update_snapshot_attribute_values(
+        snapshot,
+        attrs.except(:affiliation, :scoped_affiliation))
+    end
+
+    it 'creates the correct number of attribute value records' do
+      expect { updated_snapshot }
+        .to change(AttributeValue, :count).by(attrs.count - 2)
+    end
+
+    it 'creates a new attribute value record for each attr passed in' do
+      updated_snapshot.attribute_values.each do |av|
+        expect(av.value).to eql(attrs[av.federation_attribute.name.to_sym])
+      end
     end
   end
 
