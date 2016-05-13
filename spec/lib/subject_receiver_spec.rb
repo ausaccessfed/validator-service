@@ -117,9 +117,7 @@ RSpec.describe Authentication::SubjectReceiver do
     describe do
       let(:subject_attrs) { [] }
       let(:subject) do
-        subject_receiver .update_snapshot_scoped_affiliations(
-          snapshot,
-          attrs)
+        subject_receiver.update_snapshot_scoped_affiliations(snapshot, attrs)
       end
 
       before do
