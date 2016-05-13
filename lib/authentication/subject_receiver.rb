@@ -34,7 +34,6 @@ module Authentication
       subject.enabled = true
       subject.complete = true
       subject.update!(
-        targeted_id: attrs[:targeted_id],
         name: attrs[:name],
         mail: attrs[:mail]
       )
