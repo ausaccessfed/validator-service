@@ -70,19 +70,21 @@ RSpec.describe Authentication::SubjectReceiver do
   describe '#update_snapshot_attribute_values' do
     let(:attrs) { build(:shib_attrs) }
     let(:snapshot) { create(:snapshot) }
-    let(:updated_snapshot) do
-      subject_receiver.update_snapshot_attribute_values(
-        snapshot,
-        attrs.except(:affiliation, :scoped_affiliation))
-    end
 
     it 'creates the correct number of attribute value records' do
-      expect { updated_snapshot }
-        .to change(AttributeValue, :count).by(attrs.count - 2)
+      expect do
+        subject_receiver.update_snapshot_attribute_values(
+          snapshot,
+          attrs.except(:affiliation, :scoped_affiliation))
+      end.to change(AttributeValue, :count).by(attrs.count - 2)
     end
 
     it 'creates a new attribute value record for each attr passed in' do
-      updated_snapshot.attribute_values.each do |av|
+      subject_receiver.update_snapshot_attribute_values(
+        snapshot,
+        attrs.except(:affiliation, :scoped_affiliation))
+
+      snapshot.reload.attribute_values.each do |av|
         expect(av.value).to eql(attrs[av.federation_attribute.name.to_sym])
       end
     end
@@ -91,23 +93,19 @@ RSpec.describe Authentication::SubjectReceiver do
   describe '#update_snapshot_affiliations' do
     let(:attrs) { build(:shib_attrs) }
     let(:snapshot) { create(:snapshot) }
-    let(:updated_snapshot) do
-      subject_receiver.update_snapshot_affiliations(snapshot, attrs)
-    end
 
     it 'Creates an attribute value for each affiliation' do
       expect do
-        updated_snapshot
+        subject_receiver.update_snapshot_affiliations(snapshot, attrs)
       end.to change(AttributeValue, :count).by(attrs[:affiliation].length)
     end
 
     it 'Creates attribute values for each affiliation' do
       subject_attrs = []
-
-      updated_snapshot.attribute_values.each do |av|
+      subject_receiver.update_snapshot_affiliations(snapshot, attrs)
+      snapshot.reload.attribute_values.each do |av|
         subject_attrs << av.value
       end
-
       expect(subject_attrs).to eql attrs[:affiliation]
     end
   end
@@ -115,29 +113,30 @@ RSpec.describe Authentication::SubjectReceiver do
   describe '#update_snapshot_scoped_affiliations' do
     let(:attrs) { build(:shib_attrs) }
     let(:snapshot) { create(:snapshot) }
-    let(:updated_snapshot) do
-      subject_receiver.update_snapshot_scoped_affiliations(snapshot, attrs)
-    end
 
     it 'Creates an attribute value for each scoped_affiliation' do
-      expect { updated_snapshot }.to change(AttributeValue, :count)
+      expect do
+        subject_receiver.update_snapshot_scoped_affiliations(snapshot, attrs)
+      end.to change(AttributeValue, :count)
         .by(attrs[:scoped_affiliation].length)
     end
 
     describe do
       let(:subject_attrs) { [] }
 
-      before do
-        updated_snapshot.attribute_values.each do |av|
+      it 'Creates attribute values for each scoped affiliation' do
+        subject_receiver.update_snapshot_scoped_affiliations(snapshot, attrs)
+        snapshot.reload.attribute_values.each do |av|
           subject_attrs << av.value
         end
-      end
-
-      it 'Creates attribute values for each scoped affiliation' do
         expect(subject_attrs).to eql attrs[:scoped_affiliation]
       end
 
       it 'should store a valid email address each scoped affiliation' do
+        subject_receiver.update_snapshot_scoped_affiliations(snapshot, attrs)
+        snapshot.reload.attribute_values.each do |av|
+          subject_attrs << av.value
+        end
         subject_attrs.each do |value|
           expect(value.match(/[a-z]{1,}@\w{1,}.\w{1,}/)).to be_truthy
         end

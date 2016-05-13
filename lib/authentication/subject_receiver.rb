@@ -58,7 +58,6 @@ module Authentication
           value: v,
           federation_attribute_id: fed_attr.id)
       end
-      snapshot
     end
 
     def update_snapshot_affiliations(snapshot, attrs)
@@ -71,7 +70,6 @@ module Authentication
           value: affiliation,
           federation_attribute_id: fed_attr.id)
       end
-      snapshot
     end
 
     def update_snapshot_scoped_affiliations(snapshot, attrs)
@@ -84,7 +82,6 @@ module Authentication
           value: scoped_affiliation,
           federation_attribute_id: fed_attr.id)
       end
-      snapshot
     end
 
     def finish(_env)
