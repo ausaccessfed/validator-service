@@ -43,11 +43,11 @@ module Authentication
     def create_snapshot(subject, attrs)
       snapshot = Snapshot.new
       subject.snapshots << snapshot
-      snapshot = update_snapshot_attribute_values(
+      update_snapshot_attribute_values(
         snapshot,
         attrs.except(:affiliation, :scoped_affiliation))
-      snapshot = update_snapshot_affiliations(snapshot, attrs)
-      snapshot = update_snapshot_scoped_affiliations(snapshot, attrs)
+      update_snapshot_affiliations(snapshot, attrs)
+      update_snapshot_scoped_affiliations(snapshot, attrs)
       snapshot
     end
 

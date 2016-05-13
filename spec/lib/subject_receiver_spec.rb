@@ -61,7 +61,7 @@ RSpec.describe Authentication::SubjectReceiver do
         subject_receiver.create_snapshot(subject, attrs)
       end.to change(Snapshot, :count).by(1)
     end
-    it 'has the correct snapshot' do
+    it 'has the correct subject' do
       snapshot = subject_receiver.create_snapshot(subject, attrs)
       expect(snapshot.subject).to eql subject
     end
