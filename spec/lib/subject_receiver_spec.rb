@@ -46,13 +46,6 @@ RSpec.describe Authentication::SubjectReceiver do
         expect(subject_receiver.subject({}, attrs).name).to eql attrs[:name]
       end
     end
-
-    context 'should slice the targeted_id of the subject that is created' do
-      let(:result) { subject_receiver.subject({}, attrs) }
-      it 'returns the correct targeted_id' do
-        expect(result[:targeted_id]).to eql(attrs.slice(:targeted_id).values[0])
-      end
-    end
   end
 
   describe '#create_snapshot' do
