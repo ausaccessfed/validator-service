@@ -15,7 +15,7 @@ RSpec.describe Authentication::SubjectReceiver do
       end
 
       describe 'create a subject record with the correct attributes' do
-        it 'has the correct identifier' do
+        it 'has the correct targeted_id' do
           expect(subject.targeted_id).to eql attrs[:targeted_id]
         end
         it 'has the correct name' do
