@@ -28,7 +28,7 @@ RSpec.describe Authentication::SubjectReceiver do
           expect(subject.enabled).to eql true
         end
         it 'is complete' do
-          expect(subject.enabled).to eql true
+          expect(subject.complete).to eql true
         end
       end
     end
