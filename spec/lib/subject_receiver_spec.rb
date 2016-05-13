@@ -41,9 +41,13 @@ RSpec.describe Authentication::SubjectReceiver do
         expect { subject_receiver.subject({}, attrs) }
           .to change(Subject, :count).by(0)
       end
-      it 'updates the existing subject with the new attributes' do
+      it 'updates the existing subject with the new name attributes' do
         attrs[:name] = Faker::Name.name
         expect(subject_receiver.subject({}, attrs).name).to eql attrs[:name]
+      end
+      it 'updates the existing subject with the new mail attributes' do
+        attrs[:mail] = Faker::Internet.email
+        expect(subject_receiver.subject({}, attrs).mail).to eql attrs[:mail]
       end
     end
   end
