@@ -104,24 +104,20 @@ RSpec.describe Authentication::SubjectReceiver do
   describe '#update_snapshot_scoped_affiliations' do
     let(:attrs) { build(:shib_attrs) }
     let(:snapshot) { create(:snapshot) }
+    let(:updated_snapshot) do
+      subject_receiver.update_snapshot_scoped_affiliations(snapshot, attrs)
+    end
 
     it 'Creates an attribute value for each scoped_affiliation' do
-      expect do
-        subject_receiver.update_snapshot_scoped_affiliations(
-          snapshot,
-          attrs)
-      end.to change(AttributeValue, :count)
+      expect { updated_snapshot }.to change(AttributeValue, :count)
         .by(attrs[:scoped_affiliation].length)
     end
 
     describe do
       let(:subject_attrs) { [] }
-      let(:subject) do
-        subject_receiver.update_snapshot_scoped_affiliations(snapshot, attrs)
-      end
 
       before do
-        subject.attribute_values.each do |av|
+        updated_snapshot.attribute_values.each do |av|
           subject_attrs << av.value
         end
       end
