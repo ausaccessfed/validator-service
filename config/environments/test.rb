@@ -10,4 +10,5 @@ ValidatorService::Application.configure do
   config.action_controller.allow_forgery_protection = false
   config.action_mailer.delivery_method = :test
   config.active_support.deprecation = :stderr
+  config.shib_rack.test_mode = true
 end

@@ -5,6 +5,7 @@ class CreateAPISubjectRoles < ActiveRecord::Migration
     create_table :api_subject_roles do |t|
       t.integer :role_id, null: false
       t.integer :api_subject_id, null: false
+      t.timestamps null: false
     end
   end
 end

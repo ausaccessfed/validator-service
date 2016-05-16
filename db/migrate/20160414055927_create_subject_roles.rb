@@ -5,6 +5,7 @@ class CreateSubjectRoles < ActiveRecord::Migration
     create_table :subject_roles do |t|
       t.integer :role_id, null: false
       t.integer :subject_id, null: false
+      t.timestamps null: false
     end
   end
 end

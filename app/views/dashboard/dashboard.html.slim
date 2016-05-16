@@ -1,0 +1,13 @@
+h1.display-3 Hi, You're logged in.
+p.lead Snapshot
+
+table.table
+  tr
+    td: strong Snapshot ID
+    td
+      pre: code= @subject.snapshots.last.id
+      em= '(Not a user attribute, just a local identifier for the data.)'
+  - @subject.snapshots.last.attribute_values.each do |av|
+    tr
+      td: strong= av.federation_attribute.name
+      td: pre: code= av.value

@@ -18,6 +18,14 @@ GIT
       sprockets (~> 2.12)
       will_paginate
 
+GIT
+  remote: https://github.com/ausaccessfed/shib-rack
+  revision: 94b0ad16fec5bbb49c5852aaf40ca42bf2747e52
+  branch: develop
+  specs:
+    shib-rack (0.1.0)
+      rack
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -325,6 +333,7 @@ DEPENDENCIES
   rspec-rails (~> 3.4.2)
   rubocop
   sass-rails
+  shib-rack!
   shoulda-matchers
   simplecov
   slim-rails
