@@ -123,20 +123,18 @@ RSpec.describe Authentication::SubjectReceiver do
 
     describe do
       let(:subject_attrs) { [] }
-
-      it 'Creates attribute values for each scoped affiliation' do
+      before do
         subject_receiver.update_snapshot_scoped_affiliations(snapshot, attrs)
         snapshot.reload.attribute_values.each do |av|
           subject_attrs << av.value
         end
+      end
+
+      it 'Creates attribute values for each scoped affiliation' do
         expect(subject_attrs).to eql attrs[:scoped_affiliation]
       end
 
       it 'should store a valid email address each scoped affiliation' do
-        subject_receiver.update_snapshot_scoped_affiliations(snapshot, attrs)
-        snapshot.reload.attribute_values.each do |av|
-          subject_attrs << av.value
-        end
         subject_attrs.each do |value|
           expect(value.match(/[a-z]{1,}@\w{1,}.\w{1,}/)).to be_truthy
         end
