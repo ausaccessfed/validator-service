@@ -80,6 +80,7 @@ RSpec.describe Authentication::SubjectReceiver do
     end
 
     it 'creates a new attribute value record for each attr passed in' do
+      update_snapshot
       snapshot.reload.attribute_values.each do |av|
         expect(av.value).to eql(attrs[av.federation_attribute.name.to_sym])
       end
