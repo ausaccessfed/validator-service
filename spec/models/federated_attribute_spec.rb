@@ -20,4 +20,9 @@ RSpec.describe 'Federation Attributes', type: :model do
     federation_attribute.singular = nil
     expect(federation_attribute).not_to be_valid
   end
+
+  it 'is invalid without a http_header value' do
+    federation_attribute.http_header = nil
+    expect(federation_attribute).not_to be_valid
+  end
 end
