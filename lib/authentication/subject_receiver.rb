@@ -30,13 +30,11 @@ module Authentication
 
     def create_subject(attrs)
       identifier = attrs.slice(:targeted_id)
-      subject = Subject.find_or_initialize_by(identifier)
-      subject.enabled = true
-      subject.complete = true
-      subject.update!(
-        name: attrs[:name],
-        mail: attrs[:mail]
-      )
+      subject = Subject.find_or_initialize_by(identifier) do |s|
+        s.enabled = true
+        s.complete = true
+      end
+      subject.update!(name: attrs[:name], mail: attrs[:mail])
       subject
     end
 
