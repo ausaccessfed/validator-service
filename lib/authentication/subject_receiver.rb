@@ -6,19 +6,18 @@ module Authentication
     include ShibRack::DefaultReceiver
     include ShibRack::AttributeMapping
 
-    map_single_value  targeted_id:            'HTTP_TARGETED_ID',
-                      shared_token:           'HTTP_AUEDUPERSONSHAREDTOKEN',
-                      principal_name:         'HTTP_PRINCIPALNAME',
-                      name:                   'HTTP_DISPLAYNAME',
-                      display_name:           'HTTP_DISPLAYNAME',
-                      cn:                     'HTTP_CN',
-                      mail:                   'HTTP_MAIL',
-                      o:                      'HTTP_O',
-                      home_organization:      'HTTP_HOMEORGANIZATION',
-                      home_organization_type: 'HTTP_HOMEORGANIZATIONTYPE'
+    single_values = {}
+    FederationAttribute.all.where(singular: true).each do |av|
+      single_values[av.name.to_sym] = av.http_header
+    end
 
-    map_multi_value  affiliation:            'HTTP_EDUPERSONAFFILIATION',
-                     scoped_affiliation:     'HTTP_EDUPERSONSCOPEDAFFILIATION'
+    multi_values = {}
+    FederationAttribute.all.where(singular: false).each do |av|
+      multi_values[av.name.to_sym] = av.http_header
+    end
+
+    map_single_value single_values
+    map_multi_value multi_values
 
     def subject(_env, attrs)
       Subject.transaction do

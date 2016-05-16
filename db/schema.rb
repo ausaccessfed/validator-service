@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509010754) do
+ActiveRecord::Schema.define(version: 20160516053355) do
 
   create_table "api_subject_roles", force: :cascade do |t|
     t.integer  "role_id",        limit: 4, null: false
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20160509010754) do
     t.text    "description",             limit: 65535
     t.string  "documentation_url",       limit: 255
     t.boolean "singular",                              default: true, null: false
+    t.string  "http_header",             limit: 255,                  null: false
   end
 
   create_table "permissions", force: :cascade do |t|
