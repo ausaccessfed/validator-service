@@ -134,7 +134,7 @@ RSpec.describe Authentication::SubjectReceiver do
         expect(subject_attrs).to eql attrs[:scoped_affiliation]
       end
 
-      it 'should store a valid email address each scoped affiliation' do
+      it 'should store a valid affiliation' do
         subject_attrs.each do |value|
           expect(value.match(/[a-z]{1,}@\w{1,}.\w{1,}/)).to be_truthy
         end
