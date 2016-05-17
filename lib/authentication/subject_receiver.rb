@@ -46,14 +46,17 @@ module Authentication
       update_snapshot_attribute_values(
         snapshot,
         attrs.except(:affiliation, :scoped_affiliation))
-        update_snapshot_affiliations(snapshot, attrs)
-        update_snapshot_scoped_affiliations(snapshot, attrs)
+      update_snapshot_affiliations(snapshot, attrs)
+      update_snapshot_scoped_affiliations(snapshot, attrs)
       snapshot
     end
 
     def update_snapshot_attribute_values(snapshot, attrs)
       attrs.each do |k, v|
-        fed_attr = FederationAttribute.find_or_create_by!(name: k, http_header: "HTTP_#{k.upcase}")
+        fed_attr = FederationAttribute.find_or_create_by!(
+          name: k,
+          http_header: "HTTP_#{k.upcase}")
+
         snapshot.attribute_values << AttributeValue.create(
           value: v,
           federation_attribute_id: fed_attr.id)
@@ -71,7 +74,8 @@ module Authentication
     end
 
     def update_snapshot_scoped_affiliations(snapshot, attrs)
-      scoped_affiliation_attr = FederationAttribute.find_by_name('scoped_affiliation')
+      scoped_affiliation_attr = FederationAttribute
+                                .find_by_name('scoped_affiliation')
 
       attrs[:scoped_affiliation].each do |scoped_affiliation|
         snapshot.attribute_values << AttributeValue.create(

@@ -6,9 +6,20 @@ RSpec.describe Authentication::SubjectReceiver do
 
   describe '#subject' do
     let(:attrs) { build(:shib_attrs) }
+
     before do
-      create(:federation_attribute, name: 'affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
-      create(:federation_attribute, name: 'scoped_affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+      create(
+        :federation_attribute,
+        name: 'affiliation',
+        singular: false,
+        http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+
+      create(
+        :federation_attribute,
+        name: 'scoped_affiliation',
+        singular: false,
+        http_header:
+        'HTTP_EDUPERSONSCOPEDAFFILIATION')
     end
 
     context 'creating subject and associated records' do
@@ -61,8 +72,17 @@ RSpec.describe Authentication::SubjectReceiver do
     let(:subject) { Subject.create(attributes_for(:subject)) }
     let(:snapshot) { subject_receiver.create_snapshot(subject, attrs) }
     before do
-      create(:federation_attribute, name: 'affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
-      create(:federation_attribute, name: 'scoped_affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+      create(
+        :federation_attribute,
+        name: 'affiliation',
+        singular: false,
+        http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+
+      create(
+        :federation_attribute,
+        name: 'scoped_affiliation',
+        singular: false,
+        http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
     end
 
     it 'creates a new snapshot' do
@@ -103,7 +123,11 @@ RSpec.describe Authentication::SubjectReceiver do
     end
 
     before do
-      create(:federation_attribute, name: 'affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+      create(
+        :federation_attribute,
+        name: 'affiliation',
+        singular: false,
+        http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
     end
 
     it 'Creates an attribute value for each affiliation' do
@@ -129,7 +153,11 @@ RSpec.describe Authentication::SubjectReceiver do
     end
 
     before do
-      create(:federation_attribute, name: 'scoped_affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+      create(
+        :federation_attribute,
+        name: 'scoped_affiliation',
+        singular: false,
+        http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
     end
 
     it 'Creates an attribute value for each scoped_affiliation' do

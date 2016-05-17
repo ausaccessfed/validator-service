@@ -4,5 +4,4 @@ class FederationAttribute < ActiveRecord::Base
   has_many :attribute_values
 
   valhammer
-  
 end
