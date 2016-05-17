@@ -40,41 +40,23 @@ module Authentication
     def create_snapshot(subject, attrs)
       snapshot = Snapshot.new
       subject.snapshots << snapshot
-      update_snapshot_attribute_values(
-        snapshot,
-        attrs.except(:affiliation, :scoped_affiliation))
-      update_snapshot_affiliations(snapshot, attrs)
-      update_snapshot_scoped_affiliations(snapshot, attrs)
+      update_snapshot_attribute_values(snapshot, attrs)
       snapshot
     end
-
-    def update_snapshot_affiliations(snapshot, attrs)
-      fed_attr = FederationAttribute.find_by_name('affiliation')
-
-      attrs[:affiliation].each do |affiliation|
-        snapshot.attribute_values << AttributeValue.create(
-          value: affiliation,
-          federation_attribute_id: fed_attr.id)
-      end
-    end
-
-    def update_snapshot_scoped_affiliations(snapshot, attrs)
-      fed_attr = FederationAttribute.find_by_name('scoped_affiliation')
-
-      attrs[:scoped_affiliation].each do |scoped_affiliation|
-        snapshot.attribute_values << AttributeValue.create(
-          value: scoped_affiliation,
-          federation_attribute_id: fed_attr.id)
-      end
-    end
-
     def update_snapshot_attribute_values(snapshot, attrs)
       attrs.each do |k, v|
         fed_attr = FederationAttribute.find_by_name(k)
-
-        snapshot.attribute_values << AttributeValue.create(
-          value: v,
-          federation_attribute_id: fed_attr.id)
+        if v.kind_of?(Array) # Multi-value attribute
+          v.each do |value|
+            snapshot.attribute_values << AttributeValue.create(
+              value: value,
+              federation_attribute_id: fed_attr.id)
+          end
+        else
+          snapshot.attribute_values << AttributeValue.create(
+            value: v,
+            federation_attribute_id: fed_attr.id)
+        end
       end
     end
 
