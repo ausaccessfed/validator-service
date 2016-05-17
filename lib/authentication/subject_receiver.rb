@@ -6,22 +6,20 @@ module Authentication
     include ShibRack::DefaultReceiver
     include ShibRack::AttributeMapping
 
-    def map_attributes
-      single_values = {}
-      multi_values = {}
+    single_values = {}
+    multi_values = {}
 
-      if defined? FederationAttribute
-        FederationAttribute.all.each do |fa|
-          if fa.singular
-            single_values[fa.name.to_sym] = fa.http_header
-          else
-            multi_values[fa.name.to_sym] = fa.http_header
-          end
+    if defined? FederationAttribute
+      FederationAttribute.all.each do |fa|
+        if fa.singular
+          single_values[fa.name.to_sym] = fa.http_header
+        else
+          multi_values[fa.name.to_sym] = fa.http_header
         end
-
-        map_single_value single_values
-        map_multi_value multi_values
       end
+
+      map_single_value single_values
+      map_multi_value multi_values
     end
 
     def subject(_env, attrs)
