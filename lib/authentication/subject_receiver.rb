@@ -12,7 +12,7 @@ module Authentication
 
       if defined? FederationAttribute
         FederationAttribute.all.each do |fa|
-          if fa.singular?
+          if fa.singular
             single_values[fa.name.to_sym] = fa.http_header
           else
             multi_values[fa.name.to_sym] = fa.http_header
