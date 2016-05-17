@@ -6,24 +6,6 @@ module Authentication
     include ShibRack::DefaultReceiver
     include ShibRack::AttributeMapping
 
-
-
-    # single_values = {}
-    # multi_values = {}
-    #
-    # if defined? FederationAttribute
-    #   FederationAttribute.all.each do |fa|
-    #     if fa.singular
-    #       single_values[fa.name.to_sym] = fa.http_header
-    #     else
-    #       multi_values[fa.name.to_sym] = fa.http_header
-    #     end
-    #   end
-    #
-    #   map_single_value single_values
-    #   map_multi_value multi_values
-    # end
-
     def subject(_env, attrs)
 
       Subject.transaction do
@@ -35,8 +17,12 @@ module Authentication
 
     def map_attributes(_env)
       map = {}
-      FederationAttribute.all.where(singular: true).each do |fa|
-        map[fa.name.to_sym] = _env[fa.http_header]
+      FederationAttribute.all.each do |fa|
+        if fa.singular
+          map[fa.name.to_sym] = _env[fa.http_header]
+        else
+          map[fa.name.to_sym] = _env[fa.http_header].split(';')
+        end
       end
       map
     end
@@ -57,9 +43,29 @@ module Authentication
       update_snapshot_attribute_values(
         snapshot,
         attrs.except(:affiliation, :scoped_affiliation))
-      # update_snapshot_affiliations(snapshot, attrs)
-      # update_snapshot_scoped_affiliations(snapshot, attrs)
+      update_snapshot_affiliations(snapshot, attrs)
+      update_snapshot_scoped_affiliations(snapshot, attrs)
       snapshot
+    end
+
+    def update_snapshot_affiliations(snapshot, attrs)
+      fed_attr = FederationAttribute.find_by_name('affiliation')
+
+      attrs[:affiliation].each do |affiliation|
+        snapshot.attribute_values << AttributeValue.create(
+          value: affiliation,
+          federation_attribute_id: fed_attr.id)
+      end
+    end
+
+    def update_snapshot_scoped_affiliations(snapshot, attrs)
+      fed_attr = FederationAttribute.find_by_name('scoped_affiliation')
+
+      attrs[:scoped_affiliation].each do |scoped_affiliation|
+        snapshot.attribute_values << AttributeValue.create(
+          value: scoped_affiliation,
+          federation_attribute_id: fed_attr.id)
+      end
     end
 
     def update_snapshot_attribute_values(snapshot, attrs)
