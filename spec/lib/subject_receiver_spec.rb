@@ -6,6 +6,10 @@ RSpec.describe Authentication::SubjectReceiver do
 
   describe '#subject' do
     let(:attrs) { build(:shib_attrs) }
+    before do
+      create(:federation_attribute, name: 'affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+      create(:federation_attribute, name: 'scoped_affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+    end
 
     context 'creating subject and associated records' do
       let(:subject) { subject_receiver.subject({}, attrs) }
@@ -56,6 +60,10 @@ RSpec.describe Authentication::SubjectReceiver do
     let(:attrs) { build(:shib_attrs) }
     let(:subject) { Subject.create(attributes_for(:subject)) }
     let(:snapshot) { subject_receiver.create_snapshot(subject, attrs) }
+    before do
+      create(:federation_attribute, name: 'affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+      create(:federation_attribute, name: 'scoped_affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+    end
 
     it 'creates a new snapshot' do
       expect { snapshot }.to change(Snapshot, :count).by(1)
@@ -94,6 +102,10 @@ RSpec.describe Authentication::SubjectReceiver do
       subject_receiver.update_snapshot_affiliations(snapshot, attrs)
     end
 
+    before do
+      create(:federation_attribute, name: 'affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+    end
+
     it 'Creates an attribute value for each affiliation' do
       expect { update_snapshot }
         .to change(AttributeValue, :count).by(attrs[:affiliation].length)
@@ -114,6 +126,10 @@ RSpec.describe Authentication::SubjectReceiver do
     let(:snapshot) { create(:snapshot) }
     let(:update_snapshot) do
       subject_receiver.update_snapshot_scoped_affiliations(snapshot, attrs)
+    end
+
+    before do
+      create(:federation_attribute, name: 'scoped_affiliation', singular: false, http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
     end
 
     it 'Creates an attribute value for each scoped_affiliation' do
