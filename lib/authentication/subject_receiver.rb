@@ -43,6 +43,7 @@ module Authentication
       update_snapshot_attribute_values(snapshot, attrs)
       snapshot
     end
+
     def update_snapshot_attribute_values(snapshot, attrs)
       attrs.each do |k, v|
         fed_attr = FederationAttribute.find_by_name(k)
