@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/shib-rack
-  revision: 94b0ad16fec5bbb49c5852aaf40ca42bf2747e52
+  revision: 8399ab6b398296405208afa25fd7d41875b61583
   branch: develop
   specs:
     shib-rack (0.1.0)

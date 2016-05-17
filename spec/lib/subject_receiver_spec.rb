@@ -3,6 +3,12 @@ require 'rails_helper'
 
 RSpec.describe Authentication::SubjectReceiver do
   let(:subject_receiver) { Authentication::SubjectReceiver.new }
+  before do
+    create(
+      :federation_attribute,
+      name: 'targeted_id',
+      http_header: 'HTTP_TARGETED_ID')
+  end
 
   describe '#subject' do
     let(:attrs) { build(:shib_attrs) }
@@ -18,8 +24,7 @@ RSpec.describe Authentication::SubjectReceiver do
         :federation_attribute,
         name: 'scoped_affiliation',
         singular: false,
-        http_header:
-        'HTTP_EDUPERSONSCOPEDAFFILIATION')
+        http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
     end
 
     context 'creating subject and associated records' do
