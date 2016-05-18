@@ -165,6 +165,29 @@ RSpec.describe Authentication::SubjectReceiver do
     end
   end
 
+  describe '#create_attr_value' do
+    let(:snapshot) { create(:snapshot) }
+    let(:federation_attribute) { create(:federation_attribute) }
+    let(:create_attribute_value) do
+      subject_receiver
+        .create_attr_value(Faker::Lorem.word, federation_attribute.id, snapshot)
+    end
+
+    it 'creates a new attribute value record' do
+      expect { create_attribute_value }.to change(AttributeValue, :count).by(1)
+    end
+
+    it 'belongs to the specified snapshot' do
+      av = create_attribute_value
+      expect(snapshot.attribute_values.last).to eql av
+    end
+
+    it 'belongs to the specified federation value' do
+      av = create_attribute_value
+      expect(av.federation_attribute).to eql federation_attribute
+    end
+  end
+
   describe '#finish' do
     let(:result) { subject_receiver.finish({}) }
     it 'redirects to the dashboard page after a successful login' do

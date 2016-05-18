@@ -48,17 +48,20 @@ module Authentication
         fed_attr = FederationAttribute.find_by_name(k)
         next if fed_attr.blank?
         if v.is_a?(Array) # Multi-value attribute
-          v.each { |value| create_av(value, fed_attr.id, snapshot) }
+          v.each { |value| create_attr_value(value, fed_attr.id, snapshot) }
         else
-          create_av(v, fed_attr.id, snapshot)
+          create_attr_value(v, fed_attr.id, snapshot)
         end
       end
     end
 
-    def create_av(value, federation_attribute_id, snapshot)
-      snapshot.attribute_values << AttributeValue.create(
+    def create_attr_value(value, federation_attribute_id, snapshot)
+      av = AttributeValue.new(
         value: value,
         federation_attribute_id: federation_attribute_id)
+      snapshot.attribute_values << av
+      snapshot.save!
+      av
     end
 
     def finish(_env)
