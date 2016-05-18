@@ -6,26 +6,24 @@ module Authentication
     include ShibRack::DefaultReceiver
     include ShibRack::AttributeMapping
 
-    map_single_value  targeted_id:            'HTTP_TARGETED_ID',
-                      shared_token:           'HTTP_AUEDUPERSONSHAREDTOKEN',
-                      principal_name:         'HTTP_PRINCIPALNAME',
-                      name:                   'HTTP_DISPLAYNAME',
-                      display_name:           'HTTP_DISPLAYNAME',
-                      cn:                     'HTTP_CN',
-                      mail:                   'HTTP_MAIL',
-                      o:                      'HTTP_O',
-                      home_organization:      'HTTP_HOMEORGANIZATION',
-                      home_organization_type: 'HTTP_HOMEORGANIZATIONTYPE'
-
-    map_multi_value  affiliation:            'HTTP_EDUPERSONAFFILIATION',
-                     scoped_affiliation:     'HTTP_EDUPERSONSCOPEDAFFILIATION'
-
     def subject(_env, attrs)
       Subject.transaction do
         subject = create_subject(attrs)
         create_snapshot(subject, attrs)
         subject
       end
+    end
+
+    def map_attributes(env)
+      map = {}
+      FederationAttribute.all.each do |fa|
+        if fa.singular
+          map[fa.name.to_sym] = env[fa.http_header]
+        else
+          map[fa.name.to_sym] = env[fa.http_header].split(';')
+        end
+      end
+      map
     end
 
     def create_subject(attrs)
@@ -41,45 +39,29 @@ module Authentication
     def create_snapshot(subject, attrs)
       snapshot = Snapshot.new
       subject.snapshots << snapshot
-      update_snapshot_attribute_values(
-        snapshot,
-        attrs.except(:affiliation, :scoped_affiliation))
-      update_snapshot_affiliations(snapshot, attrs)
-      update_snapshot_scoped_affiliations(snapshot, attrs)
+      update_snapshot_attribute_values(snapshot, attrs)
       snapshot
     end
 
     def update_snapshot_attribute_values(snapshot, attrs)
       attrs.each do |k, v|
-        fed_attr = FederationAttribute.find_or_create_by!(name: k)
-        snapshot.attribute_values << AttributeValue.create(
-          value: v,
-          federation_attribute_id: fed_attr.id)
+        fed_attr = FederationAttribute.find_by_name(k)
+        next if fed_attr.blank?
+        if v.is_a?(Array) # Multi-value attribute
+          v.each { |value| create_attr_value(value, fed_attr.id, snapshot) }
+        else
+          create_attr_value(v, fed_attr.id, snapshot)
+        end
       end
     end
 
-    def update_snapshot_affiliations(snapshot, attrs)
-      fed_attr = FederationAttribute.find_or_create_by!(
-        name: 'affiliation',
-        singular: false)
-
-      attrs[:affiliation].each do |affiliation|
-        snapshot.attribute_values << AttributeValue.create(
-          value: affiliation,
-          federation_attribute_id: fed_attr.id)
-      end
-    end
-
-    def update_snapshot_scoped_affiliations(snapshot, attrs)
-      fed_attr = FederationAttribute.find_or_create_by!(
-        name: 'scoped_affiliation',
-        singular: false)
-
-      attrs[:scoped_affiliation].each do |scoped_affiliation|
-        snapshot.attribute_values << AttributeValue.create(
-          value: scoped_affiliation,
-          federation_attribute_id: fed_attr.id)
-      end
+    def create_attr_value(value, federation_attribute_id, snapshot)
+      av = AttributeValue.new(
+        value: value,
+        federation_attribute_id: federation_attribute_id)
+      snapshot.attribute_values << av
+      snapshot.save!
+      av
     end
 
     def finish(_env)

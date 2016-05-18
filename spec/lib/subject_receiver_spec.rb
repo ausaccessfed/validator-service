@@ -2,13 +2,82 @@
 require 'rails_helper'
 
 RSpec.describe Authentication::SubjectReceiver do
+  let(:env) { {} }
+  let(:attrs) { build(:shib_attrs) }
   let(:subject_receiver) { Authentication::SubjectReceiver.new }
+  before do
+    env['HTTP_TARGETED_ID'] = attrs[:targeted_id]
+    env['HTTP_AUEDUPERSONSHAREDTOKEN'] = attrs[:shared_token]
+    env['HTTP_DISPLAYNAME'] = attrs[:display_name]
+    env['HTTP_MAIL'] = attrs[:mail]
+
+    env['HTTP_EDUPERSONAFFILIATION'] = ''
+    attrs[:affiliation].each do |affiliation|
+      env['HTTP_EDUPERSONAFFILIATION'] += "#{affiliation};"
+    end
+
+    env['HTTP_EDUPERSONSCOPEDAFFILIATION'] = ''
+    attrs[:scoped_affiliation].each do |scoped_affiliation|
+      env['HTTP_EDUPERSONSCOPEDAFFILIATION'] += "#{scoped_affiliation};"
+    end
+  end
+
+  before do
+    create(
+      :federation_attribute,
+      name: 'targeted_id',
+      singular: true,
+      http_header: 'HTTP_TARGETED_ID')
+
+    create(
+      :federation_attribute,
+      name: 'shared_token',
+      singular: true,
+      http_header: 'HTTP_AUEDUPERSONSHAREDTOKEN')
+
+    create(
+      :federation_attribute,
+      name: 'name',
+      singular: true,
+      http_header: 'HTTP_DISPLAYNAME')
+
+    create(
+      :federation_attribute,
+      name: 'mail',
+      singular: true,
+      http_header: 'HTTP_MAIL')
+
+    create(
+      :federation_attribute,
+      name: 'affiliation',
+      singular: false,
+      http_header: 'HTTP_EDUPERSONAFFILIATION')
+
+    create(
+      :federation_attribute,
+      name: 'scoped_affiliation',
+      singular: false,
+      http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
+  end
 
   describe '#subject' do
-    let(:attrs) { build(:shib_attrs) }
+    let(:create_subject) do
+      subject_receiver.subject(env, attrs)
+    end
 
-    context 'creating subject and associated records' do
-      let(:subject) { subject_receiver.subject({}, attrs) }
+    context 'Create new subject and snapshot' do
+      it 'should create a new subject' do
+        expect { create_subject }.to change(Subject, :count).by(1)
+      end
+      it 'should create a new snapshot' do
+        expect { create_subject }.to change(Snapshot, :count).by(1)
+      end
+    end
+  end
+
+  describe '#create_subject' do
+    context 'creating a new subject' do
+      let(:subject) { subject_receiver.create_subject(attrs) }
 
       it 'persists a subject record' do
         expect(subject).to be_persisted
@@ -32,28 +101,9 @@ RSpec.describe Authentication::SubjectReceiver do
         end
       end
     end
-
-    context 'updates an existing subject' do
-      let(:subject) { Subject.create(attributes_for(:subject)) }
-      it 'does not create a new subject if one already exists' do
-        attrs = build(:shib_attrs)
-        attrs[:targeted_id] = subject.targeted_id
-        expect { subject_receiver.subject({}, attrs) }
-          .to change(Subject, :count).by(0)
-      end
-      it 'updates the existing subject with the new name attributes' do
-        attrs[:name] = Faker::Name.name
-        expect(subject_receiver.subject({}, attrs).name).to eql attrs[:name]
-      end
-      it 'updates the existing subject with the new mail attributes' do
-        attrs[:mail] = Faker::Internet.email
-        expect(subject_receiver.subject({}, attrs).mail).to eql attrs[:mail]
-      end
-    end
   end
 
   describe '#create_snapshot' do
-    let(:attrs) { build(:shib_attrs) }
     let(:subject) { Subject.create(attributes_for(:subject)) }
     let(:snapshot) { subject_receiver.create_snapshot(subject, attrs) }
 
@@ -66,79 +116,75 @@ RSpec.describe Authentication::SubjectReceiver do
   end
 
   describe '#update_snapshot_attribute_values' do
-    let(:attrs) { build(:shib_attrs) }
     let(:snapshot) { create(:snapshot) }
     let(:update_snapshot) do
       subject_receiver.update_snapshot_attribute_values(
         snapshot,
-        attrs.except(:affiliation, :scoped_affiliation))
+        attrs)
     end
 
     it 'creates the correct number of attribute value records' do
+      expected_count = FederationAttribute.where(singular: true).count
+      FederationAttribute.all.where(singular: false).each do |fa|
+        expected_count += attrs[fa.name.to_sym].length
+      end
+
       expect { update_snapshot }
-        .to change(AttributeValue, :count).by(attrs.count - 2)
+        .to change(AttributeValue, :count).by(expected_count)
     end
 
-    it 'creates a new attribute value record for each attr passed in' do
+    it 'creates a new attribute value for each singular attr passed in' do
       update_snapshot
-      snapshot.reload.attribute_values.each do |av|
-        expect(av.value).to eql(attrs[av.federation_attribute.name.to_sym])
+      snapshot.attribute_values.each do |av|
+        if av.federation_attribute.singular
+          expect(av.value).to eql(attrs[av.federation_attribute.name.to_sym])
+        end
+      end
+    end
+
+    it 'creates a new attribute value for each multi_value attr passed in' do
+      update_snapshot
+      FederationAttribute.where(singular: false).each do |fa|
+        fa.attribute_values.each do |av|
+          expect(attrs[fa.name.to_sym]).to include(av.value)
+        end
       end
     end
   end
 
-  describe '#update_snapshot_affiliations' do
-    let(:attrs) { build(:shib_attrs) }
-    let(:snapshot) { create(:snapshot) }
-    let(:update_snapshot) do
-      subject_receiver.update_snapshot_affiliations(snapshot, attrs)
-    end
-
-    it 'Creates an attribute value for each affiliation' do
-      expect { update_snapshot }
-        .to change(AttributeValue, :count).by(attrs[:affiliation].length)
-    end
-
-    it 'Creates attribute values for each affiliation' do
-      subject_attrs = []
-      update_snapshot
-      snapshot.reload.attribute_values.each do |av|
-        subject_attrs << av.value
-      end
-      expect(subject_attrs).to eql attrs[:affiliation]
+  describe '#map_attributes' do
+    it 'returns a hash of attributes' do
+      expect(subject_receiver.map_attributes(env)).to eql(
+        attrs.slice(
+          :targeted_id,
+          :shared_token,
+          :name,
+          :mail,
+          :affiliation,
+          :scoped_affiliation))
     end
   end
 
-  describe '#update_snapshot_scoped_affiliations' do
-    let(:attrs) { build(:shib_attrs) }
+  describe '#create_attr_value' do
     let(:snapshot) { create(:snapshot) }
-    let(:update_snapshot) do
-      subject_receiver.update_snapshot_scoped_affiliations(snapshot, attrs)
+    let(:federation_attribute) { create(:federation_attribute) }
+    let(:create_attribute_value) do
+      subject_receiver
+        .create_attr_value(Faker::Lorem.word, federation_attribute.id, snapshot)
     end
 
-    it 'Creates an attribute value for each scoped_affiliation' do
-      expect { update_snapshot }
-        .to change(AttributeValue, :count).by(attrs[:scoped_affiliation].length)
+    it 'creates a new attribute value record' do
+      expect { create_attribute_value }.to change(AttributeValue, :count).by(1)
     end
 
-    describe do
-      let(:subject_attrs) { [] }
-      before do
-        update_snapshot
-        snapshot.reload.attribute_values.each do |av|
-          subject_attrs << av.value
-        end
-      end
+    it 'belongs to the specified snapshot' do
+      av = create_attribute_value
+      expect(snapshot.attribute_values.last).to eql av
+    end
 
-      it 'Creates attribute values for each scoped affiliation' do
-        expect(subject_attrs).to eql attrs[:scoped_affiliation]
-      end
-
-      it 'should store a valid affiliation' do
-        subject_attrs.each do |value|
-          expect(value.match(/[a-z]{1,}@\w{1,}.\w{1,}/)).to be_truthy
-        end
-      end
+    it 'belongs to the specified federation value' do
+      av = create_attribute_value
+      expect(av.federation_attribute).to eql federation_attribute
     end
   end
 
