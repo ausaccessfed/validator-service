@@ -41,6 +41,32 @@ RSpec.describe Authentication::SubjectReceiver do
       http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION')
   end
 
+  describe '#subject' do
+    let(:attrs) { build(:shib_attrs) }
+    let(:env) { {} }
+
+    let(:create_subject) do
+      subject_receiver.subject(env, attrs)
+    end
+    before do
+      env['HTTP_TARGETED_ID'] = attrs[:targeted_id]
+      env['HTTP_AUEDUPERSONSHAREDTOKEN'] = attrs[:shared_token]
+      env['HTTP_DISPLAYNAME'] = attrs[:display_name]
+      env['HTTP_MAIL'] = attrs[:mail]
+      env['HTTP_EDUPERSONAFFILIATION'] = 'abc;def'
+      env['HTTP_EDUPERSONSCOPEDAFFILIATION'] = 'abc;def'
+    end
+
+    context 'Create new subject and snapshot' do
+      it 'should create a new subject' do
+        expect { create_subject }.to change(Subject, :count).by(1)
+      end
+      it 'should create a new snapshot' do
+        expect { create_subject }.to change(Snapshot, :count).by(1)
+      end
+    end
+  end
+
   describe '#create_subject' do
     let(:attrs) { build(:shib_attrs) }
 
