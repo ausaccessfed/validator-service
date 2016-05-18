@@ -7,7 +7,6 @@ module Authentication
     include ShibRack::AttributeMapping
 
     def subject(_env, attrs)
-
       Subject.transaction do
         subject = create_subject(attrs)
         create_snapshot(subject, attrs)
@@ -15,13 +14,13 @@ module Authentication
       end
     end
 
-    def map_attributes(_env)
+    def map_attributes(env)
       map = {}
       FederationAttribute.all.each do |fa|
         if fa.singular
-          map[fa.name.to_sym] = _env[fa.http_header]
+          map[fa.name.to_sym] = env[fa.http_header]
         else
-          map[fa.name.to_sym] = _env[fa.http_header].split(';')
+          map[fa.name.to_sym] = env[fa.http_header].split(';')
         end
       end
       map
@@ -47,18 +46,19 @@ module Authentication
     def update_snapshot_attribute_values(snapshot, attrs)
       attrs.each do |k, v|
         fed_attr = FederationAttribute.find_by_name(k)
-        if v.kind_of?(Array) # Multi-value attribute
-          v.each do |value|
-            snapshot.attribute_values << AttributeValue.create(
-              value: value,
-              federation_attribute_id: fed_attr.id)
-          end
+        next if fed_attr.blank?
+        if v.is_a?(Array) # Multi-value attribute
+          v.each { |value| create_av(value, fed_attr.id, snapshot) }
         else
-          snapshot.attribute_values << AttributeValue.create(
-            value: v,
-            federation_attribute_id: fed_attr.id)
+          create_av(v, fed_attr.id, snapshot)
         end
       end
+    end
+
+    def create_av(value, federation_attribute_id, snapshot)
+      snapshot.attribute_values << AttributeValue.create(
+        value: value,
+        federation_attribute_id: federation_attribute_id)
     end
 
     def finish(_env)
