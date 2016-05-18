@@ -2,7 +2,26 @@
 require 'rails_helper'
 
 RSpec.describe Authentication::SubjectReceiver do
+  let(:env) { {} }
+  let(:attrs) { build(:shib_attrs) }
   let(:subject_receiver) { Authentication::SubjectReceiver.new }
+  before do
+    env['HTTP_TARGETED_ID'] = attrs[:targeted_id]
+    env['HTTP_AUEDUPERSONSHAREDTOKEN'] = attrs[:shared_token]
+    env['HTTP_DISPLAYNAME'] = attrs[:display_name]
+    env['HTTP_MAIL'] = attrs[:mail]
+
+    env['HTTP_EDUPERSONAFFILIATION'] = ''
+    attrs[:affiliation].each do |affiliation|
+      env['HTTP_EDUPERSONAFFILIATION'] += "#{affiliation};"
+    end
+
+    env['HTTP_EDUPERSONSCOPEDAFFILIATION'] = ''
+    attrs[:scoped_affiliation].each do |scoped_affiliation|
+      env['HTTP_EDUPERSONSCOPEDAFFILIATION'] += "#{scoped_affiliation};"
+    end
+  end
+
   before do
     create(
       :federation_attribute,
@@ -42,19 +61,8 @@ RSpec.describe Authentication::SubjectReceiver do
   end
 
   describe '#subject' do
-    let(:attrs) { build(:shib_attrs) }
-    let(:env) { {} }
-
     let(:create_subject) do
       subject_receiver.subject(env, attrs)
-    end
-    before do
-      env['HTTP_TARGETED_ID'] = attrs[:targeted_id]
-      env['HTTP_AUEDUPERSONSHAREDTOKEN'] = attrs[:shared_token]
-      env['HTTP_DISPLAYNAME'] = attrs[:display_name]
-      env['HTTP_MAIL'] = attrs[:mail]
-      env['HTTP_EDUPERSONAFFILIATION'] = 'abc;def'
-      env['HTTP_EDUPERSONSCOPEDAFFILIATION'] = 'abc;def'
     end
 
     context 'Create new subject and snapshot' do
@@ -68,8 +76,6 @@ RSpec.describe Authentication::SubjectReceiver do
   end
 
   describe '#create_subject' do
-    let(:attrs) { build(:shib_attrs) }
-
     context 'creating a new subject' do
       let(:subject) { subject_receiver.create_subject(attrs) }
 
@@ -98,7 +104,6 @@ RSpec.describe Authentication::SubjectReceiver do
   end
 
   describe '#create_snapshot' do
-    let(:attrs) { build(:shib_attrs) }
     let(:subject) { Subject.create(attributes_for(:subject)) }
     let(:snapshot) { subject_receiver.create_snapshot(subject, attrs) }
 
@@ -111,7 +116,6 @@ RSpec.describe Authentication::SubjectReceiver do
   end
 
   describe '#update_snapshot_attribute_values' do
-    let(:attrs) { build(:shib_attrs) }
     let(:snapshot) { create(:snapshot) }
     let(:update_snapshot) do
       subject_receiver.update_snapshot_attribute_values(
@@ -149,25 +153,15 @@ RSpec.describe Authentication::SubjectReceiver do
   end
 
   describe '#map_attributes' do
-    let(:attrs) { build(:shib_attrs) }
-    let(:env) { {} }
-    before do
-      env['HTTP_TARGETED_ID'] = attrs[:targeted_id]
-      env['HTTP_AUEDUPERSONSHAREDTOKEN'] = attrs[:shared_token]
-      env['HTTP_DISPLAYNAME'] = attrs[:display_name]
-      env['HTTP_MAIL'] = attrs[:mail]
-      env['HTTP_EDUPERSONAFFILIATION'] = 'abc;def'
-      env['HTTP_EDUPERSONSCOPEDAFFILIATION'] = 'abc;def'
-    end
-
     it 'returns a hash of attributes' do
       expect(subject_receiver.map_attributes(env)).to eql(
-        targeted_id: env['HTTP_TARGETED_ID'],
-        shared_token: env['HTTP_AUEDUPERSONSHAREDTOKEN'],
-        name: env['HTTP_DISPLAYNAME'],
-        mail: env['HTTP_MAIL'],
-        affiliation: %w(abc def),
-        scoped_affiliation: %w(abc def))
+        attrs.slice(
+          :targeted_id,
+          :shared_token,
+          :name,
+          :mail,
+          :affiliation,
+          :scoped_affiliation))
     end
   end
 
