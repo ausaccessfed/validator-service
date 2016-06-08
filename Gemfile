@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.6'
+gem 'rails', '5.0.0.rc1'
 gem 'mysql2'
 
-gem 'valhammer'
+gem 'rack', '2.0.0.rc1'
+
+gem 'valhammer',
+    path: '../valhammer',
+    branch: 'feature/loosen-activerecord-version'
 gem 'accession'
 gem 'aaf-lipstick',
-    git: 'https://github.com/ausaccessfed/aaf-lipstick',
-    branch: 'develop'
+    path: '../aaf-lipstick',
+    branch: 'feature/unlock-sprockets-version'
 gem 'slim-rails'
 gem 'sass-rails'
 gem 'torba-rails'
@@ -20,7 +24,7 @@ gem 'unicorn', require: false
 gem 'god', require: false
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.4.2'
+  gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'faker'
