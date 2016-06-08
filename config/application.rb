@@ -14,6 +14,8 @@ module ValidatorService
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    config.autoload_paths << Rails.root.join('lib')
+
     config.shib_rack.receiver = 'Authentication::SubjectReceiver'
     config.shib_rack.error_handler = 'Authentication::ErrorHandler'
   end
