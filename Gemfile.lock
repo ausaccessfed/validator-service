@@ -131,7 +131,6 @@ GEM
       rubocop (~> 0.20)
     i18n (0.7.0)
     json (1.8.3)
-    kgio (2.10.0)
     kramdown (1.11.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -171,6 +170,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    puma (3.4.0)
     rack (2.0.0.rc1)
       json
     rack-test (0.6.3)
@@ -202,7 +202,6 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
-    raindrops (0.16.0)
     rake (11.1.2)
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
@@ -280,9 +279,6 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unicode-display_width (1.0.5)
-    unicorn (5.1.0)
-      kgio (~> 2.6)
-      raindrops (~> 0.7)
     web-console (2.3.0)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -314,6 +310,7 @@ DEPENDENCIES
   guard-rubocop
   mysql2
   poltergeist
+  puma
   rack (= 2.0.0.rc1)
   rails (= 5.0.0.rc1)
   rspec-rails
@@ -326,7 +323,6 @@ DEPENDENCIES
   terminal-notifier-guard
   timecop
   torba-rails
-  unicorn
   valhammer!
   web-console (~> 2.0)
 

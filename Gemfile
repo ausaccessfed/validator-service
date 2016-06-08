@@ -20,7 +20,7 @@ gem 'shib-rack',
     git: 'https://github.com/ausaccessfed/shib-rack',
     branch: 'develop'
 
-gem 'unicorn', require: false
+gem 'puma', require: false
 gem 'god', require: false
 
 group :development, :test do
