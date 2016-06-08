@@ -1,7 +1,6 @@
-# frozen_string_literal: true
-require 'api_constraints'
-
-ValidatorService::Application.routes.draw do
+Rails.application.routes.draw do
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  
   root to: 'welcome#index'
   get '/welcome' => 'welcome#index'
   get '/dashboard' => 'dashboard#dashboard'
