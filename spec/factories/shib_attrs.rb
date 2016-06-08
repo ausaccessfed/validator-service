@@ -12,7 +12,8 @@ FactoryGirl.define do
     'member',
     'affiliate',
     'alum',
-    'library-walk-in']
+    'library-walk-in'
+  ]
 
   factory :shib_attrs, class: Hash do
     shared_token { SecureRandom.urlsafe_base64(20) }
