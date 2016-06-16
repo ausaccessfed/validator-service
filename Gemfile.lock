@@ -8,8 +8,8 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-lipstick
-  revision: 9aaf10c0e67214c263d67095c121ad1d25bc7533
-  branch: bugfix/rails-5-needs-tilt
+  revision: 48aeef08fe3f5326d4a640ab35fe304f296086c0
+  branch: develop
   specs:
     aaf-lipstick (1.1.0)
       erubis

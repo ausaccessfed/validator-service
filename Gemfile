@@ -10,7 +10,7 @@ gem 'valhammer'
 gem 'accession'
 gem 'aaf-lipstick',
     git: 'https://github.com/ausaccessfed/aaf-lipstick',
-    branch: 'bugfix/rails-5-needs-tilt'
+    branch: 'develop'
 gem 'slim-rails'
 gem 'sass-rails'
 gem 'torba-rails'
