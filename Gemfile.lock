@@ -8,14 +8,15 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-lipstick
-  revision: 71afdbbb3eba7f474654a47e489aabf16b52ab09
-  branch: develop
+  revision: 9aaf10c0e67214c263d67095c121ad1d25bc7533
+  branch: bugfix/rails-5-needs-tilt
   specs:
     aaf-lipstick (1.1.0)
       erubis
       kramdown (~> 1.5)
       rmagick
       sprockets (~> 3.0)
+      tilt
       will_paginate
 
 GIT
