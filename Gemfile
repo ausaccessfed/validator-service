@@ -24,6 +24,7 @@ gem 'god', require: false
 group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
+  gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'timecop'
