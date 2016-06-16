@@ -1,7 +1,5 @@
 # frozen_string_literal: true
-# Extends the Authentication model
 module Authentication
-  # Class extending the subject receiver for shib-rack
   class SubjectReceiver
     include ShibRack::DefaultReceiver
     include ShibRack::AttributeMapping

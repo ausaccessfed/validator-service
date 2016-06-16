@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# Model for the api_subject_roles table
 class APISubjectRole < ActiveRecord::Base
   include Accession::Principal
 

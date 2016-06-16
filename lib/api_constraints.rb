@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# Class that handles routing api versions based on 'accept' header
 class APIConstraints
   def initialize(version:, default: false)
     @version = version
