@@ -7,28 +7,24 @@ GIT
       accession (~> 1.0)
 
 GIT
+  remote: https://github.com/ausaccessfed/aaf-lipstick
+  revision: 71afdbbb3eba7f474654a47e489aabf16b52ab09
+  branch: develop
+  specs:
+    aaf-lipstick (1.1.0)
+      erubis
+      kramdown (~> 1.5)
+      rmagick
+      sprockets (~> 3.0)
+      will_paginate
+
+GIT
   remote: https://github.com/ausaccessfed/shib-rack
   revision: 8399ab6b398296405208afa25fd7d41875b61583
   branch: develop
   specs:
     shib-rack (0.1.0)
       rack
-
-PATH
-  remote: ../aaf-lipstick
-  specs:
-    aaf-lipstick (1.1.0)
-      erubis
-      kramdown (~> 1.5)
-      rmagick
-      sprockets
-      will_paginate
-
-PATH
-  remote: ../valhammer
-  specs:
-    valhammer (0.2.1)
-      activerecord (> 4.1)
 
 GEM
   remote: https://rubygems.org/
@@ -76,7 +72,7 @@ GEM
     ast (2.3.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    brakeman (3.3.1)
+    brakeman (3.3.2)
     builder (3.2.2)
     capybara (2.7.1)
       addressable
@@ -202,7 +198,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
-    rake (11.1.2)
+    rake (11.2.2)
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
@@ -279,6 +275,8 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unicode-display_width (1.0.5)
+    valhammer (0.2.2)
+      activerecord (> 4.1)
     web-console (2.3.0)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -323,7 +321,7 @@ DEPENDENCIES
   terminal-notifier-guard
   timecop
   torba-rails
-  valhammer!
+  valhammer
   web-console (~> 2.0)
 
 BUNDLED WITH

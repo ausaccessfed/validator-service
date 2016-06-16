@@ -6,13 +6,11 @@ gem 'mysql2'
 
 gem 'rack', '2.0.0.rc1'
 
-gem 'valhammer',
-    path: '../valhammer',
-    branch: 'feature/loosen-activerecord-version'
+gem 'valhammer'
 gem 'accession'
 gem 'aaf-lipstick',
-    path: '../aaf-lipstick',
-    branch: 'feature/unlock-sprockets-version'
+    git: 'https://github.com/ausaccessfed/aaf-lipstick',
+    branch: 'develop'
 gem 'slim-rails'
 gem 'sass-rails'
 gem 'torba-rails'
