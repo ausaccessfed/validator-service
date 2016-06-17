@@ -18,11 +18,6 @@ chdir APP_ROOT do
   system! 'gem install bundler --conservative'
   system('bundle check') || system!('bundle install')
 
-  puts "\n== Installing configuration files =="
-
-  # link_global_configuration %w(api-client.crt api-client.key event_encryption_key.pem)
-  # update_local_configuration %w(validator_service.yml)
-
   puts "\n== Loading Rails environment =="
 
   require_relative '../config/environment'
