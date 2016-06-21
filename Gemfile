@@ -42,5 +42,5 @@ group :development, :test do
   gem 'terminal-notifier-guard', require: false
   gem 'aaf-gumboot',
       git: 'https://github.com/ausaccessfed/aaf-gumboot',
-      branch: 'develop'
+      branch: 'feature/rails-5-updates'
 end
