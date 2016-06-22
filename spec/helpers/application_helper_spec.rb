@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'rails_helper'
-# Specs to test application_helper
 describe ApplicationHelper, type: :helper do
   include ApplicationHelper
 

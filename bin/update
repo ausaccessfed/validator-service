@@ -1,9 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 require 'pathname'
-require_relative '../config/boot'
-require 'gumboot/strap'
-include Gumboot::Strap
 require 'fileutils'
 include FileUtils
 
@@ -18,14 +15,11 @@ chdir APP_ROOT do
   system! 'gem install bundler --conservative'
   system('bundle check') || system!('bundle install')
 
-  puts "\n== Loading Rails environment =="
+  puts "\n== Updating database =="
+  system! 'bin/rails db:migrate'
 
-  require_relative '../config/environment'
-
-  ensure_activerecord_databases(%w(test development))
-  maintain_activerecord_schema
-  clean_logs
-  clean_tempfiles
+  puts "\n== Removing old logs and tempfiles =="
+  system! 'bin/rails log:clear tmp:clear'
 
   puts "\n== Restarting application server =="
   system! 'bin/rails restart'

@@ -71,7 +71,8 @@ RSpec.describe Authentication::SubjectReceiver do
     let(:update_snapshot) do
       subject_receiver.update_snapshot_attribute_values(
         snapshot,
-        attrs.except(:affiliation, :scoped_affiliation))
+        attrs.except(:affiliation, :scoped_affiliation)
+      )
     end
 
     it 'creates the correct number of attribute value records' do

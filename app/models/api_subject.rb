@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'accession'
-# Class defining api subject model
 class APISubject < ActiveRecord::Base
   include Accession::Principal
 

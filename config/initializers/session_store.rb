@@ -1,3 +1,3 @@
 # frozen_string_literal: true
-key = '_validator-service_session'
-ValidatorService::Application.config.session_store :cookie_store, key: key
+Rails.application.config
+     .session_store :cookie_store, key: '_validator_service_session'

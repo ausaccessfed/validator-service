@@ -5,3 +5,5 @@ AllCops:
     - db/migrate/*
     - db/schema.rb
   TargetRubyVersion: 2.3
+Documentation:
+  Enabled: false

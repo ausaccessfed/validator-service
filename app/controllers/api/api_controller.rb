@@ -2,7 +2,6 @@
 require 'openssl'
 
 module API
-  # Main Rails Api Controller
   class APIController < ActionController::Base
     Forbidden = Class.new(StandardError)
     private_constant :Forbidden

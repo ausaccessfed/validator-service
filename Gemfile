@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.6'
+gem 'rails', '5.0.0.rc1'
 gem 'mysql2'
+
+gem 'rack', '2.0.0.rc1'
 
 gem 'valhammer'
 gem 'accession'
@@ -16,12 +18,13 @@ gem 'shib-rack',
     git: 'https://github.com/ausaccessfed/shib-rack',
     branch: 'develop'
 
-gem 'unicorn', require: false
+gem 'puma', require: false
 gem 'god', require: false
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.4.2'
+  gem 'rspec-rails', '~> 3.5.0.beta4'
   gem 'shoulda-matchers'
+  gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'timecop'
@@ -39,5 +42,5 @@ group :development, :test do
   gem 'terminal-notifier-guard', require: false
   gem 'aaf-gumboot',
       git: 'https://github.com/ausaccessfed/aaf-gumboot',
-      branch: 'develop'
+      branch: 'feature/rails-5-updates'
 end

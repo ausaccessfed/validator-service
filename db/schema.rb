@@ -13,90 +13,86 @@
 
 ActiveRecord::Schema.define(version: 20160509010754) do
 
-  create_table "api_subject_roles", force: :cascade do |t|
-    t.integer  "role_id",        limit: 4, null: false
-    t.integer  "api_subject_id", limit: 4, null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+  create_table "api_subject_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.integer  "role_id",        null: false
+    t.integer  "api_subject_id", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["api_subject_id"], name: "fk_rails_4bb3279f7c", using: :btree
+    t.index ["role_id"], name: "fk_rails_3c99dcce56", using: :btree
   end
 
-  add_index "api_subject_roles", ["api_subject_id"], name: "fk_rails_4bb3279f7c", using: :btree
-  add_index "api_subject_roles", ["role_id"], name: "fk_rails_3c99dcce56", using: :btree
-
-  create_table "api_subjects", force: :cascade do |t|
-    t.string   "x509_cn",      limit: 255,   null: false
+  create_table "api_subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.string   "x509_cn",                    null: false
     t.text     "description",  limit: 65535, null: false
-    t.string   "contact_name", limit: 255,   null: false
-    t.string   "contact_mail", limit: 255,   null: false
+    t.string   "contact_name",               null: false
+    t.string   "contact_mail",               null: false
     t.boolean  "enabled",                    null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["x509_cn"], name: "index_api_subjects_on_x509_cn", unique: true, using: :btree
   end
 
-  add_index "api_subjects", ["x509_cn"], name: "index_api_subjects_on_x509_cn", unique: true, using: :btree
-
-  create_table "attribute_values", force: :cascade do |t|
+  create_table "attribute_values", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.text     "value",                   limit: 65535, null: false
-    t.integer  "federation_attribute_id", limit: 4
+    t.integer  "federation_attribute_id"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
   end
 
-  create_table "federation_attributes", force: :cascade do |t|
-    t.string  "name",                    limit: 255,                  null: false
-    t.string  "regexp",                  limit: 255
+  create_table "federation_attributes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.string  "name",                                                 null: false
+    t.string  "regexp"
     t.boolean "regexp_triggers_failure",               default: true, null: false
     t.text    "description",             limit: 65535
-    t.string  "documentation_url",       limit: 255
+    t.string  "documentation_url"
     t.boolean "singular",                              default: true, null: false
   end
 
-  create_table "permissions", force: :cascade do |t|
-    t.string   "value",      limit: 255, null: false
-    t.integer  "role_id",    limit: 4,   null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.string   "value",      null: false
+    t.integer  "role_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id", "value"], name: "index_permissions_on_role_id_and_value", unique: true, using: :btree
   end
 
-  add_index "permissions", ["role_id", "value"], name: "index_permissions_on_role_id_and_value", unique: true, using: :btree
-
-  create_table "roles", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "snapshot_attribute_values", force: :cascade do |t|
-    t.integer  "snapshot_id",        limit: 4, null: false
-    t.integer  "attribute_value_id", limit: 4, null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+  create_table "snapshot_attribute_values", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.integer  "snapshot_id",        null: false
+    t.integer  "attribute_value_id", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
-  create_table "snapshots", force: :cascade do |t|
-    t.integer  "subject_id", limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+  create_table "snapshots", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.integer  "subject_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "subject_roles", force: :cascade do |t|
-    t.integer  "role_id",    limit: 4, null: false
-    t.integer  "subject_id", limit: 4, null: false
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+  create_table "subject_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.integer  "role_id",    null: false
+    t.integer  "subject_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "fk_rails_775c958b0f", using: :btree
+    t.index ["subject_id"], name: "fk_rails_452c5fd0e8", using: :btree
   end
 
-  add_index "subject_roles", ["role_id"], name: "fk_rails_775c958b0f", using: :btree
-  add_index "subject_roles", ["subject_id"], name: "fk_rails_452c5fd0e8", using: :btree
-
-  create_table "subjects", force: :cascade do |t|
-    t.string   "name",        limit: 255, null: false
-    t.string   "mail",        limit: 255, null: false
-    t.boolean  "enabled",                 null: false
-    t.boolean  "complete",                null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.string   "targeted_id", limit: 255, null: false
+  create_table "subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.string   "name",        null: false
+    t.string   "mail",        null: false
+    t.boolean  "enabled",     null: false
+    t.boolean  "complete",    null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "targeted_id", null: false
   end
 
   add_foreign_key "api_subject_roles", "api_subjects"

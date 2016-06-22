@@ -1,3 +1,4 @@
 # frozen_string_literal: true
-require File.expand_path('../application', __FILE__)
-ValidatorService::Application.initialize!
+require_relative 'application'
+
+Rails.application.initialize!
