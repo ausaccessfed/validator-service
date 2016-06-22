@@ -37,7 +37,10 @@ group :development, :test do
   gem 'guard', require: false
   gem 'guard-bundler', require: false
   gem 'guard-rubocop', require: false
-  gem 'guard-rspec', require: false
+  gem 'guard-rspec',
+      git: 'https://github.com/guard/guard-rspec',
+      branch: 'rails-5-support',
+      require: false
   gem 'guard-brakeman', require: false
   gem 'terminal-notifier-guard', require: false
   gem 'aaf-gumboot',

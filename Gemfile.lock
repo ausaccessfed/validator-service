@@ -27,6 +27,16 @@ GIT
     shib-rack (0.1.0)
       rack
 
+GIT
+  remote: https://github.com/guard/guard-rspec
+  revision: 299561df951fe1d86275f19c4ffb6953e0ef7bc3
+  branch: rails-5-support
+  specs:
+    guard-rspec (4.6.5)
+      guard (~> 2.1)
+      guard-compat (~> 1.1)
+      rspec (>= 3.5.0.beta, < 4.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -119,8 +129,6 @@ GEM
       guard (~> 2.2)
       guard-compat (~> 1.1)
     guard-compat (1.2.1)
-    guard-rspec (1.2.2)
-      guard (>= 1.1)
     guard-rubocop (1.2.0)
       guard (~> 2.0)
       rubocop (~> 0.20)
@@ -206,6 +214,10 @@ GEM
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     rmagick (2.15.4)
+    rspec (3.5.0.beta4)
+      rspec-core (= 3.5.0.beta4)
+      rspec-expectations (= 3.5.0.beta4)
+      rspec-mocks (= 3.5.0.beta4)
     rspec-core (3.5.0.beta4)
       rspec-support (= 3.5.0.beta4)
     rspec-expectations (3.5.0.beta4)
@@ -304,7 +316,7 @@ DEPENDENCIES
   guard
   guard-brakeman
   guard-bundler
-  guard-rspec
+  guard-rspec!
   guard-rubocop
   mysql2
   poltergeist
