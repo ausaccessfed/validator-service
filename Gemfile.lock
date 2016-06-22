@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ausaccessfed/aaf-gumboot
-  revision: b377349181e219578dc7c28b38a22affd33ca749
+  revision: 9c838da7d59373c9261db6d0d7ade868bbb5862b
   branch: feature/rails-5-updates
   specs:
     aaf-gumboot (0.0.1)
