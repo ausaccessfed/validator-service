@@ -16,4 +16,16 @@ class Subject < ActiveRecord::Base
   def functioning?
     enabled?
   end
+
+  class << self
+    def create_from_receiver(attrs)
+      identifier = attrs.slice(:targeted_id)
+      subject = Subject.find_or_initialize_by(identifier) do |s|
+        s.enabled = true
+        s.complete = true
+      end
+      subject.update!(name: attrs[:name], mail: attrs[:mail])
+      subject
+    end
+  end
 end
