@@ -7,5 +7,6 @@ FactoryGirl.define do
     description { Faker::Lorem.paragraph }
     documentation_url { Faker::Internet.url }
     singular { Faker::Boolean.boolean }
+    http_header { "HTTP_#{Faker::Lorem.word.upcase}" }
   end
 end
