@@ -80,6 +80,26 @@ RSpec.describe Authentication::SubjectReceiver do
     end
   end
 
+  describe '#map_attributes' do
+    it 'gets federation attributes' do
+      expect(subject_receiver
+        .map_attributes(attributes_for(:shib_env)[:env]).keys).to eql(
+          %w(
+            HTTP_TARGETED_ID
+            HTTP_AUEDUPERSONSHAREDTOKEN
+            HTTP_DISPLAYNAME HTTP_CN
+            HTTP_PRINCIPALNAME
+            HTTP_MAIL
+            HTTP_O
+            HTTP_HOMEORGANIZATION
+            HTTP_HOMEORGANIZATIONTYPE
+            HTTP_EDUPERSONAFFILIATION
+            HTTP_EDUPERSONSCOPEDAFFILIATION
+          )
+        )
+    end
+  end
+
   describe '#finish' do
     let(:result) { subject_receiver.finish({}) }
 
