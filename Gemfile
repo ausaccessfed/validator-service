@@ -22,6 +22,7 @@ gem 'puma', require: false
 gem 'god', require: false
 
 group :development, :test do
+  gem 'pry'
   gem 'rspec-rails', '~> 3.5.0.beta4'
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
