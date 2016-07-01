@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20160629225004) do
     t.string  "documentation_url"
     t.boolean "singular",                              default: true, null: false
     t.string  "http_header",                                          null: false
+    t.index ["http_header"], name: "index_federation_attributes_on_http_header", unique: true, using: :btree
   end
 
   create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
