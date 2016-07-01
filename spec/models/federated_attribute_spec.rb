@@ -51,9 +51,9 @@ RSpec.describe 'Federation Attributes', type: :model do
         has_existing_attributes
 
         expect(subject.existing_headers).to eq(%w(
+                                                 HTTP_CN
                                                  HTTP_DISPLAYNAME
                                                  HTTP_O
-                                                 HTTP_CN
                                                ))
       end
     end
