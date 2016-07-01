@@ -11,24 +11,30 @@ class Snapshot < ActiveRecord::Base
       snapshot = Snapshot.new
       subject.snapshots << snapshot
 
+      assign_attributes(attrs, snapshot)
+    end
+
+    def assign_attributes(attrs, snapshot)
       attributes = FederationAttribute.where(http_header: attrs.keys)
 
-      attributes.each do |attribute|
-        values = if attribute.singular?
-                   [attrs[attribute.http_header]]
-                 else
-                   attrs[attribute.http_header].split(';')
-        end
-
-        values.each do |value|
+      attributes.each do |db_attribute|
+        attribute_values(db_attribute, attrs).each do |value|
           snapshot.attribute_values << AttributeValue.create!(
             value: value,
-            federation_attribute: attribute
+            federation_attribute: db_attribute
           )
         end
       end
 
       snapshot
+    end
+
+    def attribute_values(db_attribute, attrs)
+      if db_attribute.singular?
+        [attrs[db_attribute.http_header]]
+      else
+        attrs[db_attribute.http_header].split(';')
+      end
     end
   end
 end
