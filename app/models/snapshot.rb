@@ -18,7 +18,7 @@ class Snapshot < ActiveRecord::Base
       attributes = FederationAttribute.where(http_header: attrs.keys)
 
       attributes.each do |db_attribute|
-        attribute_values(db_attribute, attrs).each do |value|
+        parse_attribute_values(db_attribute, attrs).each do |value|
           snapshot.attribute_values << AttributeValue.create!(
             value: value,
             federation_attribute: db_attribute
@@ -29,7 +29,7 @@ class Snapshot < ActiveRecord::Base
       snapshot
     end
 
-    def attribute_values(db_attribute, attrs)
+    def parse_attribute_values(db_attribute, attrs)
       if db_attribute.singular?
         [attrs[db_attribute.http_header]]
       else
