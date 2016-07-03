@@ -64,4 +64,41 @@ RSpec.describe Subject, type: :model do
       end
     end
   end
+
+  context 'class' do
+    describe '.combined_name' do
+      let(:given_name) do
+        Faker::Name.first_name
+      end
+
+      let(:surname) do
+        Faker::Name.last_name
+      end
+
+      it 'has given' do
+        expect(Subject.combined_name('HTTP_GIVENNAME' => given_name)).to eql(
+          given_name
+        )
+      end
+
+      it 'has surname' do
+        expect(Subject.combined_name('HTTP_SURNAME' => surname)).to eql(
+          surname
+        )
+      end
+
+      it 'has both' do
+        expect(Subject.combined_name('HTTP_GIVENNAME' => given_name,
+                                     'HTTP_SURNAME' => surname)).to eql(
+                                       given_name + ' ' + surname
+                                     )
+      end
+
+      it 'has neither' do
+        expect(Subject.combined_name({})).to eql(
+          ''
+        )
+      end
+    end
+  end
 end

@@ -34,7 +34,11 @@ class Subject < ActiveRecord::Base
     def best_guess_name(attrs)
       attrs['HTTP_DISPLAYNAME'] ||
         attrs['HTTP_CN'] ||
-        attrs['HTTP_PRINCIPALNAME']
+        combined_name
+    end
+
+    def combined_name(attrs)
+      "#{attrs['HTTP_GIVENNAME']} #{attrs['HTTP_SURNAME']}".strip
     end
   end
 end
