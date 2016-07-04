@@ -28,16 +28,18 @@ RSpec.describe 'Federation Attributes', type: :model do
 
     let(:only_existing_attributes) do
       {
-        'HTTP_DISPLAYNAME' => 'Display Name',
-        'HTTP_O' => 'Organisation Name',
-        'HTTP_CN' => 'Common Name'
+        'HTTP_DISPLAYNAME' => shib_env['HTTP_DISPLAYNAME'],
+        'HTTP_O' => shib_env['HTTP_O'],
+        'HTTP_CN' => shib_env['HTTP_CN']
       }
     end
 
     let(:with_new_attributes) do
       only_existing_attributes
-        .merge('HTTP_HOMEORGANIZATIONTYPE' => 'Home Organisation Type',
-               'HTTP_EDUPERSONSCOPEDAFFILIATION' => 'Edu Person Affiliation')
+        .merge('HTTP_HOMEORGANIZATIONTYPE' =>
+                 shib_env['HTTP_HOMEORGANIZATIONTYPE'],
+               'HTTP_EDUPERSONSCOPEDAFFILIATION' =>
+                 shib_env['HTTP_EDUPERSONAFFILIATION'])
     end
 
     let(:has_existing_attributes) do
@@ -63,9 +65,9 @@ RSpec.describe 'Federation Attributes', type: :model do
         has_existing_attributes
 
         expect(subject.existing_attributes(shib_env))
-          .to eql('HTTP_CN' => 'Jefferey Kohler',
-                  'HTTP_DISPLAYNAME' => 'Jefferey Kohler',
-                  'HTTP_O' => 'Southern Ernser University')
+          .to eql('HTTP_CN' => shib_env['HTTP_CN'],
+                  'HTTP_DISPLAYNAME' => shib_env['HTTP_DISPLAYNAME'],
+                  'HTTP_O' => shib_env['HTTP_O'])
       end
 
       it 'finds none' do

@@ -1,16 +1,32 @@
 # frozen_string_literal: true
 FactoryGirl.define do
+  idp_domain = Faker::Internet.domain_name
+  idp = "https://idp.#{idp_domain}/idp/shibboleth"
+  sp = "https://sp.#{Faker::Internet.domain_name}/shibboleth"
+  name = Faker::Name.name
+  valid_affiliations = [
+    'faculty',
+    'student',
+    'staff',
+    'employee',
+    'member',
+    'affiliate',
+    'alum',
+    'library-walk-in'
+  ]
+  token = SecureRandom.urlsafe_base64(20)
+
   factory :shib_env, class: Hash do
     env do
       {
         'SCRIPT_NAME' => '/auth',
-        'QUERY_STRING' => 'identity=CZa_1pvgsbWD_IzNsAR7d7jaGcs',
+        'QUERY_STRING' => "identity=#{token}",
         'SERVER_PROTOCOL' => 'HTTP/1.1',
         'SERVER_SOFTWARE' => 'puma 3.4.0 Owl Bowl Brawl',
         'GATEWAY_INTERFACE' => 'CGI/1.2',
         'REQUEST_METHOD' => 'GET',
         'REQUEST_PATH' => '/auth/login',
-        'REQUEST_URI' => '/auth/login?identity=CZa',
+        'REQUEST_URI' => "/auth/login?identity=#{token}",
         'HTTP_VERSION' => 'HTTP/1.1',
         'HTTP_HOST' => 'localhost:3000',
         'HTTP_CONNECTION' => 'keep-alive',
@@ -29,24 +45,26 @@ FactoryGirl.define do
         'PATH_INFO' => '/login',
         'REMOTE_ADDR' => '::1',
         'ROUTES_70279184121340_SCRIPT_NAME' => '',
-        'ORIGINAL_FULLPATH' => '/auth/login?identity=CZa',
+        'ORIGINAL_FULLPATH' => "/auth/login?identity=#{token}",
         'ORIGINAL_SCRIPT_NAME' => '',
         'ROUTES_70279169814040_SCRIPT_NAME' => '/auth',
-        'HTTP_TARGETED_ID' => 'https://idp.ernser.example.edu/idp/' \
-          'shibboleth!https://sp.example.edu/' \
-          'shibboleth!17865674-60c1-4202-aef9-21d4e66338d6',
-        'HTTP_AUEDUPERSONSHAREDTOKEN' => 'CZa',
-        'HTTP_DISPLAYNAME' => 'Jefferey Kohler',
-        'HTTP_CN' => 'Jefferey Kohler',
-        'HTTP_PRINCIPALNAME' => 'kohlerj@ernser.example.edu',
-        'HTTP_MAIL' => 'jefferey.kohler@ernser.example.edu',
-        'HTTP_O' => 'Southern Ernser University',
-        'HTTP_HOMEORGANIZATION' => 'ernser.example.edu',
+        'HTTP_TARGETED_ID' => "#{idp}!#{sp}!#{SecureRandom.uuid}",
+        'HTTP_AUEDUPERSONSHAREDTOKEN' => token,
+        'HTTP_DISPLAYNAME' => name,
+        'HTTP_CN' => name,
+        'HTTP_PRINCIPALNAME' => name,
+        'HTTP_MAIL' => Faker::Internet.email,
+        'HTTP_O' => Faker::Company.name,
+        'HTTP_HOMEORGANIZATION' => Faker::Internet.domain_name,
         'HTTP_HOMEORGANIZATIONTYPE' => 'urn:mace:terena.org:schac:' \
           'homeOrganizationType:au:university',
-        'HTTP_EDUPERSONAFFILIATION' => 'staff;member',
-        'HTTP_EDUPERSONSCOPEDAFFILIATION' => 'staff@ernser.example.edu;' \
-          'member@ernser.example.edu'
+        'HTTP_EDUPERSONAFFILIATION' => rand(2...10).times do
+                                         valid_affiliations.sample
+                                       end,
+        'HTTP_EDUPERSONSCOPEDAFFILIATION' => rand(2...10).times do
+                                               valid_affiliations.sample + \
+                                                 '@' + idp_domain
+                                             end
       }
     end
   end
