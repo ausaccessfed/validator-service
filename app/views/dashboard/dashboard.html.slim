@@ -7,10 +7,22 @@ h2
   | Snapshot ID: &nbsp;#{@subject.snapshots.last.id}
 
 .panel.panel-default
-  .panel-heading Core Attributes
+  .panel-heading
+    h4 Core Attributes
   .panel-body
     table.table.table-striped.snapshot-table
+      tr
+        th Attribute
+        th Supplied Value
+        th Status
+        th Details
       - @subject.snapshots.last.attribute_values.each do |av|
         tr
           td: strong= av.federation_attribute.name
           td: pre: code= av.value
+          td.text-center
+            i.glyphicon.glyphicon-ok-sign.alert-success
+            i.glyphicon.glyphicon-remove-sign.alert-danger
+            i.glyphicon.glyphicon-exclamation-sign.alert-warning
+          td.text-center
+            i.glyphicon.glyphicon-book
