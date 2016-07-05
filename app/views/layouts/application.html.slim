@@ -19,15 +19,16 @@ html lang='en'
         = nav_first_item('Welcome', '/')
         = nav_first_item('Support', 'http://support.aaf.edu.au/forums')
 
-    section class='content'
+    section.content
       main= yield
 
     == aaf_footer do
       = logged_in_user(@subject)
 
       p
-        strong= application_version
+        strong
+          = application_version
         br
 
         ' Developed by the
-        a(href='http://www.aaf.edu.au') Australian Access Federation
+        = link_to 'Australian Access Federation', 'https://www.aaf.edu.au'
