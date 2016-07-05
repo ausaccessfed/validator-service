@@ -113,6 +113,38 @@ FederationAttribute.create(
 # Optional
 
 FederationAttribute.create(
+  name: 'businessCategory',
+  http_header: 'HTTP_BUSINESSCATEGORY',
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ]
+)
+
+FederationAttribute.create(
+  name: 'departmentNumber',
+  http_header: 'HTTP_DEPARTMENTNUMBER',
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ]
+)
+
+FederationAttribute.create(
+  name: 'division',
+  http_header: 'HTTP_DIVISION',
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ]
+)
+
+FederationAttribute.create(
+  name: 'eduPersonOrcid',
+  http_header: 'HTTP_EDUPERSONORCID',
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ]
+)
+
+FederationAttribute.create(
   name: 'givenName',
   http_header: 'HTTP_GIVENNAME',
   category_attributes: [
@@ -164,6 +196,14 @@ FederationAttribute.create(
 FederationAttribute.create(
   name: 'surname',
   http_header: 'HTTP_SURNAME',
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ]
+)
+
+FederationAttribute.create(
+  name: 'sn',
+  http_header: 'HTTP_SN',
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ]
