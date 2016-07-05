@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705040100) do
+ActiveRecord::Schema.define(version: 20160705053129) do
 
   create_table "api_subject_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer  "role_id",        null: false
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20160705040100) do
     t.integer  "order",                     null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.index ["order"], name: "index_categories_on_order", unique: true, using: :btree
   end
 
   create_table "category_attributes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
