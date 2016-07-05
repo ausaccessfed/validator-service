@@ -3,12 +3,10 @@ h2
   small
     | Taken on #{@subject.snapshots.last.created_at.to_formatted_s(:rfc822)}
 
+.alert.alert-info
+  | Snapshot ID: &nbsp;#{@subject.snapshots.last.id}
+
 table.table.table-striped.snapshot-table
-  tr
-    td: strong Snapshot ID
-    td
-      pre: code= @subject.snapshots.last.id
-      em= '(Not a user attribute, just a local identifier for the data.)'
   - @subject.snapshots.last.attribute_values.each do |av|
     tr
       td: strong= av.federation_attribute.name
