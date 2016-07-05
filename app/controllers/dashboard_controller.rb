@@ -4,5 +4,6 @@ class DashboardController < ApplicationController
     public_action
 
     @latest_snapshot = @subject.snapshots.last
+    @categories = Category.order(:order).all
   end
 end
