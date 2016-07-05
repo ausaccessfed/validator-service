@@ -1,5 +1,7 @@
-h1.display-3 Hi, You're logged in.
-p.lead Snapshot
+h2
+  | Current snapshot of your released attributes.
+  small
+    | Taken on #{@subject.snapshots.last.created_at.to_formatted_s(:rfc822)}
 
 table.table
   tr
