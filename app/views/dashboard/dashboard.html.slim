@@ -6,6 +6,14 @@ h2
 .alert.alert-info
   | Snapshot ID: &nbsp;#{@subject.snapshots.last.id}
 
+p
+  ul.nav.nav-pills.nav-justified
+    li role="presentation" class="active"
+      a href="#core-attributes" Core Attributes
+    li role="presentation"
+      a href="#optional-attributes" Optional Attributes
+
+a name="core-attributes"
 .panel.panel-default
   .panel-heading
     h4 Core Attributes
