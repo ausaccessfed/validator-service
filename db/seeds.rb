@@ -13,7 +13,7 @@ optional = Category.create(
   name: 'Optional Attributes',
   description: 'AAF Optional Attributes.',
   enabled: true,
-  order: 1
+  order: 2
 )
 
 # Core attributes
