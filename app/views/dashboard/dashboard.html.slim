@@ -1,7 +1,7 @@
 h2
   | Snapshot ID: &nbsp;#{@subject.snapshots.last.id}
   small
-    | Taken on #{@subject.snapshots.last.created_at.to_formatted_s(:rfc822)}
+    | Taken on #{@latest_snapshot.created_at.to_formatted_s(:rfc822)}
 
 a name="core-attributes"
 .panel.panel-default
