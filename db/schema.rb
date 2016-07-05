@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705035127) do
+ActiveRecord::Schema.define(version: 20160705040100) do
 
   create_table "api_subject_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer  "role_id",        null: false
@@ -41,19 +41,19 @@ ActiveRecord::Schema.define(version: 20160705035127) do
   end
 
   create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.string   "name"
+    t.string   "name",                      null: false
     t.text     "description", limit: 65535
     t.string   "url"
-    t.boolean  "enabled"
-    t.integer  "order"
+    t.boolean  "enabled",                   null: false
+    t.integer  "order",                     null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
 
   create_table "category_attributes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.boolean  "presence"
-    t.integer  "category_id"
-    t.integer  "federation_attribute_id"
+    t.boolean  "presence",                null: false
+    t.integer  "category_id",             null: false
+    t.integer  "federation_attribute_id", null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.index ["category_id"], name: "index_category_attributes_on_category_id", using: :btree
