@@ -6,7 +6,7 @@ html lang='en'
     meta name='viewport' content='width=device-width, initial-scale=1.0'
 
     title AAF Validator Service
-    
+
     = csrf_meta_tags
 
     = javascript_include_tag 'application'
@@ -17,10 +17,7 @@ html lang='en'
     = aaf_header(title: 'AAF Validator Service', environment: 'Rails') do
       = nav_bar do
         = nav_first_item('Welcome', '/')
-
-        = nav_collapsing_items do
-          - Faker::Lorem.words(7).each do |word|
-            = nav_item(word.titleize, "/#{word}")
+        = nav_first_item('Support', 'http://support.aaf.edu.au/forums')
 
     section class='content'
       main= yield
