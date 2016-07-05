@@ -33,7 +33,8 @@ class Snapshot < ActiveRecord::Base
       if db_attribute.singular?
         [attrs[db_attribute.http_header]]
       else
-        attrs[db_attribute.http_header].split(';')
+        Class.new.extend(ShibRack::AttributeMapping::ClassMethods)
+             .parse_multi_value(attrs[db_attribute.http_header])
       end
     end
   end
