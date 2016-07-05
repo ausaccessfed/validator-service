@@ -3,7 +3,7 @@ h2
   small
     | Taken on #{@subject.snapshots.last.created_at.to_formatted_s(:rfc822)}
 
-table.table
+table.table.table-striped.snapshot-table
   tr
     td: strong Snapshot ID
     td
