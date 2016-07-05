@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629225004) do
+ActiveRecord::Schema.define(version: 20160705035127) do
 
   create_table "api_subject_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer  "role_id",        null: false
@@ -38,6 +38,26 @@ ActiveRecord::Schema.define(version: 20160629225004) do
     t.integer  "federation_attribute_id"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+  end
+
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.string   "name"
+    t.text     "description", limit: 65535
+    t.string   "url"
+    t.boolean  "enabled"
+    t.integer  "order"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "category_attributes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.boolean  "presence"
+    t.integer  "category_id"
+    t.integer  "federation_attribute_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["category_id"], name: "index_category_attributes_on_category_id", using: :btree
+    t.index ["federation_attribute_id"], name: "index_category_attributes_on_federation_attribute_id", using: :btree
   end
 
   create_table "federation_attributes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
@@ -99,6 +119,8 @@ ActiveRecord::Schema.define(version: 20160629225004) do
 
   add_foreign_key "api_subject_roles", "api_subjects"
   add_foreign_key "api_subject_roles", "roles"
+  add_foreign_key "category_attributes", "categories"
+  add_foreign_key "category_attributes", "federation_attributes"
   add_foreign_key "permissions", "roles"
   add_foreign_key "subject_roles", "roles"
   add_foreign_key "subject_roles", "subjects"
