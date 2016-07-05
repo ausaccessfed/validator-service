@@ -2,34 +2,55 @@
 
 FederationAttribute.destroy_all
 
-FederationAttribute.create(
-  name: 'targeted_id',
-  http_header: 'HTTP_TARGETED_ID'
-)
+# Core attributes
 
 FederationAttribute.create(
-  name: 'shared_token',
+  name: 'auEduPersonSharedToken',
   http_header: 'HTTP_AUEDUPERSONSHAREDTOKEN'
 )
 
 FederationAttribute.create(
-  name: 'principal_name',
-  http_header: 'HTTP_PRINCIPALNAME'
-)
-
-FederationAttribute.create(
-  name: 'name',
-  http_header: 'HTTP_DISPLAYNAME'
-)
-
-FederationAttribute.create(
-  name: 'display_name',
-  http_header: 'HTTP_DISPLAYNAME'
+  name: 'authenticationMethod',
+  http_header: 'HTTP_AUTHENTICATIONMETHOD'
 )
 
 FederationAttribute.create(
   name: 'cn',
   http_header: 'HTTP_CN'
+)
+
+FederationAttribute.create(
+  name: 'displayName',
+  http_header: 'HTTP_DISPLAYNAME'
+)
+
+FederationAttribute.create(
+  name: 'eduPersonAffiliation',
+  http_header: 'HTTP_EDUPERSONAFFILIATION',
+  singular: false
+)
+
+FederationAttribute.create(
+  name: 'eduPersonAssurance',
+  http_header: 'HTTP_EDUPERSONASSURANCE',
+  singular: false
+)
+
+FederationAttribute.create(
+  name: 'eduPersonEntitlement',
+  http_header: 'HTTP_EDUPERSONENTITLEMENT',
+  singular: false
+)
+
+FederationAttribute.create(
+  name: 'eduPersonScopedAffiliation',
+  http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION',
+  singular: false
+)
+
+FederationAttribute.create(
+  name: 'eduPersonTargetedID',
+  http_header: 'HTTP_TARGETED_ID'
 )
 
 FederationAttribute.create(
@@ -42,24 +63,51 @@ FederationAttribute.create(
   http_header: 'HTTP_O'
 )
 
+# Optional
+
 FederationAttribute.create(
-  name: 'home_organization',
+  name: 'givenName',
+  http_header: 'HTTP_GIVENNAME'
+)
+
+FederationAttribute.create(
+  name: 'mobileNumber',
+  http_header: 'HTTP_MOBILENUMBER'
+)
+
+FederationAttribute.create(
+  name: 'organizationalUnit',
+  http_header: 'HTTP_ORGANIZATIONALUNIT'
+)
+
+FederationAttribute.create(
+  name: 'postalAddress',
+  http_header: 'HTTP_POSTALADDRESS'
+)
+
+FederationAttribute.create(
+  name: 'schacHomeOrganization',
   http_header: 'HTTP_HOMEORGANIZATION'
 )
 
 FederationAttribute.create(
-  name: 'home_organization_type',
+  name: 'schacHomeOrganizationType',
   http_header: 'HTTP_HOMEORGANIZATIONTYPE'
 )
 
 FederationAttribute.create(
-  name: 'affiliation',
-  http_header: 'HTTP_EDUPERSONAFFILIATION',
-  singular: false
+  name: 'surname',
+  http_header: 'HTTP_SURNAME'
 )
 
 FederationAttribute.create(
-  name: 'scoped_affiliation',
-  http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION',
-  singular: false
+  name: 'telephoneNumber',
+  http_header: 'HTTP_TELEPHONENUMBER'
+)
+
+# Other
+
+FederationAttribute.create(
+  name: 'eduPersonPrincipalName',
+  http_header: 'HTTP_PRINCIPALNAME'
 )
