@@ -6,8 +6,11 @@ h2
 .alert.alert-info
   | Snapshot ID: &nbsp;#{@subject.snapshots.last.id}
 
-table.table.table-striped.snapshot-table
-  - @subject.snapshots.last.attribute_values.each do |av|
-    tr
-      td: strong= av.federation_attribute.name
-      td: pre: code= av.value
+.panel.panel-default
+  .panel-heading Core Attributes
+  .panel-body
+    table.table.table-striped.snapshot-table
+      - @subject.snapshots.last.attribute_values.each do |av|
+        tr
+          td: strong= av.federation_attribute.name
+          td: pre: code= av.value
