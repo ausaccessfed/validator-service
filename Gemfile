@@ -16,7 +16,7 @@ gem 'sass-rails'
 gem 'torba-rails'
 gem 'shib-rack',
     git: 'https://github.com/ausaccessfed/shib-rack',
-    branch: 'bugfix/semicolon-escaping'
+    branch: 'develop'
 
 gem 'puma', require: false
 gem 'god', require: false
