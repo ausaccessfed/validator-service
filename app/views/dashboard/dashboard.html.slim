@@ -3,23 +3,30 @@ h2
   small
     | Taken on #{@latest_snapshot.created_at.to_formatted_s(:rfc822)}
 
-.panel.panel-default
-  .panel-heading
-    h4 Core Attributes
-  .panel-body
-    table.table.table-striped.snapshot-table
-      tr
-        th Attribute
-        th Supplied Value
-        th Status
-        th Details
-      - @subject.snapshots.last.attribute_values.each do |av|
+- @categories.each do |category|
+  .panel.panel-default
+    .panel-heading
+      h4 = category.name
+    .panel-body
+      table.table.table-striped.snapshot-table
         tr
-          td: strong= av.federation_attribute.name
-          td: pre: code= av.value
-          td.text-center
-            i.glyphicon.glyphicon-ok-sign.alert-success
-            i.glyphicon.glyphicon-remove-sign.alert-danger
-            i.glyphicon.glyphicon-exclamation-sign.alert-warning
-          td.text-center
-            i.glyphicon.glyphicon-book
+          th Attribute
+          th Supplied Value
+          th Status
+          th Details
+        - category.federation_attributes.each do|attribute|
+          - value = @snapshot_values.find_by(federation_attribute: attribute).try(:value)
+          tr class="#{ value ? '' : 'warning' }"
+            td = attribute.name
+            td
+              - if value
+                pre
+                  code=value
+              - else
+                i Not supplied
+            td.text-center
+              i.glyphicon.glyphicon-ok-sign.alert-success
+              i.glyphicon.glyphicon-remove-sign.alert-danger
+              i.glyphicon.glyphicon-exclamation-sign.alert-warning
+            td.text-center
+              i.glyphicon.glyphicon-book
