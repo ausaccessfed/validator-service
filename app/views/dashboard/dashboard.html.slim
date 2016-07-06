@@ -3,30 +3,40 @@ h2
   small
     | Taken on #{@latest_snapshot.created_at.to_formatted_s(:rfc822)}
 
+p
+  input type="search" id="search" class="form-control" placeholder="Search..."
+
+javascript:
+  $(document).ready(function() {
+    $('.snapshot-table').filterTable({ inputSelector: "#search"});
+  });
+
 - @categories.each do |category|
   .panel.panel-default
     .panel-heading
       h4 = category.name
     .panel-body
       table.table.table-striped.snapshot-table
-        tr
-          th Attribute
-          th Supplied Value
-          th Status
-          th Details
-        - category.federation_attributes.each do|attribute|
-          - value = @snapshot_values.find_by(federation_attribute: attribute).try(:value)
-          tr class="#{ value ? '' : 'warning' }"
-            td = attribute.name
-            td
-              - if value
-                pre
-                  code=value
-              - else
-                i Not supplied
-            td.text-center
-              i.glyphicon.glyphicon-ok-sign.alert-success
-              i.glyphicon.glyphicon-remove-sign.alert-danger
-              i.glyphicon.glyphicon-exclamation-sign.alert-warning
-            td.text-center
-              i.glyphicon.glyphicon-book
+        thead
+          tr
+            th Attribute
+            th Supplied Value
+            th Status
+            th Details
+        tbody
+          - category.federation_attributes.each do|attribute|
+            - value = @snapshot_values.find_by(federation_attribute: attribute).try(:value)
+            tr class="#{ value ? '' : 'warning' }"
+              td = attribute.name
+              td
+                - if value
+                  pre
+                    code=value
+                - else
+                  i Not supplied
+              td.text-center
+                i.glyphicon.glyphicon-ok-sign.alert-success
+                i.glyphicon.glyphicon-remove-sign.alert-danger
+                i.glyphicon.glyphicon-exclamation-sign.alert-warning
+              td.text-center
+                i.glyphicon.glyphicon-book
