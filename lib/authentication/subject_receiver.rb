@@ -11,12 +11,6 @@ module Authentication
     end
 
     def subject(_env, attrs)
-      if FederationAttribute.new_attributes?(attrs.keys)
-        # FederationAttribute.new_attributes(attr.keys).each do |attribute|
-        #   send_off_to_sqs(attribute)
-        # end
-      end
-
       existing_attributes = FederationAttribute.existing_attributes(attrs)
 
       Subject.transaction do
