@@ -1,5 +1,5 @@
 h2
-  | Snapshot ID: &nbsp;#{@subject.snapshots.last.id}
+  | Snapshot ID: &nbsp;#{@latest_snapshot.id}
   small
     | Taken on #{@latest_snapshot.created_at.to_formatted_s(:rfc822)}
 
