@@ -19,13 +19,26 @@ class Subject < ActiveRecord::Base
 
   class << self
     def create_from_receiver(attrs)
-      identifier = attrs.slice(:targeted_id)
-      subject = Subject.find_or_initialize_by(identifier) do |s|
+      identifier = attrs['HTTP_TARGETED_ID']
+
+      subject = Subject.find_or_initialize_by(targeted_id: identifier) do |s|
         s.enabled = true
         s.complete = true
       end
-      subject.update!(name: attrs[:name], mail: attrs[:mail])
+
+      subject.update!(name: best_guess_name(attrs), mail: attrs['HTTP_MAIL'])
+
       subject
+    end
+
+    def best_guess_name(attrs)
+      attrs['HTTP_DISPLAYNAME'] ||
+        attrs['HTTP_CN'] ||
+        combined_name
+    end
+
+    def combined_name(attrs)
+      "#{attrs['HTTP_GIVENNAME']} #{attrs['HTTP_SURNAME']}".strip
     end
   end
 end
