@@ -6,7 +6,7 @@ html lang='en'
     meta name='viewport' content='width=device-width, initial-scale=1.0'
 
     title AAF Validator Service
-    
+
     = csrf_meta_tags
 
     = javascript_include_tag 'application'
@@ -16,21 +16,22 @@ html lang='en'
   body
     = aaf_header(title: 'AAF Validator Service', environment: 'Rails') do
       = nav_bar do
-        = nav_first_item('Welcome', '/')
+        - if @subject
+          = nav_first_item('My Attributes', dashboard_path)
+        - else
+          = nav_first_item('Welcome', '/')
+        = nav_first_item('Support', 'http://support.aaf.edu.au/forums')
 
-        = nav_collapsing_items do
-          - Faker::Lorem.words(7).each do |word|
-            = nav_item(word.titleize, "/#{word}")
-
-    section class='content'
+    section.content
       main= yield
 
     == aaf_footer do
       = logged_in_user(@subject)
 
       p
-        strong= application_version
+        strong
+          = application_version
         br
 
         ' Developed by the
-        a(href='http://www.aaf.edu.au') Australian Access Federation
+        = link_to 'Australian Access Federation', 'https://www.aaf.edu.au'

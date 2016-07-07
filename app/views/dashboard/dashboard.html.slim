@@ -1,13 +1,26 @@
-h1.display-3 Hi, You're logged in.
-p.lead Snapshot
+h2
+  | Snapshot ID: &nbsp;#{@subject.snapshots.last.id}
+  small
+    | Taken on #{@subject.snapshots.last.created_at.to_formatted_s(:rfc822)}
 
-table.table
-  tr
-    td: strong Snapshot ID
-    td
-      pre: code= @subject.snapshots.last.id
-      em= '(Not a user attribute, just a local identifier for the data.)'
-  - @subject.snapshots.last.attribute_values.each do |av|
-    tr
-      td: strong= av.federation_attribute.name
-      td: pre: code= av.value
+a name="core-attributes"
+.panel.panel-default
+  .panel-heading
+    h4 Core Attributes
+  .panel-body
+    table.table.table-striped.snapshot-table
+      tr
+        th Attribute
+        th Supplied Value
+        th Status
+        th Details
+      - @subject.snapshots.last.attribute_values.each do |av|
+        tr
+          td: strong= av.federation_attribute.name
+          td: pre: code= av.value
+          td.text-center
+            i.glyphicon.glyphicon-ok-sign.alert-success
+            i.glyphicon.glyphicon-remove-sign.alert-danger
+            i.glyphicon.glyphicon-exclamation-sign.alert-warning
+          td.text-center
+            i.glyphicon.glyphicon-book
