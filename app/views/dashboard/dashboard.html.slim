@@ -1,17 +1,7 @@
 h2
-  | Current snapshot of your released attributes.
+  | Snapshot ID: &nbsp;#{@subject.snapshots.last.id}
   small
     | Taken on #{@subject.snapshots.last.created_at.to_formatted_s(:rfc822)}
-
-.alert.alert-info
-  | Snapshot ID: &nbsp;#{@subject.snapshots.last.id}
-
-p
-  ul.nav.nav-pills.nav-justified
-    li role="presentation" class="active"
-      a href="#core-attributes" Core Attributes
-    li role="presentation"
-      a href="#optional-attributes" Optional Attributes
 
 a name="core-attributes"
 .panel.panel-default
