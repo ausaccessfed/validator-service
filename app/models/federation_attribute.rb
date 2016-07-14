@@ -2,6 +2,9 @@
 class FederationAttribute < ActiveRecord::Base
   has_many :attribute_values
 
+  has_many :category_attributes
+  has_many :categories, through: :category_attributes
+
   valhammer
 
   class << self
