@@ -1,0 +1,32 @@
+ol.breadcrumb
+  li = link_to 'Documentation', documentation_path
+  li = link_to 'Attributes', documentation_attributes_path
+  li.active = @federation_attribute.name
+
+dl.dl-horizontal
+  dt Name
+  dd = @federation_attribute.name
+
+  dt Number of values
+  dd = @federation_attribute.singular ? 'One' : 'One or more'
+
+  dt Categories
+  dd == @attribute_categories.map { |name, path| link_to(name, path) }.join(', ')
+
+  dt Description
+  dd == @federation_attribute.description
+
+  br
+
+  dt Format
+  dd == @federation_attribute.notes_on_format
+
+  br
+
+  dt Notes on usage
+  dd == @federation_attribute.notes_on_usage
+
+  br
+
+  dt Notes on privacy
+  dd == @federation_attribute.notes_on_privacy

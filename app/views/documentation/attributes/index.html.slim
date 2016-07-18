@@ -1,0 +1,7 @@
+ol.breadcrumb
+  li = link_to 'Documentation', documentation_path
+  li.active Attributes
+
+ul
+  - @federation_attributes.each do |federation_attribute|
+    li = link_to federation_attribute.name, documentation_attribute_path(federation_attribute.name)

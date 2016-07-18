@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   mount ShibRack::Engine => '/auth'
   namespace :documentation do
+    resources :attributes, only: [:index, :show]
     resources :categories, only: [:index, :show]
   end
 end
