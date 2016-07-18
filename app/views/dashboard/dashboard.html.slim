@@ -21,7 +21,9 @@ p
         tbody
           - category.federation_attributes.each do|attribute|
             - value = @snapshot_values.find_by(federation_attribute: attribute).try(:value)
-            tr class="#{ value ? '' : 'warning' }"
+            - state = AttributeValue.validation_state(category, attribute, value)
+
+            tr class="#{state[:row_classes].join(' ')}"
               td = attribute.name
               td
                 - if value
@@ -30,8 +32,6 @@ p
                 - else
                   i Not supplied
               td.text-center
-                i.glyphicon.glyphicon-ok-sign.alert-success
-                i.glyphicon.glyphicon-remove-sign.alert-danger
-                i.glyphicon.glyphicon-exclamation-sign.alert-warning
+                i class="#{state[:icon_classes].join(' ')}" data-toggle="tooltip" title="#{state[:message]}"
               td.text-center
                 i.glyphicon.glyphicon-book
