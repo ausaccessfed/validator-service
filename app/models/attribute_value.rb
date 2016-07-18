@@ -20,92 +20,23 @@ class AttributeValue < ActiveRecord::Base
       if federation_attribute.regexp
         unless Regexp.new(federation_attribute.regexp).match(attribute_value)
           if federation_attribute.regexp_triggers_failure?
-            return ResponseFor.invalid_attribute
+            return ApplicationHelper::ResponseFor.invalid_attribute
           else
-            return ResponseFor.imperfect_attribute
+            return ApplicationHelper::ResponseFor.imperfect_attribute
           end
         end
       end
 
-      ResponseFor.valid_attribute
+      ApplicationHelper::ResponseFor.valid_attribute
     end
 
     def required_response(category, federation_attribute)
       if category.category_attributes
                  .find_by(federation_attribute: federation_attribute)
                  .try(:presence?)
-        ResponseFor.required_attribute
+        ApplicationHelper::ResponseFor.required_attribute
       else
-        ResponseFor.not_supplied_attribute
-      end
-    end
-  end
-
-  class ResponseFor
-    class << self
-      def required_attribute
-        {
-          state: 'error',
-          message: 'This attribute is required for this category.',
-          icon_classes: [
-            'glyphicon',
-            'glyphicon-remove-sign',
-            'alert-danger'
-          ],
-          row_classes: ['danger']
-        }
-      end
-
-      def invalid_attribute
-        {
-          state: 'invalid',
-          message: 'This attribute is invalid.',
-          icon_classes: [
-            'glyphicon',
-            'glyphicon-remove-sign',
-            'alert-danger'
-          ],
-          row_classes: ['danger']
-        }
-      end
-
-      def valid_attribute
-        {
-          state: 'valid',
-          message: 'This attribute forefills all requirements.',
-          icon_classes: [
-            'glyphicon',
-            'glyphicon-ok-sign',
-            'alert-success'
-          ],
-          row_classes: ['success']
-        }
-      end
-
-      def not_supplied_attribute
-        {
-          state: 'not_supplied',
-          message: 'This attribute has not been supplied.',
-          icon_classes: [
-            'glyphicon',
-            'glyphicon-exclamation-sign',
-            'alert-warning'
-          ],
-          row_classes: ['warning']
-        }
-      end
-
-      def imperfect_attribute
-        {
-          state: 'imperfect',
-          message: 'This attribute is not valid, but allowable.',
-          icon_classes: [
-            'glyphicon',
-            'glyphicon-exclamation-sign',
-            'alert-warning'
-          ],
-          row_classes: ['warning']
-        }
+        ApplicationHelper::ResponseFor.not_supplied_attribute
       end
     end
   end
