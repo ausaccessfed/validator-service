@@ -9,10 +9,10 @@ class AttributeValue < ActiveRecord::Base
 
   class << self
     def validation_state(category, federation_attribute, attribute_value)
-      if !attribute_value
-        required_response(category, federation_attribute)
-      else
+      if attribute_value
         valid_response(federation_attribute, attribute_value)
+      else
+        required_response(category, federation_attribute)
       end
     end
 
