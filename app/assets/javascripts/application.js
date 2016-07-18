@@ -11,4 +11,5 @@
 // about supported directives.
 //
 //= require aaf-lipstick
+//= require filterTable/jquery.filtertable
 //= require_tree .

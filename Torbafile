@@ -6,3 +6,5 @@ npm package: 'jquery-validation', version: '1.15.0',
 npm package: 'pickadate', version: '3.5.6',
     import: %w(lib/picker.js lib/picker.date.js
                lib/themes/classic.css lib/themes/classic.date.css)
+gh_release "filterTable", source: "sunnywalker/jQuery.FilterTable", tag: "1.5.6",
+    import: %w(jquery.filtertable.js)
