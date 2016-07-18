@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   get '/documentation' => 'documentation#index'
 
   mount ShibRack::Engine => '/auth'
+  namespace :documentation do
+    resources :categories, only: [:index, :show]
+  end
 end
