@@ -6,6 +6,6 @@ class DashboardController < ApplicationController
     @latest_snapshot = @subject.snapshots.last
     @snapshot_values = @latest_snapshot.attribute_values
 
-    @categories = Category.order(:order).all
+    @categories = Category.where(enabled: true).order(:order).all
   end
 end
