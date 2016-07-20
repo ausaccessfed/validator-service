@@ -316,7 +316,7 @@ DEPENDENCIES
   poltergeist
   pry
   puma
-  rails (= 5.0.0)
+  rails (>= 5.0.0, < 5.1)
   rails-controller-testing
   rspec-rails (~> 3.5.0.beta4)
   rubocop
