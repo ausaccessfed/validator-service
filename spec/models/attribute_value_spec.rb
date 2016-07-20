@@ -6,7 +6,7 @@ RSpec.describe 'Attribute Values', type: :model do
   let(:category) { build :category }
   let(:federation_attribute) do
     create(:federation_attribute,
-           regexp: '^[a-zA-Z\s\-]+$',
+           regexp: '^[a-zA-Z\s\-\.]+$',
            regexp_triggers_failure: false,
            category_attributes: [
              CategoryAttribute.new(presence: false, category: category)
@@ -14,7 +14,7 @@ RSpec.describe 'Attribute Values', type: :model do
   end
   let(:strict_federation_attribute) do
     create(:federation_attribute,
-           regexp: '^[a-zA-Z\s\-]+$',
+           regexp: '^[a-zA-Z\s\-\.]+$',
            regexp_triggers_failure: true,
            category_attributes: [
              CategoryAttribute.new(presence: false, category: category)
@@ -22,7 +22,7 @@ RSpec.describe 'Attribute Values', type: :model do
   end
   let(:required_federation_attribute) do
     create(:federation_attribute,
-           regexp: '^[a-zA-Z\s\-]+$',
+           regexp: '^[a-zA-Z\s\-\.]+$',
            regexp_triggers_failure: false,
            category_attributes: [
              CategoryAttribute.new(presence: true, category: category)

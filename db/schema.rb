@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705053129) do
+ActiveRecord::Schema.define(version: 20160711021351) do
 
   create_table "api_subject_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer  "role_id",        null: false
@@ -66,9 +66,11 @@ ActiveRecord::Schema.define(version: 20160705053129) do
     t.string  "regexp"
     t.boolean "regexp_triggers_failure",               default: true, null: false
     t.text    "description",             limit: 65535
-    t.string  "documentation_url"
     t.boolean "singular",                              default: true, null: false
     t.string  "http_header",                                          null: false
+    t.text    "notes_on_format",         limit: 65535
+    t.text    "notes_on_usage",          limit: 65535
+    t.text    "notes_on_privacy",        limit: 65535
     t.index ["http_header"], name: "index_federation_attributes_on_http_header", unique: true, using: :btree
   end
 
