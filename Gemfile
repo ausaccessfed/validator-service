@@ -19,6 +19,9 @@ gem 'shib-rack',
 gem 'puma', require: false
 gem 'god', require: false
 
+gem 'wkhtmltopdf-binary'
+gem 'pdfkit'
+
 group :development, :test do
   gem 'pry'
   gem 'rspec-rails', '~> 3.5.0.beta4'

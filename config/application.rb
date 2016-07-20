@@ -12,5 +12,7 @@ module ValidatorService
 
     config.shib_rack.receiver = 'Authentication::SubjectReceiver'
     config.shib_rack.error_handler = 'Authentication::ErrorHandler'
+
+    config.middleware.use PDFKit::Middleware, {}, only: '/dashboard'
   end
 end
