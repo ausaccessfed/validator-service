@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class AttributeValue < ActiveRecord::Base
+class AttributeValue < ApplicationRecord
   has_many :snapshot_attribute_values
   has_one :snapshot, through: :snapshot_attribute_values
 

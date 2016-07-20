@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class Permission < ActiveRecord::Base
+class Permission < ApplicationRecord
   belongs_to :role
 
   valhammer

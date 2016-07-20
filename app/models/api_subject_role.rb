@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class APISubjectRole < ActiveRecord::Base
+class APISubjectRole < ApplicationRecord
   include Accession::Principal
 
   belongs_to :api_subject
