@@ -7,7 +7,7 @@ module Documentation
     before_action :set_documentation_category, only: [:show]
 
     def index
-      @federation_categories = Category.where(enabled: true).order(:order).all
+      @federation_categories = Category.enabled.order(:order).all
     end
 
     def show
@@ -20,7 +20,7 @@ module Documentation
     private
 
     def set_documentation_category
-      @federation_category = Category.find(params[:id])
+      @federation_category = Category.enabled.find(params[:id])
     end
   end
 end
