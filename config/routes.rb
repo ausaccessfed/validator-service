@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :snapshots, only: [:index, :show] do
     collection do
-      get 'latest' => 'snapshots#latest'
+      get 'latest'
     end
   end
 
