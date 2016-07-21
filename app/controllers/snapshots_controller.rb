@@ -8,6 +8,10 @@ class SnapshotsController < ApplicationController
     show_actions
   end
 
+  def index
+    @snapshots = @subject.snapshots.order(id: :desc)
+  end
+
   def show
     @snapshot = @subject.snapshots.find(params[:id])
 
