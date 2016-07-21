@@ -2,9 +2,17 @@
 require 'rails_helper'
 
 RSpec.describe Snapshot, type: :model do
-  let(:snapshot) { build :snapshot }
+  let(:snapshot) { create :snapshot }
 
   it { expect(snapshot).to be_valid }
+
+  it '#name' do
+    expect(snapshot.name).to eql "Snapshot #{snapshot.id}"
+  end
+
+  it '#taken_at' do
+    expect(snapshot.taken_at).to eql snapshot.created_at.to_formatted_s(:rfc822)
+  end
 
   describe '.create_from_receiver' do
     let(:attrs) do
