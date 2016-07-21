@@ -3,6 +3,10 @@ h2
   small
     | Taken on #{@snapshot.taken_at}
 
+- unless @snapshot.latest?(@subject)
+  .alert.alert-warning role="alert"
+    | This is not your most recent snapshot.
+    =< link_to 'View your most recent attributes in your latest snapshot.', latest_snapshots_path
 
 p
   input type="search" id="search" class="form-control hidden-print" placeholder="Search..."
