@@ -18,6 +18,6 @@ module ValidatorService
                             page_size: 'A4',
                             print_media_type: true
                           },
-                          only: '/dashboard'
+                          only: '/snapshots'
   end
 end

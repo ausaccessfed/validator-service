@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe DashboardController, type: :controller do
+RSpec.describe SnapshotsController, type: :controller do
   let(:subject) { create(:subject) }
 
   let(:attrs) do
@@ -26,13 +26,13 @@ RSpec.describe DashboardController, type: :controller do
     Snapshot.create_from_receiver(subject, attrs)
   end
 
-  describe '#dashboard' do
+  describe '#latest' do
     context 'when the user is logged in' do
       before do
         has_snapshot
 
         session[:subject_id] = subject.id
-        get :dashboard
+        get :latest
       end
 
       it 'should render ok' do
@@ -50,7 +50,7 @@ RSpec.describe DashboardController, type: :controller do
         expect(assigns(:categories).first).to be_instance_of(Category)
       end
 
-      it { is_expected.to render_template('dashboard/dashboard') }
+      it { is_expected.to render_template('snapshots/show') }
     end
   end
 end
