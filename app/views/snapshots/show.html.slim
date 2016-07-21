@@ -1,7 +1,8 @@
 h2
-  | Snapshot ID: &nbsp;#{@latest_snapshot.id}
+  | Snapshot ID: &nbsp;#{@snapshot.id}
   small
-    | Taken on #{@latest_snapshot.created_at.to_formatted_s(:rfc822)}
+    | Taken on #{@snapshot.taken_at}
+
 
 p
   input type="search" id="search" class="form-control hidden-print" placeholder="Search..."
@@ -20,7 +21,7 @@ p
             th.text-center.hidden-print Details
         tbody
           - category.federation_attributes.each do|attribute|
-            - attribute_value = @snapshot_values.find_by(federation_attribute: attribute)
+            - attribute_value = @snapshot_values.for_federation_attribute(attribute).first
 
             - value = attribute_value.try(:value)
             - state = AttributeValue.validation_state(category, attribute, value)

@@ -40,10 +40,10 @@ RSpec.describe SnapshotsController, type: :controller do
       end
 
       it 'assigns' do
-        expect(assigns(:latest_snapshot)).to be_instance_of(Snapshot)
+        expect(assigns(:snapshot)).to be_instance_of(Snapshot)
 
-        expect(assigns(:snapshot_values).size).to eql 3
-        expect(assigns(:snapshot_values).first)
+        expect(assigns(:attribute_values).size).to eql 3
+        expect(assigns(:attribute_values).first)
           .to be_instance_of(AttributeValue)
 
         expect(assigns(:categories).size).to eql 1

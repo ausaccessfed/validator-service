@@ -1,11 +1,23 @@
 # frozen_string_literal: true
 class SnapshotsController < ApplicationController
+  before_action :public_action
+
   def latest
-    public_action
+    @snapshot = @subject.snapshots.last
 
-    @latest_snapshot = @subject.snapshots.last
-    @snapshot_values = @latest_snapshot.attribute_values
+    show_actions
+  end
 
+  def show
+    @snapshot = @subject.snapshots.find(params[:id])
+
+    show_actions
+  end
+
+  private
+
+  def show_actions
+    @attribute_values = @snapshot.attribute_values
     @categories = Category.enabled.order(:order).all
 
     render :show
