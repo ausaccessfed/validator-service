@@ -16,8 +16,8 @@ p
           tr
             th Attribute
             th Supplied Value
-            th Status
-            th Details
+            th.text-center Status
+            th.text-center Details
         tbody
           - category.federation_attributes.each do|attribute|
             - value = @snapshot_values.find_by(federation_attribute: attribute).try(:value)
