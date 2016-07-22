@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class SubjectRole < ActiveRecord::Base
+class SubjectRole < ApplicationRecord
   include Accession::Principal
 
   belongs_to :subject

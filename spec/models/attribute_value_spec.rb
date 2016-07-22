@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe 'Attribute Values', type: :model do
+RSpec.describe AttributeValue, type: :model do
   let(:attribute_value) { build :attribute_value }
   let(:category) { build :category }
   let(:federation_attribute) do

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class FederationAttribute < ActiveRecord::Base
+class FederationAttribute < ApplicationRecord
   has_many :attribute_values
 
   has_many :category_attributes

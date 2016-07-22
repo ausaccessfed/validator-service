@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe 'Federation Attributes', type: :model do
+RSpec.describe FederationAttribute, type: :model do
   let(:federation_attribute) { build :federation_attribute }
 
   it { expect(federation_attribute).to be_valid }

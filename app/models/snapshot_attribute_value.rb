@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class SnapshotAttributeValue < ActiveRecord::Base
+class SnapshotAttributeValue < ApplicationRecord
   belongs_to :snapshot
   belongs_to :attribute_value
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require 'accession'
-class APISubject < ActiveRecord::Base
+class APISubject < ApplicationRecord
   include Accession::Principal
 
   has_many :api_subject_roles

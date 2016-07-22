@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class Snapshot < ActiveRecord::Base
+class Snapshot < ApplicationRecord
   has_many :snapshot_attribute_values
   has_many :attribute_values, through: :snapshot_attribute_values
   belongs_to :subject
