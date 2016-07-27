@@ -11,7 +11,9 @@ module Documentation
     end
 
     def show
-      @attribute_categories = @federation_attribute.categories.map do |category|
+      @attribute_categories = @federation_attribute.categories
+                                                   .enabled
+                                                   .map do |category|
         [category.name, documentation_category_path(category)]
       end
     end
