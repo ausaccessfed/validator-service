@@ -8,6 +8,10 @@ class FederationAttribute < ApplicationRecord
 
   valhammer
 
+  def name
+    federation_attribute_aliases.map(&:name).join(', ')
+  end
+
   class << self
     def existing_headers
       select(:http_header).map(&:http_header)

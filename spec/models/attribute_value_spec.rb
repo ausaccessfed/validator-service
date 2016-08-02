@@ -37,6 +37,10 @@ RSpec.describe AttributeValue, type: :model do
     expect(attribute_value).not_to be_valid
   end
 
+  it '#name' do
+    expect(attribute_value.name).to eql federation_attribute.name
+  end
+
   context 'class' do
     describe '.validation_state' do
       it 'has an attribute' do

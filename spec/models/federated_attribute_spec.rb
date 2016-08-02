@@ -6,19 +6,28 @@ RSpec.describe FederationAttribute, type: :model do
 
   it { expect(federation_attribute).to be_valid }
 
-  it 'is invalid without a name' do
-    federation_attribute.name = nil
-    expect(federation_attribute).not_to be_valid
-  end
+  describe '#name' do
+    it 'joins any aliases together' do
+      %w(o organizationName).each do |name|
+        federation_attribute.federation_attribute_aliases <<
+          FederationAttributeAlias.new(
+            name: name
+          )
+      end
 
-  it 'is invalid without a regexp_triggers_failure value' do
-    federation_attribute.regexp_triggers_failure = nil
-    expect(federation_attribute).not_to be_valid
-  end
+      expect(federation_attribute.name).to eql('o, organizationName')
+    end
 
-  it 'is invalid without a singular value' do
-    federation_attribute.singular = nil
-    expect(federation_attribute).not_to be_valid
+    it 'handles a single name' do
+      %w(o).each do |name|
+        federation_attribute.federation_attribute_aliases <<
+          FederationAttributeAlias.new(
+            name: name
+          )
+      end
+
+      expect(federation_attribute.name).to eql('o')
+    end
   end
 
   context 'class' do
