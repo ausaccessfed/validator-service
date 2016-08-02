@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 class FederationAttribute < ApplicationRecord
-  has_many :attribute_values
-
   has_many :category_attributes
   has_many :categories, through: :category_attributes
+
+  has_many :federation_attribute_aliases
+  has_many :attribute_values
 
   valhammer
 
