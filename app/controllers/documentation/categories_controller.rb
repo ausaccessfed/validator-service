@@ -13,7 +13,7 @@ module Documentation
     def show
       @category_attributes = @federation_category
                              .federation_attributes.map do |attribute|
-        [attribute.name, documentation_attribute_path(attribute.name)]
+        [attribute.name, documentation_attribute_path(attribute.oid)]
       end
     end
 

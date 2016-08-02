@@ -4,4 +4,4 @@ ol.breadcrumb
 
 ul
   - @federation_attributes.each do |federation_attribute|
-    li = link_to federation_attribute.name, documentation_attribute_path(federation_attribute.name)
+    li = link_to federation_attribute.name, documentation_attribute_path(federation_attribute.oid)

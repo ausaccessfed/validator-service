@@ -34,5 +34,5 @@ p
               td.text-center
                 i class="#{state[:icon_classes].join(' ')}" data-toggle="tooltip" title="#{state[:message]}"
               td.text-center
-                = link_to documentation_attribute_path(attribute.name), target: '_blank'
+                = link_to documentation_attribute_path(attribute.oid), target: '_blank'
                   i.glyphicon.glyphicon-book

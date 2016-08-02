@@ -21,7 +21,7 @@ module Documentation
     private
 
     def set_documentation_attribute
-      @federation_attribute = FederationAttribute.find_by_name(params[:id])
+      @federation_attribute = FederationAttribute.find_by_oid(params[:id])
     end
   end
 end
