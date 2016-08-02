@@ -2,8 +2,15 @@
 require 'rails_helper'
 
 RSpec.describe AttributeValue, type: :model do
-  let(:attribute_value) { build :attribute_value }
-  let(:category) { build :category }
+  let(:attribute_value) do
+    create(
+      :attribute_value,
+      federation_attribute: federation_attribute
+    )
+  end
+
+  let(:category) { create :category }
+
   let(:federation_attribute) do
     create(:federation_attribute,
            regexp: '^[a-zA-Z\s\-\.]+$',
@@ -12,6 +19,7 @@ RSpec.describe AttributeValue, type: :model do
              CategoryAttribute.new(presence: false, category: category)
            ])
   end
+
   let(:strict_federation_attribute) do
     create(:federation_attribute,
            regexp: '^[a-zA-Z\s\-\.]+$',
@@ -20,6 +28,7 @@ RSpec.describe AttributeValue, type: :model do
              CategoryAttribute.new(presence: false, category: category)
            ])
   end
+
   let(:required_federation_attribute) do
     create(:federation_attribute,
            regexp: '^[a-zA-Z\s\-\.]+$',
@@ -28,6 +37,7 @@ RSpec.describe AttributeValue, type: :model do
              CategoryAttribute.new(presence: true, category: category)
            ])
   end
+
   let(:name) { Faker::Name.name }
 
   it { expect(attribute_value).to be_valid }
