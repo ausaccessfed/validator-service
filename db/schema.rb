@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718013550) do
+ActiveRecord::Schema.define(version: 20160809013641) do
 
   create_table "api_subject_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer  "role_id",        null: false
@@ -62,9 +62,10 @@ ActiveRecord::Schema.define(version: 20160718013550) do
 
   create_table "federation_attribute_aliases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string   "name",                    null: false
-    t.integer  "federation_attribute_id", null: false
+    t.integer  "federation_attribute_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.index ["federation_attribute_id", "name"], name: "index_faa_on_faid_and_name", using: :btree
     t.index ["federation_attribute_id"], name: "index_federation_attribute_aliases_on_federation_attribute_id", using: :btree
     t.index ["name"], name: "index_federation_attribute_aliases_on_name", unique: true, using: :btree
   end
@@ -78,9 +79,11 @@ ActiveRecord::Schema.define(version: 20160718013550) do
     t.text    "notes_on_format",         limit: 65535
     t.text    "notes_on_usage",          limit: 65535
     t.text    "notes_on_privacy",        limit: 65535
-    t.string  "oid"
+    t.string  "oid",                                                  null: false
+    t.integer "primary_alias_id",                                     null: false
     t.index ["http_header"], name: "index_federation_attributes_on_http_header", unique: true, using: :btree
     t.index ["oid"], name: "index_federation_attributes_on_oid", unique: true, using: :btree
+    t.index ["primary_alias_id"], name: "index_federation_attributes_on_primary_alias_id", unique: true, using: :btree
   end
 
   create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
