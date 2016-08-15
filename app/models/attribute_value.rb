@@ -7,6 +7,8 @@ class AttributeValue < ApplicationRecord
 
   valhammer
 
+  delegate :name, to: :federation_attribute
+
   class << self
     def validation_state(category, federation_attribute, attribute_value)
       if attribute_value

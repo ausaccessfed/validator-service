@@ -7,7 +7,9 @@ module Documentation
     before_action :set_documentation_attribute, only: [:show]
 
     def index
-      @federation_attributes = FederationAttribute.order(:name).all
+      @federation_attributes = FederationAttribute
+                               .includes(:federation_attribute_aliases)
+                               .order('federation_attribute_aliases.name').all
     end
 
     def show
@@ -21,7 +23,7 @@ module Documentation
     private
 
     def set_documentation_attribute
-      @federation_attribute = FederationAttribute.find_by_name(params[:id])
+      @federation_attribute = FederationAttribute.find_by_oid(params[:id])
     end
   end
 end

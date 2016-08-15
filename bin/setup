@@ -22,6 +22,8 @@ chdir APP_ROOT do
 
   require_relative '../config/environment'
 
+  system('rake db:drop:all') unless Rails.env.production?
+
   ensure_activerecord_databases(%w(test development))
   maintain_activerecord_schema
   load_seeds

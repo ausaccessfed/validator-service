@@ -2,23 +2,32 @@
 require 'rails_helper'
 
 RSpec.describe FederationAttribute, type: :model do
-  let(:federation_attribute) { build :federation_attribute }
+  let(:federation_attribute_alias) { create :federation_attribute_alias }
+  let(:federation_attribute) do
+    create :federation_attribute,
+           federation_attribute_aliases: [federation_attribute_alias],
+           primary_alias: federation_attribute_alias
+  end
 
   it { expect(federation_attribute).to be_valid }
 
-  it 'is invalid without a name' do
-    federation_attribute.name = nil
-    expect(federation_attribute).not_to be_valid
+  describe '#name' do
+    it 'uses a primary alias' do
+      expect(federation_attribute.name).to eql(federation_attribute_alias.name)
+    end
   end
 
-  it 'is invalid without a regexp_triggers_failure value' do
-    federation_attribute.regexp_triggers_failure = nil
-    expect(federation_attribute).not_to be_valid
-  end
+  describe '#aliases' do
+    it 'no aliases' do
+      expect(federation_attribute.aliases.to_a).to eql([])
+    end
 
-  it 'is invalid without a singular value' do
-    federation_attribute.singular = nil
-    expect(federation_attribute).not_to be_valid
+    it 'aliases' do
+      a = create :federation_attribute_alias
+      federation_attribute.federation_attribute_aliases << a
+
+      expect(federation_attribute.aliases.to_a).to eql([a])
+    end
   end
 
   context 'class' do
@@ -44,7 +53,14 @@ RSpec.describe FederationAttribute, type: :model do
 
     let(:has_existing_attributes) do
       only_existing_attributes.each do |http_header, _value|
-        create(:federation_attribute, http_header: http_header)
+        faa = FederationAttributeAlias.create!(
+          name: http_header.sub('HTTP_', '').downcase
+        )
+
+        create(:federation_attribute,
+               http_header: http_header,
+               federation_attribute_aliases: [faa],
+               primary_alias: faa)
       end
     end
 

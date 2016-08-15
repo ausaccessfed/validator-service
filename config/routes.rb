@@ -11,7 +11,10 @@ Rails.application.routes.draw do
   get '/documentation' => 'documentation#index'
 
   namespace :documentation do
-    resources :attributes, only: [:index, :show]
+    resources :attributes,
+              only: [:index, :show],
+              id: /[A-Za-z0-9\.\:]+?/,
+              format: /json|csv|xml|yaml/
     resources :categories, only: [:index, :show]
   end
 end

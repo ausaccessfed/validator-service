@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160711021351) do
+ActiveRecord::Schema.define(version: 20160809013641) do
 
   create_table "api_subject_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer  "role_id",        null: false
@@ -60,8 +60,17 @@ ActiveRecord::Schema.define(version: 20160711021351) do
     t.index ["federation_attribute_id"], name: "index_category_attributes_on_federation_attribute_id", using: :btree
   end
 
+  create_table "federation_attribute_aliases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+    t.string   "name",                    null: false
+    t.integer  "federation_attribute_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["federation_attribute_id", "name"], name: "index_faa_on_faid_and_name", using: :btree
+    t.index ["federation_attribute_id"], name: "index_federation_attribute_aliases_on_federation_attribute_id", using: :btree
+    t.index ["name"], name: "index_federation_attribute_aliases_on_name", unique: true, using: :btree
+  end
+
   create_table "federation_attributes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.string  "name",                                                 null: false
     t.string  "regexp"
     t.boolean "regexp_triggers_failure",               default: true, null: false
     t.text    "description",             limit: 65535
@@ -70,7 +79,11 @@ ActiveRecord::Schema.define(version: 20160711021351) do
     t.text    "notes_on_format",         limit: 65535
     t.text    "notes_on_usage",          limit: 65535
     t.text    "notes_on_privacy",        limit: 65535
+    t.string  "oid",                                                  null: false
+    t.integer "primary_alias_id",                                     null: false
     t.index ["http_header"], name: "index_federation_attributes_on_http_header", unique: true, using: :btree
+    t.index ["oid"], name: "index_federation_attributes_on_oid", unique: true, using: :btree
+    t.index ["primary_alias_id"], name: "index_federation_attributes_on_primary_alias_id", unique: true, using: :btree
   end
 
   create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
@@ -123,6 +136,7 @@ ActiveRecord::Schema.define(version: 20160711021351) do
   add_foreign_key "api_subject_roles", "roles"
   add_foreign_key "category_attributes", "categories"
   add_foreign_key "category_attributes", "federation_attributes"
+  add_foreign_key "federation_attribute_aliases", "federation_attributes"
   add_foreign_key "permissions", "roles"
   add_foreign_key "subject_roles", "roles"
   add_foreign_key "subject_roles", "subjects"

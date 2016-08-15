@@ -14,7 +14,14 @@ RSpec.describe Snapshot, type: :model do
 
     before :each do
       %w(HTTP_TARGETED_ID HTTP_MAIL HTTP_DISPLAYNAME).each do |http_header|
-        create(:federation_attribute, http_header: http_header)
+        faa = FederationAttributeAlias.create!(
+          name: http_header.sub('HTTP_', '').downcase
+        )
+
+        create(:federation_attribute,
+               http_header: http_header,
+               federation_attribute_aliases: [faa],
+               primary_alias: faa)
       end
     end
 
@@ -31,7 +38,8 @@ RSpec.describe Snapshot, type: :model do
 
     it 'creates a new attribute value record for each attr passed in' do
       snapshot.reload.attribute_values.each do |av|
-        expect(av.value).to eql(attrs[av.federation_attribute.http_header])
+        expect(av.value)
+          .to eql(attrs[av.federation_attribute.http_header])
       end
     end
   end

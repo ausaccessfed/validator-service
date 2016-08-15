@@ -2,32 +2,50 @@
 require 'rails_helper'
 
 RSpec.describe AttributeValue, type: :model do
-  let(:attribute_value) { build :attribute_value }
-  let(:category) { build :category }
+  let(:attribute_value) do
+    create(
+      :attribute_value,
+      federation_attribute: federation_attribute
+    )
+  end
+
+  let(:category) { create :category }
+
+  let(:federation_attribute_alias) { create :federation_attribute_alias }
+
   let(:federation_attribute) do
     create(:federation_attribute,
            regexp: '^[a-zA-Z\s\-\.]+$',
            regexp_triggers_failure: false,
+           federation_attribute_aliases: [federation_attribute_alias],
+           primary_alias_id: federation_attribute_alias.id,
            category_attributes: [
              CategoryAttribute.new(presence: false, category: category)
            ])
   end
+
   let(:strict_federation_attribute) do
     create(:federation_attribute,
            regexp: '^[a-zA-Z\s\-\.]+$',
            regexp_triggers_failure: true,
+           federation_attribute_aliases: [federation_attribute_alias],
+           primary_alias_id: federation_attribute_alias.id,
            category_attributes: [
              CategoryAttribute.new(presence: false, category: category)
            ])
   end
+
   let(:required_federation_attribute) do
     create(:federation_attribute,
            regexp: '^[a-zA-Z\s\-\.]+$',
            regexp_triggers_failure: false,
+           federation_attribute_aliases: [federation_attribute_alias],
+           primary_alias_id: federation_attribute_alias.id,
            category_attributes: [
              CategoryAttribute.new(presence: true, category: category)
            ])
   end
+
   let(:name) { Faker::Name.name }
 
   it { expect(attribute_value).to be_valid }
@@ -35,6 +53,10 @@ RSpec.describe AttributeValue, type: :model do
   it 'is invalid without a value' do
     attribute_value.value = nil
     expect(attribute_value).not_to be_valid
+  end
+
+  it '#name' do
+    expect(attribute_value.name).to eql federation_attribute.name
   end
 
   context 'class' do
