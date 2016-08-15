@@ -2,31 +2,31 @@
 require 'rails_helper'
 
 RSpec.describe FederationAttribute, type: :model do
-  let(:federation_attribute) { build :federation_attribute }
+  let(:federation_attribute_alias) { create :federation_attribute_alias }
+  let(:federation_attribute) do
+    create :federation_attribute,
+           federation_attribute_aliases: [federation_attribute_alias],
+           primary_alias: federation_attribute_alias
+  end
 
   it { expect(federation_attribute).to be_valid }
 
   describe '#name' do
-    it 'joins any aliases together' do
-      %w(o organizationName).each do |name|
-        federation_attribute.federation_attribute_aliases <<
-          FederationAttributeAlias.new(
-            name: name
-          )
-      end
+    it 'uses a primary alias' do
+      expect(federation_attribute.name).to eql(federation_attribute_alias.name)
+    end
+  end
 
-      expect(federation_attribute.name).to eql('o, organizationName')
+  describe '#aliases' do
+    it 'no aliases' do
+      expect(federation_attribute.aliases.to_a).to eql([])
     end
 
-    it 'handles a single name' do
-      %w(o).each do |name|
-        federation_attribute.federation_attribute_aliases <<
-          FederationAttributeAlias.new(
-            name: name
-          )
-      end
+    it 'aliases' do
+      a = create :federation_attribute_alias
+      federation_attribute.federation_attribute_aliases << a
 
-      expect(federation_attribute.name).to eql('o')
+      expect(federation_attribute.aliases.to_a).to eql([a])
     end
   end
 
@@ -53,10 +53,14 @@ RSpec.describe FederationAttribute, type: :model do
 
     let(:has_existing_attributes) do
       only_existing_attributes.each do |http_header, _value|
-        fa = create(:federation_attribute, http_header: http_header)
-        fa.federation_attribute_aliases << FederationAttributeAlias.new(
+        faa = FederationAttributeAlias.create!(
           name: http_header.sub('HTTP_', '').downcase
         )
+
+        create(:federation_attribute,
+               http_header: http_header,
+               federation_attribute_aliases: [faa],
+               primary_alias: faa)
       end
     end
 

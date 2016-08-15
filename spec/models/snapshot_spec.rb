@@ -14,10 +14,14 @@ RSpec.describe Snapshot, type: :model do
 
     before :each do
       %w(HTTP_TARGETED_ID HTTP_MAIL HTTP_DISPLAYNAME).each do |http_header|
-        fa = create(:federation_attribute, http_header: http_header)
-        fa.federation_attribute_aliases << FederationAttributeAlias.new(
+        faa = FederationAttributeAlias.create!(
           name: http_header.sub('HTTP_', '').downcase
         )
+
+        create(:federation_attribute,
+               http_header: http_header,
+               federation_attribute_aliases: [faa],
+               primary_alias: faa)
       end
     end
 

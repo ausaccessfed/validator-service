@@ -11,10 +11,14 @@ RSpec.describe AttributeValue, type: :model do
 
   let(:category) { create :category }
 
+  let(:federation_attribute_alias) { create :federation_attribute_alias }
+
   let(:federation_attribute) do
     create(:federation_attribute,
            regexp: '^[a-zA-Z\s\-\.]+$',
            regexp_triggers_failure: false,
+           federation_attribute_aliases: [federation_attribute_alias],
+           primary_alias_id: federation_attribute_alias.id,
            category_attributes: [
              CategoryAttribute.new(presence: false, category: category)
            ])
@@ -24,6 +28,8 @@ RSpec.describe AttributeValue, type: :model do
     create(:federation_attribute,
            regexp: '^[a-zA-Z\s\-\.]+$',
            regexp_triggers_failure: true,
+           federation_attribute_aliases: [federation_attribute_alias],
+           primary_alias_id: federation_attribute_alias.id,
            category_attributes: [
              CategoryAttribute.new(presence: false, category: category)
            ])
@@ -33,6 +39,8 @@ RSpec.describe AttributeValue, type: :model do
     create(:federation_attribute,
            regexp: '^[a-zA-Z\s\-\.]+$',
            regexp_triggers_failure: false,
+           federation_attribute_aliases: [federation_attribute_alias],
+           primary_alias_id: federation_attribute_alias.id,
            category_attributes: [
              CategoryAttribute.new(presence: true, category: category)
            ])

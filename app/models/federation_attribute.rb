@@ -6,10 +6,16 @@ class FederationAttribute < ApplicationRecord
   has_many :federation_attribute_aliases
   has_many :attribute_values
 
+  belongs_to :primary_alias, class_name: FederationAttributeAlias
+
   valhammer
 
-  def name
-    federation_attribute_aliases.map(&:name).join(', ')
+  delegate :name, to: :primary_alias
+
+  def aliases
+    federation_attribute_aliases.where
+                                .not(federation_attribute_aliases:
+                                  { id: primary_alias.id })
   end
 
   class << self
