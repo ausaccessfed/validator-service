@@ -12,5 +12,12 @@ module ValidatorService
 
     config.shib_rack.receiver = 'Authentication::SubjectReceiver'
     config.shib_rack.error_handler = 'Authentication::ErrorHandler'
+
+    config.middleware.use PDFKit::Middleware,
+                          {
+                            page_size: 'A4',
+                            print_media_type: true
+                          },
+                          only: '/dashboard'
   end
 end
