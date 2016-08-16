@@ -14,24 +14,26 @@ html lang='en'
 
     = disable_animations if Rails.env.test? || params[:disable_animations]
   body
-    = aaf_header(title: 'AAF Validator Service', environment: 'Rails') do
-      = nav_bar do
-        - if @subject
-          = nav_first_item('My Attributes', dashboard_path)
-        - else
-          = nav_first_item('Welcome', '/')
-        = nav_first_item('Support', 'http://support.aaf.edu.au/forums')
+    .hidden-print
+      = aaf_header(title: 'AAF Validator Service', environment: 'Rails') do
+        = nav_bar do
+          - if @subject
+            = nav_first_item('My Attributes', dashboard_path)
+          - else
+            = nav_first_item('Welcome', '/')
+          = nav_first_item('Support', 'http://support.aaf.edu.au/forums')
 
     section.content
       main= yield
 
-    == aaf_footer do
-      = logged_in_user(@subject)
+    .hidden-print
+      == aaf_footer do
+        = logged_in_user(@subject)
 
-      p
-        strong
-          = application_version
-        br
+        p
+          strong
+            = application_version
+          br
 
-        ' Developed by the
-        = link_to 'Australian Access Federation', 'https://www.aaf.edu.au'
+          ' Developed by the
+          = link_to 'Australian Access Federation', 'https://www.aaf.edu.au'

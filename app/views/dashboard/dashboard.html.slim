@@ -17,7 +17,7 @@ p
             th Attribute
             th Supplied Value
             th.text-center Status
-            th.text-center Details
+            th.text-center.hidden-print Details
         tbody
           - category.federation_attributes.each do|attribute|
             - attribute_value = @snapshot_values.find_by(federation_attribute: attribute)
@@ -36,7 +36,7 @@ p
                     = value
                 - else
                   i Not supplied
-              td.text-center
+              td.text-center.hidden-print
                 i class="#{state[:icon_classes].join(' ')}" data-toggle="tooltip" title="#{state[:message]}"
               td
                 .text-center.hidden-print
