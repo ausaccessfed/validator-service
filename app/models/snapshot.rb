@@ -15,14 +15,14 @@ class Snapshot < ApplicationRecord
   end
 
   def latest?(subject)
-    latest(subject) == self
-  end
-
-  def latest(subject)
-    subject.snapshots.last
+    Snapshot.latest(subject) == self
   end
 
   class << self
+    def latest(subject)
+      subject.snapshots.last
+    end
+
     def create_from_receiver(subject, attrs)
       snapshot = Snapshot.new
       subject.snapshots << snapshot
