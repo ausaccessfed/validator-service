@@ -51,7 +51,7 @@ p
                   =< state[:state].titleize
 
 .hidden-print
-  = link_to latest_snapshots_path(format: 'pdf'), class: 'btn btn-primary' do
+  = link_to snapshot_path(@snapshot, format: 'pdf'), class: 'btn btn-primary' do
     i.glyphicon.glyphicon-download-alt
     | &nbsp;&nbsp; Export as a PDF
   end
