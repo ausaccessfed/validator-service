@@ -6,7 +6,23 @@ class Snapshot < ApplicationRecord
 
   valhammer
 
+  def name
+    "Snapshot #{id}"
+  end
+
+  def taken_at
+    created_at.to_formatted_s(:rfc822)
+  end
+
+  def latest?(subject)
+    Snapshot.latest(subject) == self
+  end
+
   class << self
+    def latest(subject)
+      subject.snapshots.last
+    end
+
     def create_from_receiver(subject, attrs)
       snapshot = Snapshot.new
       subject.snapshots << snapshot

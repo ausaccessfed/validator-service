@@ -18,7 +18,7 @@ html lang='en'
       = aaf_header(title: 'AAF Validator Service', environment: 'Rails') do
         = nav_bar do
           - if @subject
-            = nav_first_item('My Attributes', dashboard_path)
+            = nav_first_item('My Attributes', latest_snapshots_path)
           - else
             = nav_first_item('Welcome', '/')
           = nav_first_item('Support', 'http://support.aaf.edu.au/forums')

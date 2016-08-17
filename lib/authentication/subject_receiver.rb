@@ -21,7 +21,7 @@ module Authentication
     end
 
     def finish(_env)
-      redirect_to('/dashboard')
+      redirect_to('/snapshots/latest')
     end
   end
 end

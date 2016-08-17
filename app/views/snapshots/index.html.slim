@@ -1,0 +1,10 @@
+h2
+  | Snapshots
+
+ul
+  - @snapshots.each do |snapshot|
+    li
+      => link_to snapshot.name, snapshot_path(snapshot)
+      | (
+      = snapshot.taken_at
+      | )

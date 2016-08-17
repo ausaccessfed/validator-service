@@ -2,9 +2,45 @@
 require 'rails_helper'
 
 RSpec.describe Snapshot, type: :model do
-  let(:snapshot) { build :snapshot }
+  let(:snapshot) { create :snapshot }
+  let(:snapshot2) { create :snapshot }
+  let(:subject) { create :subject }
 
   it { expect(snapshot).to be_valid }
+
+  it '#name' do
+    expect(snapshot.name).to eql "Snapshot #{snapshot.id}"
+  end
+
+  it '#taken_at' do
+    expect(snapshot.taken_at).to eql snapshot.created_at.to_formatted_s(:rfc822)
+  end
+
+  describe '#latest?' do
+    it 'is the latest' do
+      subject.snapshots << snapshot
+
+      expect(snapshot.latest?(subject)).to eql true
+    end
+
+    it 'is not the latest' do
+      subject.snapshots = [snapshot, snapshot2]
+
+      expect(snapshot.latest?(subject)).to eql false
+    end
+  end
+
+  describe '.latest' do
+    it 'has a latest' do
+      subject.snapshots = [snapshot, snapshot2]
+
+      expect(Snapshot.latest(subject)).to eql snapshot2
+    end
+
+    it 'has no latest' do
+      expect(Snapshot.latest(subject)).to eql nil
+    end
+  end
 
   describe '.create_from_receiver' do
     let(:attrs) do

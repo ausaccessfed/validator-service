@@ -1,7 +1,12 @@
 h2
-  | Snapshot ID: &nbsp;#{@latest_snapshot.id}
+  | Snapshot ID: &nbsp;#{@snapshot.id}
   small
-    | Taken on #{@latest_snapshot.created_at.to_formatted_s(:rfc822)}
+    | Taken on #{@snapshot.taken_at}
+
+- unless @snapshot.latest?(@subject)
+  .alert.alert-warning role="alert"
+    | This is not your most recent snapshot.
+    =< link_to 'View your most recent attributes in your latest snapshot.', latest_snapshots_path
 
 p
   input type="search" id="search" class="form-control hidden-print" placeholder="Search..."
@@ -20,7 +25,7 @@ p
             th.text-center.hidden-print Details
         tbody
           - category.federation_attributes.each do|attribute|
-            - attribute_value = @snapshot_values.find_by(federation_attribute: attribute)
+            - attribute_value = @attribute_values.find_by(federation_attribute: attribute)
 
             - value = attribute_value.try(:value)
             - state = AttributeValue.validation_state(category, attribute, value)
@@ -46,7 +51,7 @@ p
                   =< state[:state].titleize
 
 .hidden-print
-  = link_to dashboard_path(format: 'pdf'), class: 'btn btn-primary' do
+  = link_to snapshot_path(@snapshot, format: 'pdf'), class: 'btn btn-primary' do
     i.glyphicon.glyphicon-download-alt
     | &nbsp;&nbsp; Export as a PDF
   end

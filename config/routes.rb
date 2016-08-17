@@ -7,8 +7,13 @@ Rails.application.routes.draw do
   root to: 'welcome#index'
 
   get '/welcome' => 'welcome#index'
-  get '/dashboard' => 'dashboard#dashboard'
   get '/documentation' => 'documentation#index'
+
+  resources :snapshots, only: [:index, :show] do
+    collection do
+      get 'latest'
+    end
+  end
 
   namespace :documentation do
     resources :attributes,
