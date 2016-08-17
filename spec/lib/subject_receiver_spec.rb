@@ -111,7 +111,7 @@ RSpec.describe Authentication::SubjectReceiver do
     let(:result) { subject_receiver.finish({}) }
 
     it 'redirects to the latest snapshot after a successful login' do
-      expect(result).to eql([302, { 'Location' => 'snapshots/latest' }, []])
+      expect(result).to eql([302, { 'Location' => '/snapshots/latest' }, []])
     end
   end
 end
