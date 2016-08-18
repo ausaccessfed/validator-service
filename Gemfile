@@ -11,6 +11,7 @@ gem 'aaf-lipstick',
     branch: 'develop'
 gem 'slim-rails'
 gem 'sass-rails'
+gem 'uglifier', require: false
 gem 'torba-rails'
 gem 'shib-rack',
     git: 'https://github.com/ausaccessfed/shib-rack',

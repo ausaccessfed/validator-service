@@ -100,6 +100,7 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.5)
     erubis (2.7.0)
+    execjs (2.7.0)
     factory_girl (4.7.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.7.0)
@@ -281,6 +282,8 @@ GEM
       torba (~> 1.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uglifier (3.0.0)
+      execjs (>= 0.3.0, < 3)
     unicode-display_width (1.1.0)
     valhammer (0.2.2)
       activerecord (> 4.1)
@@ -331,6 +334,7 @@ DEPENDENCIES
   terminal-notifier-guard
   timecop
   torba-rails
+  uglifier
   valhammer
   web-console (~> 2.0)
   wkhtmltopdf-binary
