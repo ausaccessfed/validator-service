@@ -28,7 +28,7 @@ God.watch do |w|
   defaults(w, 'puma')
 
   w.env = { 'RAILS_ENV' => RAILS_ENV }
-  w.start = 'bundle exec puma -c config/puma.rb -D'
+  w.start = 'bundle exec puma -C config/puma.rb -d'
   w.restart = -> { God.registry['puma'].signal('USR2') }
 
   w.pid_file = File.join(PID_FILE_DIRECTORY, 'puma.pid')
