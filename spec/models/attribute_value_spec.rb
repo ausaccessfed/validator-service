@@ -59,6 +59,12 @@ RSpec.describe AttributeValue, type: :model do
     expect(attribute_value.name).to eql federation_attribute.name
   end
 
+  it '#custom_label_method' do
+    expect(attribute_value.custom_label_method).to(
+      eql "#{federation_attribute.primary_alias.name}: #{attribute_value.value}"
+    )
+  end
+
   context 'class' do
     describe '.validation_state' do
       it 'has an attribute' do

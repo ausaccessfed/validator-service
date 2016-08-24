@@ -23,5 +23,17 @@ RailsAdmin.config do |config|
       redirect_to controller.main_app.root_path
     end
   end
+
+  # Note: These are strings to stop `bin/setup`, etc. from crashing.
+  config.included_models = %w(
+    AttributeValue
+    Category
+    CategoryAttribute
+    FederationAttributeAlias
+    FederationAttribute
+    SnapshotAttributeValue
+    Snapshot
+    Subject
+  )
 end
 # :nocov:

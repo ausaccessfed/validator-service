@@ -54,4 +54,11 @@ class Snapshot < ApplicationRecord
       end
     end
   end
+
+  # :nocov:
+  rails_admin do
+    field :subject
+    field :attribute_values
+  end
+  # :nocov:
 end

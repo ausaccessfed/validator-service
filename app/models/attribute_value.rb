@@ -42,4 +42,18 @@ class AttributeValue < ApplicationRecord
       end
     end
   end
+
+  # :nocov:
+  rails_admin do
+    visible false
+
+    object_label_method do
+      :custom_label_method
+    end
+  end
+  # :nocov:
+
+  def custom_label_method
+    "#{federation_attribute.primary_alias.name}: #{value}"
+  end
 end

@@ -39,4 +39,31 @@ class FederationAttribute < ApplicationRecord
       attrs.keep_if { |k, _v| headers.include?(k) }
     end
   end
+
+  # :nocov:
+  rails_admin do
+    object_label_method do
+      :custom_label_method
+    end
+
+    field :oid
+    field :primary_alias
+    field :federation_attribute_aliases
+
+    field :http_header
+    field :description
+    field :singular
+
+    field :regexp
+    field :regexp_triggers_failure
+    field :notes_on_format, :ck_editor
+
+    field :notes_on_usage, :ck_editor
+    field :notes_on_privacy, :ck_editor
+  end
+  # :nocov:
+
+  def custom_label_method
+    "#{oid} (#{name})"
+  end
 end
