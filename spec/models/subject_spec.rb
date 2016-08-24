@@ -100,5 +100,57 @@ RSpec.describe Subject, type: :model do
         )
       end
     end
+
+    describe '.check_subject' do
+      it 'calls' do
+        attrs = {
+          'HTTP_TARGETED_ID' => subject.targeted_id,
+          'HTTP_AUEDUPERSONSHAREDTOKEN' => subject.auedupersonsharedtoken
+        }
+
+        expect(Subject).to(
+          receive(:require_subject_match).with(subject,
+                                               attrs,
+                                               'HTTP_TARGETED_ID')
+        )
+
+        expect(Subject).to(
+          receive(:require_subject_match).with(subject,
+                                               attrs,
+                                               'HTTP_AUEDUPERSONSHAREDTOKEN')
+        )
+
+        Subject.check_subject(subject, attrs)
+      end
+    end
+
+    describe '.require_subject_match' do
+      let(:auedupersonsharedtoken) { SecureRandom.urlsafe_base64(19) }
+
+      it 'matches' do
+        expect(Subject.require_subject_match(
+                 subject,
+                 {
+                   'HTTP_AUEDUPERSONSHAREDTOKEN' =>
+                    subject.auedupersonsharedtoken
+                 },
+                 'HTTP_AUEDUPERSONSHAREDTOKEN'
+        )).to eql subject.auedupersonsharedtoken
+      end
+
+      it 'does not match' do
+        expect do
+          Subject.require_subject_match(
+            subject,
+            { 'HTTP_AUEDUPERSONSHAREDTOKEN' => auedupersonsharedtoken },
+            'HTTP_AUEDUPERSONSHAREDTOKEN'
+          )
+        end.to(raise_error(
+                 RuntimeError,
+                 'Incoming HTTP_AUEDUPERSONSHAREDTOKEN ' \
+                 "`#{auedupersonsharedtoken}` did not match existing ``"
+        ))
+      end
+    end
   end
 end

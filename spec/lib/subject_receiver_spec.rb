@@ -11,7 +11,10 @@ RSpec.describe Authentication::SubjectReceiver do
     end
 
     before :each do
-      %w(HTTP_TARGETED_ID HTTP_MAIL HTTP_DISPLAYNAME).each do |http_header|
+      %w(HTTP_TARGETED_ID
+         HTTP_AUEDUPERSONSHAREDTOKEN
+         HTTP_MAIL
+         HTTP_DISPLAYNAME).each do |http_header|
         faa = FederationAttributeAlias.create!(
           name: http_header.sub('HTTP_', '').downcase
         )

@@ -19,14 +19,16 @@ class Subject < ApplicationRecord
 
   class << self
     def create_from_receiver(attrs)
-      identifier = attrs['HTTP_TARGETED_ID']
-
-      subject = Subject.find_or_initialize_by(targeted_id: identifier) do |s|
+      subject = subject_scope(attrs).find_or_initialize_by({}) do |s|
         s.enabled = true
         s.complete = true
       end
 
-      subject.update!(name: best_guess_name(attrs), mail: attrs['HTTP_MAIL'])
+      subject.update!(name: best_guess_name(attrs),
+                      mail: attrs['HTTP_MAIL'],
+                      targeted_id: attrs['HTTP_TARGETED_ID'],
+                      auedupersonsharedtoken:
+                      attrs['HTTP_AUEDUPERSONSHAREDTOKEN'])
 
       subject
     end
@@ -39,6 +41,29 @@ class Subject < ApplicationRecord
 
     def combined_name(attrs)
       "#{attrs['HTTP_GIVENNAME']} #{attrs['HTTP_SURNAME']}".strip
+    end
+
+    def subject_scope(attrs)
+      Subject.where(targeted_id: attrs['HTTP_TARGETED_ID'])
+             .or(
+               where(auedupersonsharedtoken:
+                 attrs['HTTP_AUEDUPERSONSHAREDTOKEN'])
+             )
+    end
+
+    def check_subject(subject, attrs)
+      require_subject_match(subject, attrs, 'HTTP_TARGETED_ID')
+      require_subject_match(subject, attrs, 'HTTP_AUEDUPERSONSHAREDTOKEN')
+    end
+
+    def require_subject_match(subject, attrs, key)
+      incoming = attrs[key]
+      existing = subject.send(key.sub(/^HTTP_/, '').downcase)
+
+      return if existing == incoming
+
+      raise("Incoming #{key} `#{incoming}` did not match"\
+            " existing `#{existing}`")
     end
   end
 end

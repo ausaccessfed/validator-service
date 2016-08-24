@@ -125,13 +125,16 @@ ActiveRecord::Schema.define(version: 20160823044117) do
   end
 
   create_table "subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.string   "name",        null: false
-    t.string   "mail",        null: false
-    t.boolean  "enabled",     null: false
-    t.boolean  "complete",    null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "targeted_id", null: false
+    t.string   "name",                   null: false
+    t.string   "mail",                   null: false
+    t.boolean  "enabled",                null: false
+    t.boolean  "complete",               null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "targeted_id",            null: false
+    t.string   "auedupersonsharedtoken", null: false
+    t.index ["auedupersonsharedtoken"], name: "index_subjects_on_auedupersonsharedtoken", unique: true, using: :btree
+    t.index ["targeted_id"], name: "index_subjects_on_targeted_id", unique: true, using: :btree
   end
 
   add_foreign_key "api_subject_roles", "api_subjects"
