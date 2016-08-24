@@ -6,9 +6,12 @@ abort('The Rails environment is running in production mode!') unless env.test?
 
 require 'spec_helper'
 require 'rspec/rails'
+require 'webmock/rspec'
 require 'factory_girl_rails'
 
 ActiveRecord::Migration.maintain_test_schema!
+
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

@@ -17,6 +17,16 @@ class Subject < ApplicationRecord
     enabled?
   end
 
+  def entitlements=(values)
+    assigned = values.map do |value|
+      Role.for_entitlement(value).tap do |r|
+        roles << r unless roles.include?(r)
+      end
+    end
+
+    subject_roles.where.not(role: assigned).destroy_all
+  end
+
   class << self
     def create_from_receiver(attrs)
       subject = subject_scope(attrs).find_or_initialize_by({}) do |s|

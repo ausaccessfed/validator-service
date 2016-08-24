@@ -2,6 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe Authentication::SubjectReceiver do
+  include IdentityEnhancementStub
+
   let(:subject_receiver) { Authentication::SubjectReceiver.new }
 
   describe '#subject' do
@@ -24,6 +26,11 @@ RSpec.describe Authentication::SubjectReceiver do
                federation_attribute_aliases: [faa],
                primary_alias: faa)
       end
+
+      entitlements = 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
+
+      stub_ide(shared_token: attrs['HTTP_AUEDUPERSONSHAREDTOKEN'],
+               entitlements: [entitlements])
     end
 
     context 'creating subject and associated records' do
