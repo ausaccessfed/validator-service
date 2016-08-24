@@ -10,7 +10,7 @@ class FederationAttribute < ApplicationRecord
 
   valhammer
 
-  delegate :name, to: :primary_alias
+  delegate :name, to: :primary_alias, allow_nil: true
 
   def aliases
     federation_attribute_aliases.where
