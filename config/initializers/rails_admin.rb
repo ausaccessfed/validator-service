@@ -14,5 +14,14 @@ RailsAdmin.config do |config|
     # history_index
     # history_show
   end
+
+  config.authenticate_with do |controller|
+    ensure_authenticated
+    @access_checked = true
+
+    unless subject.roles.any?(&:admin_entitlements?)
+      redirect_to controller.main_app.root_path
+    end
+  end
 end
 # :nocov:
