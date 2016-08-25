@@ -29,16 +29,20 @@ class Subject < ApplicationRecord
 
   class << self
     def create_from_receiver(attrs)
-      subject = subject_scope(attrs).find_or_initialize_by({}) do |s|
-        s.enabled = true
-        s.complete = true
+      subject = subject_scope(attrs)
+
+      unless subject
+        subject = Subject.new
+        subject.enabled = true
+        subject.complete = true
       end
 
-      subject.update!(name: best_guess_name(attrs),
-                      mail: attrs['HTTP_MAIL'],
-                      targeted_id: attrs['HTTP_TARGETED_ID'],
-                      auedupersonsharedtoken:
-                      attrs['HTTP_AUEDUPERSONSHAREDTOKEN'])
+      subject.name = best_guess_name(attrs)
+      subject.mail = attrs['HTTP_MAIL']
+      subject.targeted_id = attrs['HTTP_TARGETED_ID']
+      subject.auedupersonsharedtoken = attrs['HTTP_AUEDUPERSONSHAREDTOKEN']
+
+      subject.save!
 
       subject
     end
