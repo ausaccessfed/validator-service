@@ -9,6 +9,14 @@ class Subject < ApplicationRecord
 
   valhammer
 
+  scope :from_attributes, lambda { |attributes|
+    where(targeted_id: attributes['HTTP_TARGETED_ID'])
+      .or(
+        where(auedupersonsharedtoken:
+          attributes['HTTP_AUEDUPERSONSHAREDTOKEN'])
+      ).order(created_at: :asc)
+  }
+
   def permissions
     roles.flat_map { |role| role.permissions.map(&:value) }
   end
@@ -27,9 +35,16 @@ class Subject < ApplicationRecord
     subject_roles.where.not(role: assigned).destroy_all
   end
 
+  def valid_identifier_history?
+    Subject.from_attributes(
+      'HTTP_TARGETED_ID' => targeted_id,
+      'HTTP_AUEDUPERSONSHAREDTOKEN' => auedupersonsharedtoken
+    ).count == 1
+  end
+
   class << self
     def create_from_receiver(attrs)
-      subject = subject_scope(attrs)
+      subject = Subject.most_recent(attrs)
 
       unless subject
         subject = Subject.new
@@ -47,6 +62,10 @@ class Subject < ApplicationRecord
       subject
     end
 
+    def most_recent(attrs)
+      Subject.from_attributes(attrs).last
+    end
+
     def best_guess_name(attrs)
       attrs['HTTP_DISPLAYNAME'] ||
         attrs['HTTP_CN'] ||
@@ -55,29 +74,6 @@ class Subject < ApplicationRecord
 
     def combined_name(attrs)
       "#{attrs['HTTP_GIVENNAME']} #{attrs['HTTP_SURNAME']}".strip
-    end
-
-    def subject_scope(attrs)
-      Subject.where(targeted_id: attrs['HTTP_TARGETED_ID'])
-             .or(
-               where(auedupersonsharedtoken:
-                 attrs['HTTP_AUEDUPERSONSHAREDTOKEN'])
-             )
-    end
-
-    def check_subject(subject, attrs)
-      require_subject_match(subject, attrs, 'HTTP_TARGETED_ID')
-      require_subject_match(subject, attrs, 'HTTP_AUEDUPERSONSHAREDTOKEN')
-    end
-
-    def require_subject_match(subject, attrs, key)
-      incoming = attrs[key]
-      existing = subject.send(key.sub(/^HTTP_/, '').downcase)
-
-      return if existing == incoming
-
-      raise("Incoming #{key} `#{incoming}` did not match"\
-            " existing `#{existing}`")
     end
   end
 end

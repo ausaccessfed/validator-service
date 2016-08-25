@@ -65,7 +65,103 @@ RSpec.describe Subject, type: :model do
     end
   end
 
+  describe '#valid_identifier_history?' do
+    let(:subject) { FactoryGirl.create(:subject) }
+
+    it 'is valid' do
+      expect(subject.valid_identifier_history?).to eql true
+    end
+
+    it 'is invalid' do
+      future_time = DateTime.current + 10.minutes
+
+      FactoryGirl.create(
+        :subject,
+        targeted_id: subject.targeted_id,
+        created_at: future_time,
+        updated_at: future_time
+      )
+
+      expect(subject.valid_identifier_history?).to eql false
+    end
+  end
+
   context 'class' do
+    let(:subject) { FactoryGirl.create(:subject) }
+
+    describe '.from_attributes' do
+      describe 'finds record' do
+        it 'by targeted_id' do
+          result = Subject.from_attributes(
+            'HTTP_TARGETED_ID' => subject.targeted_id,
+            'HTTP_AUEDUPERSONSHAREDTOKEN' => ''
+          )
+
+          expect(result.count).to eql 1
+          expect(result.first).to eql subject
+        end
+
+        it 'by auedupersonsharedtoken' do
+          result = Subject.from_attributes(
+            'HTTP_TARGETED_ID' => '',
+            'HTTP_AUEDUPERSONSHAREDTOKEN' =>
+              subject.auedupersonsharedtoken
+          )
+
+          expect(result.count).to eql 1
+          expect(result.first).to eql subject
+        end
+
+        it 'by both' do
+          result = Subject.from_attributes(
+            'HTTP_TARGETED_ID' => subject.targeted_id,
+            'HTTP_AUEDUPERSONSHAREDTOKEN' =>
+              subject.auedupersonsharedtoken
+          )
+
+          expect(result.count).to eql 1
+          expect(result.first).to eql subject
+        end
+      end
+
+      it 'does not find record' do
+        expect(Subject.from_attributes(
+          'HTTP_TARGETED_ID' => '',
+          'HTTP_AUEDUPERSONSHAREDTOKEN' => ''
+        ).count).to eql 0
+      end
+    end
+
+    describe '.most_recent' do
+      describe 'finds record' do
+        it 'chooses the most recent subject' do
+          future_time = DateTime.current + 10.minutes
+
+          subject2 = FactoryGirl.create(
+            :subject,
+            targeted_id: subject.targeted_id,
+            created_at: future_time,
+            updated_at: future_time
+          )
+
+          expect(
+            Subject.most_recent(
+              'HTTP_TARGETED_ID' => subject.targeted_id,
+              'HTTP_AUEDUPERSONSHAREDTOKEN' =>
+                subject.auedupersonsharedtoken
+            )
+          ).to eql subject2
+        end
+      end
+
+      it 'does not find record' do
+        expect(Subject.most_recent(
+                 'HTTP_TARGETED_ID' => '',
+                 'HTTP_AUEDUPERSONSHAREDTOKEN' => ''
+        )).to eql nil
+      end
+    end
+
     describe '.combined_name' do
       let(:given_name) do
         Faker::Name.first_name
@@ -98,58 +194,6 @@ RSpec.describe Subject, type: :model do
         expect(Subject.combined_name({})).to eql(
           ''
         )
-      end
-    end
-
-    describe '.check_subject' do
-      it 'calls' do
-        attrs = {
-          'HTTP_TARGETED_ID' => subject.targeted_id,
-          'HTTP_AUEDUPERSONSHAREDTOKEN' => subject.auedupersonsharedtoken
-        }
-
-        expect(Subject).to(
-          receive(:require_subject_match).with(subject,
-                                               attrs,
-                                               'HTTP_TARGETED_ID')
-        )
-
-        expect(Subject).to(
-          receive(:require_subject_match).with(subject,
-                                               attrs,
-                                               'HTTP_AUEDUPERSONSHAREDTOKEN')
-        )
-
-        Subject.check_subject(subject, attrs)
-      end
-    end
-
-    describe '.require_subject_match' do
-      let(:auedupersonsharedtoken) { SecureRandom.urlsafe_base64(19) }
-
-      it 'matches' do
-        expect(Subject.require_subject_match(
-                 subject,
-                 {
-                   'HTTP_AUEDUPERSONSHAREDTOKEN' =>
-                    subject.auedupersonsharedtoken
-                 },
-                 'HTTP_AUEDUPERSONSHAREDTOKEN'
-        )).to eql subject.auedupersonsharedtoken
-      end
-
-      it 'does not match' do
-        expect do
-          Subject.require_subject_match(
-            subject,
-            { 'HTTP_AUEDUPERSONSHAREDTOKEN' => auedupersonsharedtoken },
-            'HTTP_AUEDUPERSONSHAREDTOKEN'
-          )
-        end.to(raise_error(
-                 RuntimeError,
-                 'Incoming HTTP_AUEDUPERSONSHAREDTOKEN ' \
-                 "`#{auedupersonsharedtoken}` did not match existing ``"
-        ))
       end
     end
   end

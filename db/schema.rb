@@ -133,8 +133,7 @@ ActiveRecord::Schema.define(version: 20160823044117) do
     t.datetime "updated_at",             null: false
     t.string   "targeted_id",            null: false
     t.string   "auedupersonsharedtoken", null: false
-    t.index ["auedupersonsharedtoken"], name: "index_subjects_on_auedupersonsharedtoken", unique: true, using: :btree
-    t.index ["targeted_id"], name: "index_subjects_on_targeted_id", unique: true, using: :btree
+    t.index ["targeted_id", "auedupersonsharedtoken"], name: "index_subjects_on_targeted_id_and_auedupersonsharedtoken", unique: true, using: :btree
   end
 
   add_foreign_key "api_subject_roles", "api_subjects"
