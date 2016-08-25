@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'mail'
 
 Rails.application.configure do
   app_config = YAML.load(Rails.root.join('config/validator_service.yml').read)
@@ -16,9 +15,6 @@ Rails.application.configure do
 
     config.validator_service.url_options = { base_url: 'example.com' }
 
-    config.validator_service.mail = OpenStruct.new(from: 'noreply@example.com')
     config.validator_service.environment_string = 'Test'
-
-    Mail.defaults { delivery_method :test }
   end
 end
