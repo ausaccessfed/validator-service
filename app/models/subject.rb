@@ -42,6 +42,13 @@ class Subject < ApplicationRecord
     ).count == 1
   end
 
+  def subject_attributes(attrs)
+    self.name = Subject.best_guess_name(attrs)
+    self.mail = attrs['HTTP_MAIL']
+    self.targeted_id = attrs['HTTP_TARGETED_ID']
+    self.auedupersonsharedtoken = attrs['HTTP_AUEDUPERSONSHAREDTOKEN']
+  end
+
   class << self
     def create_from_receiver(attrs)
       subject = Subject.most_recent(attrs)
@@ -52,11 +59,7 @@ class Subject < ApplicationRecord
         subject.complete = true
       end
 
-      subject.name = best_guess_name(attrs)
-      subject.mail = attrs['HTTP_MAIL']
-      subject.targeted_id = attrs['HTTP_TARGETED_ID']
-      subject.auedupersonsharedtoken = attrs['HTTP_AUEDUPERSONSHAREDTOKEN']
-
+      subject.subject_attributes(attrs)
       subject.save!
 
       subject
