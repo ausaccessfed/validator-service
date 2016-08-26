@@ -72,17 +72,32 @@ RSpec.describe Subject, type: :model do
       expect(subject.valid_identifier_history?).to eql true
     end
 
-    it 'is invalid' do
-      future_time = DateTime.current + 10.minutes
+    describe 'is invalid' do
+      it 'invalid targeted id' do
+        future_time = DateTime.current + 10.minutes
 
-      FactoryGirl.create(
-        :subject,
-        targeted_id: subject.targeted_id,
-        created_at: future_time,
-        updated_at: future_time
-      )
+        FactoryGirl.create(
+          :subject,
+          targeted_id: subject.targeted_id,
+          created_at: future_time,
+          updated_at: future_time
+        )
 
-      expect(subject.valid_identifier_history?).to eql false
+        expect(subject.valid_identifier_history?).to eql false
+      end
+
+      it 'invalid auedupersonsharedtoken' do
+        future_time = DateTime.current + 10.minutes
+
+        FactoryGirl.create(
+          :subject,
+          auedupersonsharedtoken: subject.auedupersonsharedtoken,
+          created_at: future_time,
+          updated_at: future_time
+        )
+
+        expect(subject.valid_identifier_history?).to eql false
+      end
     end
   end
 
@@ -134,23 +149,44 @@ RSpec.describe Subject, type: :model do
 
     describe '.most_recent' do
       describe 'finds record' do
-        it 'chooses the most recent subject' do
-          future_time = DateTime.current + 10.minutes
+        describe 'chooses the most recent subject' do
+          it 'with invalid targeted id' do
+            future_time = DateTime.current + 10.minutes
 
-          subject2 = FactoryGirl.create(
-            :subject,
-            targeted_id: subject.targeted_id,
-            created_at: future_time,
-            updated_at: future_time
-          )
-
-          expect(
-            Subject.most_recent(
-              'HTTP_TARGETED_ID' => subject.targeted_id,
-              'HTTP_AUEDUPERSONSHAREDTOKEN' =>
-                subject.auedupersonsharedtoken
+            subject2 = FactoryGirl.create(
+              :subject,
+              targeted_id: subject.targeted_id,
+              created_at: future_time,
+              updated_at: future_time
             )
-          ).to eql subject2
+
+            expect(
+              Subject.most_recent(
+                'HTTP_TARGETED_ID' => subject.targeted_id,
+                'HTTP_AUEDUPERSONSHAREDTOKEN' =>
+                  subject.auedupersonsharedtoken
+              )
+            ).to eql subject2
+          end
+
+          it 'with invalid auedupersonsharedtoken' do
+            future_time = DateTime.current + 10.minutes
+
+            subject2 = FactoryGirl.create(
+              :subject,
+              auedupersonsharedtoken: subject.auedupersonsharedtoken,
+              created_at: future_time,
+              updated_at: future_time
+            )
+
+            expect(
+              Subject.most_recent(
+                'HTTP_TARGETED_ID' => subject.targeted_id,
+                'HTTP_AUEDUPERSONSHAREDTOKEN' =>
+                  subject.auedupersonsharedtoken
+              )
+            ).to eql subject2
+          end
         end
       end
 
