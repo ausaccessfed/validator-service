@@ -6,3 +6,7 @@
 coverage
 coverage/*
 config/rapidconnect.yml
+config/validator_service.yml
+config/api-client.*
+config/deploy.yml
+config/event_encryption_key.pem

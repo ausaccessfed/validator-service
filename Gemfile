@@ -6,6 +6,7 @@ gem 'mysql2'
 
 gem 'valhammer'
 gem 'accession'
+gem 'super-identity'
 gem 'aaf-lipstick',
     git: 'https://github.com/ausaccessfed/aaf-lipstick',
     branch: 'develop'
@@ -30,6 +31,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'factory_girl_rails'
+  gem 'webmock', require: false
   gem 'faker'
   gem 'timecop'
   gem 'database_cleaner'

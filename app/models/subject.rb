@@ -9,6 +9,14 @@ class Subject < ApplicationRecord
 
   valhammer
 
+  scope :from_attributes, lambda { |attributes|
+    where(targeted_id: attributes['HTTP_TARGETED_ID'])
+      .or(
+        where(auedupersonsharedtoken:
+          attributes['HTTP_AUEDUPERSONSHAREDTOKEN'])
+      ).order(created_at: :asc)
+  }
+
   def permissions
     roles.flat_map { |role| role.permissions.map(&:value) }
   end
@@ -17,18 +25,48 @@ class Subject < ApplicationRecord
     enabled?
   end
 
+  def entitlements=(values)
+    assigned = values.map do |value|
+      Role.for_entitlement(value).tap do |r|
+        roles << r unless roles.include?(r)
+      end
+    end
+
+    subject_roles.where.not(role: assigned).destroy_all
+  end
+
+  def valid_identifier_history?
+    Subject.from_attributes(
+      'HTTP_TARGETED_ID' => targeted_id,
+      'HTTP_AUEDUPERSONSHAREDTOKEN' => auedupersonsharedtoken
+    ).count == 1
+  end
+
+  def subject_attributes(attrs)
+    self.name = Subject.best_guess_name(attrs)
+    self.mail = attrs['HTTP_MAIL']
+    self.targeted_id = attrs['HTTP_TARGETED_ID']
+    self.auedupersonsharedtoken = attrs['HTTP_AUEDUPERSONSHAREDTOKEN']
+  end
+
   class << self
     def create_from_receiver(attrs)
-      identifier = attrs['HTTP_TARGETED_ID']
+      subject = Subject.most_recent(attrs)
 
-      subject = Subject.find_or_initialize_by(targeted_id: identifier) do |s|
-        s.enabled = true
-        s.complete = true
+      unless subject
+        subject = Subject.new
+        subject.enabled = true
+        subject.complete = true
       end
 
-      subject.update!(name: best_guess_name(attrs), mail: attrs['HTTP_MAIL'])
+      subject.subject_attributes(attrs)
+      subject.save!
 
       subject
+    end
+
+    def most_recent(attrs)
+      Subject.from_attributes(attrs).last
     end
 
     def best_guess_name(attrs)

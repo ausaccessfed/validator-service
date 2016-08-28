@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809013641) do
+ActiveRecord::Schema.define(version: 20160823044117) do
 
   create_table "api_subject_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer  "role_id",        null: false
@@ -95,9 +95,11 @@ ActiveRecord::Schema.define(version: 20160809013641) do
   end
 
   create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",        null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "entitlement", null: false
+    t.index ["entitlement"], name: "index_roles_on_entitlement", unique: true, using: :btree
   end
 
   create_table "snapshot_attribute_values", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
@@ -123,13 +125,15 @@ ActiveRecord::Schema.define(version: 20160809013641) do
   end
 
   create_table "subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.string   "name",        null: false
-    t.string   "mail",        null: false
-    t.boolean  "enabled",     null: false
-    t.boolean  "complete",    null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "targeted_id", null: false
+    t.string   "name",                   null: false
+    t.string   "mail",                   null: false
+    t.boolean  "enabled",                null: false
+    t.boolean  "complete",               null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "targeted_id",            null: false
+    t.string   "auedupersonsharedtoken", null: false
+    t.index ["targeted_id", "auedupersonsharedtoken"], name: "index_subjects_on_targeted_id_and_auedupersonsharedtoken", unique: true, using: :btree
   end
 
   add_foreign_key "api_subject_roles", "api_subjects"
