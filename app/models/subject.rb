@@ -83,4 +83,28 @@ class Subject < ApplicationRecord
       "#{attrs['HTTP_GIVENNAME']} #{attrs['HTTP_SURNAME']}".strip
     end
   end
+
+  # :nocov:
+  rails_admin do
+    list do
+      field :name
+    end
+
+    field :name
+    field :mail
+    field :enabled
+    field :complete
+
+    field :targeted_id
+    field :auedupersonsharedtoken
+
+    field :created_at do
+      read_only true
+    end
+
+    field :updated_at do
+      read_only true
+    end
+  end
+  # :nocov:
 end

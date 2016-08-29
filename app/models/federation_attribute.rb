@@ -46,20 +46,60 @@ class FederationAttribute < ApplicationRecord
       :custom_label_method
     end
 
-    field :oid
-    field :primary_alias
-    field :federation_attribute_aliases
+    list do
+      field :primary_alias
+      field :description
+    end
 
-    field :http_header
-    field :description
-    field :singular
+    show do
+      field :oid
+      field :primary_alias
+      field :federation_attribute_aliases
 
-    field :regexp
-    field :regexp_triggers_failure
-    field :notes_on_format, :ck_editor
+      field :http_header
+      field :description
+      field :singular
 
-    field :notes_on_usage, :ck_editor
-    field :notes_on_privacy, :ck_editor
+      field :regexp
+      field :regexp_triggers_failure
+      field :notes_on_format
+
+      field :notes_on_usage
+      field :notes_on_privacy
+
+      field :created_at do
+        read_only true
+      end
+
+      field :updated_at do
+        read_only true
+      end
+    end
+
+    edit do
+      field :oid
+      field :primary_alias
+      field :federation_attribute_aliases
+
+      field :http_header
+      field :description
+      field :singular
+
+      field :regexp
+      field :regexp_triggers_failure
+      field :notes_on_format, :ck_editor
+
+      field :notes_on_usage, :ck_editor
+      field :notes_on_privacy, :ck_editor
+
+      field :created_at do
+        read_only true
+      end
+
+      field :updated_at do
+        read_only true
+      end
+    end
   end
   # :nocov:
 
