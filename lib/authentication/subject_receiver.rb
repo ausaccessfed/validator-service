@@ -28,8 +28,10 @@ module Authentication
       redirect_to('/snapshots/latest')
     end
 
+    # :nocov:
     def ide_config
       Rails.application.config.validator_service.ide
     end
+    # :nocov:
   end
 end

@@ -2,9 +2,21 @@
 require 'rails_helper'
 
 RSpec.describe Authentication::SubjectReceiver do
-  include IdentityEnhancementStub
-
   let(:subject_receiver) { Authentication::SubjectReceiver.new }
+
+  let(:ide_config) do
+    {
+      host: 'ide.example.edu',
+      cert: 'spec/api.crt',
+      key: 'spec/api.key',
+      admin_entitlements: ['urn:mace:aaf.edu.au:ide:internal:aaf-admin',
+                           'urn:mace:aaf.edu.au:ide:internal:aaf-validator']
+    }
+  end
+
+  before do
+    allow(subject_receiver).to receive(:ide_config).and_return(ide_config)
+  end
 
   describe '#subject' do
     let(:attrs) do
