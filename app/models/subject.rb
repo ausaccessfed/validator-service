@@ -49,6 +49,10 @@ class Subject < ApplicationRecord
     self.auedupersonsharedtoken = attrs['HTTP_AUEDUPERSONSHAREDTOKEN']
   end
 
+  def admin?
+    roles.any?(&:admin_entitlements?)
+  end
+
   class << self
     def create_from_receiver(attrs)
       subject = Subject.most_recent(attrs)

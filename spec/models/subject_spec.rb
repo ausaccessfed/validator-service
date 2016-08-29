@@ -7,6 +7,20 @@ require 'gumboot/shared_examples/subjects'
 RSpec.describe Subject, type: :model do
   include_examples 'Subjects'
 
+  describe '#admin?' do
+    it 'is admin' do
+      subject = FactoryGirl.create(:subject, :admin)
+
+      expect(subject.admin?).to eql true
+    end
+
+    it 'is not admin' do
+      subject = FactoryGirl.create(:subject)
+
+      expect(subject.admin?).to eql false
+    end
+  end
+
   context 'subject#permissions' do
     let(:subject) { FactoryGirl.create(:subject) }
     let(:permission) { FactoryGirl.create(:permission) }
