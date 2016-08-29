@@ -75,8 +75,9 @@ class FederationAttribute < ApplicationRecord
       read_only true
     end
 
-    fields :primary_alias, :federation_attribute_aliases, :regexp_triggers_failure,
-           :notes_on_format, :notes_on_usage, :notes_on_privacy, :created_at, :updated_at do
+    fields :primary_alias, :federation_attribute_aliases,
+           :regexp_triggers_failure, :notes_on_format, :notes_on_usage,
+           :notes_on_privacy, :created_at, :updated_at do
       label label.titleize
     end
 
