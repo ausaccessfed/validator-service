@@ -2,6 +2,8 @@
 class FederationAttributeAlias < ApplicationRecord
   belongs_to :federation_attribute
 
+  valhammer
+
   # :nocov:
   rails_admin do
     parent FederationAttribute

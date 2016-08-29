@@ -5,6 +5,8 @@ class Category < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
+  valhammer
+
   # :nocov:
   rails_admin do
     field :name
