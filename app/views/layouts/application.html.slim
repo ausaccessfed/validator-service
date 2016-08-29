@@ -26,6 +26,9 @@ html lang='en'
             = nav_first_item('Admin', rails_admin.dashboard_path)
 
     section.content
+      - if notice
+        .alert.alert-warning role="alert"
+          == notice
       main= yield
 
     .hidden-print
