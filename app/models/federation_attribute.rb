@@ -47,109 +47,49 @@ class FederationAttribute < ApplicationRecord
     end
 
     list do
-      field :primary_alias do
-        label label.titleize
-      end
-
+      field :primary_alias
       field :description
+    end
+
+    field :oid do
+      label label.upcase
+    end
+
+    field :primary_alias
+    field :federation_attribute_aliases
+    field :http_header do
+      label 'HTTP Header'
+    end
+
+    field :description
+    field :singular
+
+    field :regexp
+    field :regexp_triggers_failure
+
+    field :created_at do
+      read_only true
+    end
+
+    field :updated_at do
+      read_only true
+    end
+
+    fields :primary_alias, :federation_attribute_aliases, :regexp_triggers_failure,
+           :notes_on_format, :notes_on_usage, :notes_on_privacy, :created_at, :updated_at do
+      label label.titleize
     end
 
     show do
-      field :oid do
-        label label.upcase
-      end
-
-      field :primary_alias do
-        label label.titleize
-      end
-
-      field :federation_attribute_aliases do
-        label label.titleize
-      end
-
-      field :http_header do
-        label 'HTTP Header'
-      end
-
-      field :description
-      field :singular
-
-      field :regexp
-
-      field :regexp_triggers_failure do
-        label label.titleize
-      end
-
-      field :notes_on_format do
-        label label.titleize
-      end
-
-      field :notes_on_usage do
-        label label.titleize
-      end
-
-      field :notes_on_privacy do
-        label label.titleize
-      end
-
-      field :created_at do
-        read_only true
-        label label.titleize
-      end
-
-      field :updated_at do
-        read_only true
-        label label.titleize
-      end
+      field :notes_on_format
+      field :notes_on_usage
+      field :notes_on_privacy
     end
 
     edit do
-      field :oid do
-        label label.upcase
-      end
-
-      field :primary_alias do
-        label label.titleize
-      end
-
-      field :federation_attribute_aliases do
-        label label.titleize
-      end
-
-      field :http_header do
-        label 'HTTP Header'
-      end
-
-      field :description
-      field :singular
-
-      field :regexp
-
-      field :regexp_triggers_failure do
-        label label.titleize
-      end
-
-      field :notes_on_format, :ck_editor do
-        label label.titleize
-      end
-
-      field :notes_on_usage, :ck_editor do
-        label label.titleize
-      end
-
-      field :notes_on_privacy, :ck_editor do
-        label label.titleize
-      end
-
-      field :created_at do
-        read_only true
-        label label.titleize
-      end
-
-      field :updated_at do
-        read_only true
-        label label.titleize
-      end
+      field :notes_on_format, :ck_editor
+      field :notes_on_usage, :ck_editor
+      field :notes_on_privacy, :ck_editor
     end
   end
   # :nocov:

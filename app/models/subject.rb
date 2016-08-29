@@ -103,12 +103,10 @@ class Subject < ApplicationRecord
       label 'Shared Token'
     end
 
-    field :created_at do
-      read_only true
-      label label.titleize
-    end
+    field :created_at
+    field :updated_at
 
-    field :updated_at do
+    fields :created_at, :updated_at do
       read_only true
       label label.titleize
     end

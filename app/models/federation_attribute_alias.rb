@@ -10,26 +10,21 @@ class FederationAttributeAlias < ApplicationRecord
 
     list do
       field :name
-
-      field :federation_attribute do
-        label label.titleize
-      end
+      field :federation_attribute
     end
 
     field :name
+    field :federation_attribute
 
-    field :federation_attribute do
+    field :created_at
+    field :updated_at
+
+    fields :created_at, :updated_at, :federation_attribute do
       label label.titleize
     end
 
-    field :created_at do
+    fields :created_at, :updated_at do
       read_only true
-      label label.titleize
-    end
-
-    field :updated_at do
-      read_only true
-      label label.titleize
     end
   end
   # :nocov:

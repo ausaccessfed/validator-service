@@ -11,27 +11,22 @@ class CategoryAttribute < ApplicationRecord
 
     list do
       field :category
-      field :federation_attribute do
-        label label.titleize
-      end
+      field :federation_attribute
     end
 
     field :category
-
-    field :federation_attribute do
-      label label.titleize
-    end
-
+    field :federation_attribute
     field :presence
 
-    field :created_at do
-      read_only true
+    field :created_at
+    field :updated_at
+
+    fields :created_at, :updated_at, :federation_attribute do
       label label.titleize
     end
 
-    field :updated_at do
+    fields :created_at, :updated_at do
       read_only true
-      label label.titleize
     end
   end
   # :nocov:
