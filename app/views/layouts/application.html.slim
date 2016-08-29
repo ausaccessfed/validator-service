@@ -20,8 +20,10 @@ html lang='en'
           - if @subject
             = nav_first_item('My Attributes', latest_snapshots_path)
           - else
-            = nav_first_item('Welcome', '/')
+            = nav_first_item('Welcome', root_path)
           = nav_first_item('Support', 'http://support.aaf.edu.au/forums')
+          - if @subject && @subject.admin?
+            = nav_first_item('Admin', rails_admin.dashboard_path)
 
     section.content
       main= yield
