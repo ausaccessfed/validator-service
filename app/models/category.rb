@@ -21,10 +21,12 @@ class Category < ApplicationRecord
 
     field :created_at do
       read_only true
+      label label.titleize
     end
 
     field :updated_at do
       read_only true
+      label label.titleize
     end
   end
   # :nocov:

@@ -58,19 +58,26 @@ class Snapshot < ApplicationRecord
   # :nocov:
   rails_admin do
     list do
-      field :id
+      field :id do
+        label label.upcase
+      end
+
       field :subject
     end
 
     field :subject
-    field :attribute_values
+    field :attribute_values do
+      label label.titleize
+    end
 
     field :created_at do
       read_only true
+      label label.titleize
     end
 
     field :updated_at do
       read_only true
+      label label.titleize
     end
   end
   # :nocov:

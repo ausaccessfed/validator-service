@@ -95,15 +95,22 @@ class Subject < ApplicationRecord
     field :enabled
     field :complete
 
-    field :targeted_id
-    field :auedupersonsharedtoken
+    field :targeted_id do
+      label 'Targeted ID'
+    end
+
+    field :auedupersonsharedtoken do
+      label 'Shared Token'
+    end
 
     field :created_at do
       read_only true
+      label label.titleize
     end
 
     field :updated_at do
       read_only true
+      label label.titleize
     end
   end
   # :nocov:
