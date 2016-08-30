@@ -20,12 +20,17 @@ class Category < ApplicationRecord
     field :description
     field :order
     field :enabled
-    field :created_at
-    field :updated_at
-
-    fields :created_at, :updated_at do
-      read_only true
+    field :federation_attributes do
       label label.titleize
+    end
+
+    show do
+      field :created_at
+      field :updated_at
+
+      fields :created_at, :updated_at do
+        label label.titleize
+      end
     end
   end
   # :nocov:

@@ -9,24 +9,30 @@ class CategoryAttribute < ApplicationRecord
   rails_admin do
     parent Category
 
+    label label.titleize
+
     list do
       field :category
-      field :federation_attribute
+      field :federation_attribute do
+        label label.titleize
+      end
     end
 
     field :category
-    field :federation_attribute
-    field :presence
 
-    field :created_at
-    field :updated_at
-
-    fields :created_at, :updated_at, :federation_attribute do
+    field :federation_attribute do
       label label.titleize
     end
 
-    fields :created_at, :updated_at do
-      read_only true
+    field :presence
+
+    show do
+      field :created_at
+      field :updated_at
+
+      fields :created_at, :updated_at do
+        label label.titleize
+      end
     end
   end
   # :nocov:

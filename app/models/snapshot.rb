@@ -66,17 +66,17 @@ class Snapshot < ApplicationRecord
     end
 
     field :subject
-    field :attribute_values
-
-    field :created_at
-    field :updated_at
-
-    fields :attribute_values, :created_at, :updated_at do
+    field :attribute_values do
       label label.titleize
     end
 
-    fields :created_at, :updated_at do
-      read_only true
+    show do
+      field :created_at
+      field :updated_at
+
+      fields :created_at, :updated_at do
+        label label.titleize
+      end
     end
   end
   # :nocov:
