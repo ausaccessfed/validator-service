@@ -15,13 +15,13 @@ html lang='en'
     = disable_animations if Rails.env.test? || params[:disable_animations]
   body
     .hidden-print
-      = aaf_header(title: 'AAF Validator Service', environment: 'Rails') do
+      - auth = @subject ? :logout : :login
+      = aaf_header(title: 'AAF Validator Service', environment: Rails.env.titleize, auth: auth) do
         = nav_bar do
           - if @subject
             = nav_first_item('My Attributes', latest_snapshots_path)
           - else
             = nav_first_item('Welcome', root_path)
-          = nav_first_item('Support', 'http://support.aaf.edu.au/forums')
           - if @subject && @subject.admin?
             = nav_first_item('Admin', rails_admin.dashboard_path)
 
