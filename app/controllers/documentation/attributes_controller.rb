@@ -3,7 +3,7 @@ module Documentation
   class AttributesController < ApplicationController
     skip_before_action :ensure_authenticated
 
-    before_action :public_action
+    before_action :public_action, :subject
     before_action :set_documentation_attribute, only: [:show]
 
     def index
