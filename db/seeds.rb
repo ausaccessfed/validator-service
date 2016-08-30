@@ -3,14 +3,14 @@
 FederationAttribute.destroy_all
 
 core = Category.create!(
-  name: 'Core Attributes',
+  name: 'AAF Core Attributes',
   description: 'AAF Core Attributes.',
   enabled: true,
   order: 1
 )
 
 optional = Category.create!(
-  name: 'Optional Attributes',
+  name: 'AAF Optional Attributes',
   description: 'AAF Optional Attributes.',
   enabled: true,
   order: 2
