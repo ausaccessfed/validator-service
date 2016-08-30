@@ -38,8 +38,8 @@ p
             - state = AttributeValue.validation_state(category, attribute, value)
 
             tr class="#{state[:row_classes].join(' ')}"
-              td = attribute.name
-              td
+              td.col-xs-2 = attribute.name
+              td.col-xs-9
                 - if value
                   .hidden-print
                     pre
