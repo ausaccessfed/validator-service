@@ -7,7 +7,8 @@ class Category < ApplicationRecord
 
   valhammer
 
-  validates :order, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
+  validates :order, numericality:
+    { only_integer: true, greater_than_or_equal_to: 1 }
 
   # :nocov:
   rails_admin do
