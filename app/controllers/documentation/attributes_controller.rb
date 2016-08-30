@@ -23,7 +23,9 @@ module Documentation
     private
 
     def set_documentation_attribute
-      @federation_attribute = FederationAttribute.find_by(oid: params[:id])
+      id = FederationAttribute.fuzzy_lookup(params[:id]).first.try(:id)
+
+      @federation_attribute = FederationAttribute.find(id)
     end
   end
 end

@@ -12,6 +12,15 @@ class FederationAttribute < ApplicationRecord
 
   delegate :name, to: :primary_alias, allow_nil: true
 
+  scope :fuzzy_lookup, lambda { |id|
+    alias_lookup(id) + where(oid: id)
+  }
+
+  scope :alias_lookup, lambda { |id|
+    includes(:federation_attribute_aliases)
+      .where(federation_attribute_aliases: { name: id })
+  }
+
   def aliases
     federation_attribute_aliases.where
                                 .not(federation_attribute_aliases:
