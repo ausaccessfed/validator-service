@@ -1,9 +1,18 @@
 # frozen_string_literal: true
-threads_count = ENV.fetch('RAILS_MAX_THREADS') { 5 }.to_i
-threads threads_count, threads_count
 
-port        ENV.fetch('PORT') { 3000 }
+config = YAML.load_file(File.expand_path('../deploy.yml', __FILE__))
+puma_config = config['puma']
 
+preload_app!
+daemonize
+
+port puma_config['port']
 environment ENV.fetch('RAILS_ENV') { 'development' }
+workers 2
+threads 8, 32
+tag 'validator'
+pidfile 'tmp/pids/puma.pid'
 
-plugin :tmp_restart
+stdout_redirect puma_config['stdout'],
+                puma_config['stderr'],
+                :append
