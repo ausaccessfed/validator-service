@@ -16,9 +16,9 @@ module ApplicationHelper
           icon_classes: [
             'glyphicon',
             'glyphicon-remove-sign',
-            'alert-danger'
+            'validator-error'
           ],
-          row_classes: ['danger']
+          row_classes: []
         }
       end
 
@@ -29,9 +29,9 @@ module ApplicationHelper
           icon_classes: [
             'glyphicon',
             'glyphicon-remove-sign',
-            'alert-danger'
+            'validator-error'
           ],
-          row_classes: ['danger']
+          row_classes: []
         }
       end
 
@@ -42,9 +42,9 @@ module ApplicationHelper
           icon_classes: [
             'glyphicon',
             'glyphicon-ok-sign',
-            'alert-success'
+            'validator-success'
           ],
-          row_classes: ['success']
+          row_classes: []
         }
       end
 
@@ -55,9 +55,9 @@ module ApplicationHelper
           icon_classes: [
             'glyphicon',
             'glyphicon-exclamation-sign',
-            'alert-warning'
+            'validator-warning'
           ],
-          row_classes: ['warning']
+          row_classes: []
         }
       end
 
@@ -68,9 +68,9 @@ module ApplicationHelper
           icon_classes: [
             'glyphicon',
             'glyphicon-exclamation-sign',
-            'alert-warning'
+            'validator-warning'
           ],
-          row_classes: ['warning']
+          row_classes: []
         }
       end
     end
