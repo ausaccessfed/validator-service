@@ -88,6 +88,14 @@ class Subject < ApplicationRecord
   rails_admin do
     list do
       field :name
+
+      field :targeted_id do
+        label 'Targeted ID'
+      end
+
+      field :auedupersonsharedtoken do
+        label 'Shared Token'
+      end
     end
 
     field :name
