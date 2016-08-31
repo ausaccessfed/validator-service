@@ -41,12 +41,6 @@ RSpec.describe FederationAttribute, type: :model do
     end
   end
 
-  it '#custom_label_method' do
-    expect(federation_attribute.custom_label_method).to(
-      eql"#{federation_attribute.oid} (#{federation_attribute.name})"
-    )
-  end
-
   describe '#aliases' do
     it 'no aliases' do
       expect(federation_attribute.aliases.to_a).to eql([])
