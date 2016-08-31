@@ -53,10 +53,6 @@ class FederationAttribute < ApplicationRecord
   rails_admin do
     label label.titleize
 
-    object_label_method do
-      :custom_label_method
-    end
-
     list do
       field :primary_alias do
         label label.titleize
@@ -111,8 +107,4 @@ class FederationAttribute < ApplicationRecord
     end
   end
   # :nocov:
-
-  def custom_label_method
-    "#{oid} (#{name})"
-  end
 end

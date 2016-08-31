@@ -12,9 +12,6 @@ class FederationAttributeAlias < ApplicationRecord
 
     list do
       field :name
-      field :federation_attribute do
-        label label.titleize
-      end
     end
 
     field :name
