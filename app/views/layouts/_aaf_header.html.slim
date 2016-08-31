@@ -1,0 +1,11 @@
+- auth = @subject ? :logout : :login
+= aaf_header(title: 'AAF Validator Service', environment: Rails.env.titleize, auth: auth) do
+  = nav_bar do
+    - if @subject
+      = nav_first_item('My Snapshot History', main_app.snapshots_path)
+      = nav_first_item('My Latest Snapshot', main_app.latest_snapshots_path)
+    - else
+      = nav_first_item('Welcome', main_app.root_path)
+    = nav_first_item('Documentation', main_app.documentation_path)
+    - if @subject && @subject.admin?
+      = nav_first_item('Admin', rails_admin.dashboard_path)

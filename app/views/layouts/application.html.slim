@@ -15,32 +15,13 @@ html lang='en'
     = disable_animations if Rails.env.test? || params[:disable_animations]
   body
     .hidden-print
-      - auth = @subject ? :logout : :login
-      = aaf_header(title: 'AAF Validator Service', environment: Rails.env.titleize, auth: auth) do
-        = nav_bar do
-          - if @subject
-            = nav_first_item('My Snapshot History', snapshots_path)
-            = nav_first_item('My Latest Snapshot', latest_snapshots_path)
-          - else
-            = nav_first_item('Welcome', root_path)
-          = nav_first_item('Documentation', documentation_path)
-          - if @subject && @subject.admin?
-            = nav_first_item('Admin', rails_admin.dashboard_path)
+      = render 'layouts/aaf_header'
 
     section.content
       - if notice
-        .alert.alert-warning role="alert"
+        = warning_message do
           == notice
       main= yield
 
     .hidden-print
-      == aaf_footer do
-        = logged_in_user(@subject)
-
-        p
-          strong
-            = application_version
-          br
-
-          ' Developed by the
-          = link_to 'Australian Access Federation', 'https://www.aaf.edu.au'
+      = render 'layouts/aaf_footer'
