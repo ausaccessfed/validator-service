@@ -94,12 +94,6 @@ class FederationAttribute < ApplicationRecord
              :updated_at do
         label label.titleize
       end
-
-      fields :notes_on_format, :notes_on_usage, :notes_on_privacy do
-        formatted_value do
-          value.html_safe
-        end
-      end
     end
 
     edit do
