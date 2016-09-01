@@ -10,7 +10,16 @@ class FederationAttribute < ApplicationRecord
 
   valhammer
 
-  delegate :name, to: :primary_alias
+  delegate :name, to: :primary_alias, allow_nil: true
+
+  scope :fuzzy_lookup, lambda { |id|
+    alias_lookup(id) + where(oid: id)
+  }
+
+  scope :alias_lookup, lambda { |id|
+    includes(:federation_attribute_aliases)
+      .where(federation_attribute_aliases: { name: id })
+  }
 
   def aliases
     federation_attribute_aliases.where
@@ -39,4 +48,63 @@ class FederationAttribute < ApplicationRecord
       attrs.keep_if { |k, _v| headers.include?(k) }
     end
   end
+
+  # :nocov:
+  rails_admin do
+    label label.titleize
+
+    list do
+      field :primary_alias do
+        label label.titleize
+      end
+
+      field :description
+    end
+
+    field :oid do
+      label label.upcase
+    end
+
+    field :primary_alias
+    field :federation_attribute_aliases
+    field :http_header do
+      label 'HTTP Header'
+    end
+
+    field :description
+    field :singular
+
+    field :regexp
+    field :regexp_triggers_failure
+
+    fields :primary_alias, :federation_attribute_aliases,
+           :regexp_triggers_failure do
+      label label.titleize
+    end
+
+    show do
+      field :notes_on_format
+      field :notes_on_usage
+      field :notes_on_privacy
+
+      field :created_at
+      field :updated_at
+
+      fields :notes_on_format, :notes_on_usage, :notes_on_privacy, :created_at,
+             :updated_at do
+        label label.titleize
+      end
+    end
+
+    edit do
+      field :notes_on_format, :ck_editor
+      field :notes_on_usage, :ck_editor
+      field :notes_on_privacy, :ck_editor
+
+      fields :notes_on_format, :notes_on_usage, :notes_on_privacy do
+        label label.titleize
+      end
+    end
+  end
+  # :nocov:
 end

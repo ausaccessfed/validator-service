@@ -23,5 +23,19 @@ FactoryGirl.define do
         role.subjects << subject
       end
     end
+
+    trait :admin do
+      transient { permission '*' }
+
+      after(:create) do |subject, attrs|
+        role = create(
+          :role,
+          entitlement: 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
+        )
+        permission = create :permission, value: attrs.permission, role: role
+        role.permissions << permission
+        role.subjects << subject
+      end
+    end
   end
 end

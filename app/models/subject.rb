@@ -49,6 +49,10 @@ class Subject < ApplicationRecord
     self.auedupersonsharedtoken = attrs['HTTP_AUEDUPERSONSHAREDTOKEN']
   end
 
+  def admin?
+    roles.any?(&:admin_entitlements?)
+  end
+
   class << self
     def create_from_receiver(attrs)
       subject = Subject.most_recent(attrs)
@@ -79,4 +83,44 @@ class Subject < ApplicationRecord
       "#{attrs['HTTP_GIVENNAME']} #{attrs['HTTP_SURNAME']}".strip
     end
   end
+
+  # :nocov:
+  rails_admin do
+    list do
+      field :name
+
+      field :targeted_id do
+        label 'Targeted ID'
+      end
+
+      field :auedupersonsharedtoken do
+        label 'Shared Token'
+      end
+    end
+
+    field :name
+    field :mail
+    field :enabled
+    field :complete
+
+    field :targeted_id do
+      label 'Targeted ID'
+    end
+
+    field :auedupersonsharedtoken do
+      label 'Shared Token'
+    end
+
+    show do
+      field :snapshots
+
+      field :created_at
+      field :updated_at
+
+      fields :created_at, :updated_at do
+        label label.titleize
+      end
+    end
+  end
+  # :nocov:
 end

@@ -15,25 +15,13 @@ html lang='en'
     = disable_animations if Rails.env.test? || params[:disable_animations]
   body
     .hidden-print
-      = aaf_header(title: 'AAF Validator Service', environment: 'Rails') do
-        = nav_bar do
-          - if @subject
-            = nav_first_item('My Attributes', latest_snapshots_path)
-          - else
-            = nav_first_item('Welcome', '/')
-          = nav_first_item('Support', 'http://support.aaf.edu.au/forums')
+      = render 'layouts/aaf_header'
 
     section.content
+      - if notice
+        = warning_message do
+          == notice
       main= yield
 
     .hidden-print
-      == aaf_footer do
-        = logged_in_user(@subject)
-
-        p
-          strong
-            = application_version
-          br
-
-          ' Developed by the
-          = link_to 'Australian Access Federation', 'https://www.aaf.edu.au'
+      = render 'layouts/aaf_footer'

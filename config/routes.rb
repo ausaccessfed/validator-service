@@ -3,6 +3,7 @@ require 'api_constraints'
 
 Rails.application.routes.draw do
   mount ShibRack::Engine => '/auth'
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   root to: 'welcome#index'
 

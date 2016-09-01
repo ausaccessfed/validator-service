@@ -11,6 +11,30 @@ RSpec.describe FederationAttribute, type: :model do
 
   it { expect(federation_attribute).to be_valid }
 
+  context 'scopes' do
+    it '.alias_lookup' do
+      faa = federation_attribute.federation_attribute_aliases.first.name
+
+      expect(FederationAttribute.alias_lookup(faa).first).to(
+        eql federation_attribute
+      )
+    end
+
+    it '.fuzzy_lookup' do
+      oid = federation_attribute.oid
+
+      expect(FederationAttribute.fuzzy_lookup(oid).first).to(
+        eql federation_attribute
+      )
+
+      faa = federation_attribute.federation_attribute_aliases.first.name
+
+      expect(FederationAttribute.fuzzy_lookup(faa).first).to(
+        eql federation_attribute
+      )
+    end
+  end
+
   describe '#name' do
     it 'uses a primary alias' do
       expect(federation_attribute.name).to eql(federation_attribute_alias.name)

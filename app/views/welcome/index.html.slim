@@ -1,15 +1,17 @@
-.jumbotron
+.alert
   h2 Attribute Valiator
   p
-    | This service will validate the atrributes provided about you from your identity provider ensuring they are provided in a format that is suitable for consumption by AAF connected services.
+    | This service will validate the attributes provided about you from your identity provider ensuring they are provided in a format that is suitable for consumption by AAF connected services.
 
+  br
   p
     = link_to latest_snapshots_path, class: 'btn btn-primary btn-lg', role: 'button' do
       i.glyphicon.glyphicon-user>
-      | Show me my attributes
+      | &nbsp;Show me my attributes
     end
+  br
 
-.alert.alert-info
+.alert
   p
     h5 Identity Provider Administrators
 

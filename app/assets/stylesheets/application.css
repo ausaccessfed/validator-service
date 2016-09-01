@@ -19,3 +19,15 @@
   margin: 0;
   padding: 2px;
 }
+
+.validator-success {
+  color: green;
+}
+
+.validator-warning {
+  color: orange;
+}
+
+.validator-error {
+  color: red;
+}

@@ -54,4 +54,30 @@ class Snapshot < ApplicationRecord
       end
     end
   end
+
+  # :nocov:
+  rails_admin do
+    list do
+      field :id do
+        label label.upcase
+      end
+
+      field :subject
+    end
+
+    field :subject
+    field :attribute_values do
+      label label.titleize
+    end
+
+    show do
+      field :created_at
+      field :updated_at
+
+      fields :created_at, :updated_at do
+        label label.titleize
+      end
+    end
+  end
+  # :nocov:
 end

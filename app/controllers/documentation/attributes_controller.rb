@@ -3,7 +3,7 @@ module Documentation
   class AttributesController < ApplicationController
     skip_before_action :ensure_authenticated
 
-    before_action :public_action
+    before_action :public_action, :subject
     before_action :set_documentation_attribute, only: [:show]
 
     def index
@@ -23,7 +23,9 @@ module Documentation
     private
 
     def set_documentation_attribute
-      @federation_attribute = FederationAttribute.find_by(oid: params[:id])
+      id = FederationAttribute.fuzzy_lookup(params[:id]).first.try(:id)
+
+      @federation_attribute = FederationAttribute.find(id)
     end
   end
 end
