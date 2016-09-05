@@ -9,14 +9,6 @@ class Subject < ApplicationRecord
 
   valhammer
 
-  scope :from_attributes, lambda { |attributes|
-    where(targeted_id: attributes['HTTP_TARGETED_ID'])
-      .or(
-        where(auedupersonsharedtoken:
-          attributes['HTTP_AUEDUPERSONSHAREDTOKEN'])
-      ).order(created_at: :asc)
-  }
-
   def permissions
     roles.flat_map { |role| role.permissions.map(&:value) }
   end
@@ -36,10 +28,7 @@ class Subject < ApplicationRecord
   end
 
   def valid_identifier_history?
-    Subject.from_attributes(
-      'HTTP_TARGETED_ID' => targeted_id,
-      'HTTP_AUEDUPERSONSHAREDTOKEN' => auedupersonsharedtoken
-    ).count == 1
+    Subject.where(targeted_id: targeted_id).count == 1
   end
 
   def subject_attributes(attrs)
@@ -70,7 +59,9 @@ class Subject < ApplicationRecord
     end
 
     def most_recent(attrs)
-      Subject.from_attributes(attrs).last
+      Subject.order(created_at: :desc).find_by(
+        targeted_id: attrs['HTTP_TARGETED_ID']
+      )
     end
 
     def best_guess_name(attrs)
