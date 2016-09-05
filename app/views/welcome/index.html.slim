@@ -1,3 +1,12 @@
+- if params[:no_targeted_id]
+  = error_message('<b>Error</b>'.html_safe) do
+    | You are missing an
+    b<> eduPersonTargetedID
+    | and we cannot complete your request.
+    br
+    br
+    | Please contact your Identity Provider Administrator.
+
 .alert
   h2 Attribute Valiator
   p

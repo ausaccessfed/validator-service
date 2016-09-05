@@ -6,6 +6,15 @@ module Authentication
   class SubjectReceiver
     include ShibRack::DefaultReceiver
     include SuperIdentity::Client
+    include Rails.application.routes.url_helpers
+
+    def receive(env)
+      attrs = map_attributes(env)
+
+      return super if attrs['HTTP_TARGETED_ID']
+
+      finish(env, true)
+    end
 
     def map_attributes(env)
       Authentication::AttributeHelpers.federation_attributes(env)
@@ -24,8 +33,12 @@ module Authentication
       end
     end
 
-    def finish(_env)
-      redirect_to('/snapshots/latest')
+    def finish(_env, failed = false)
+      if failed
+        redirect_to(root_path(no_targeted_id: true))
+      else
+        redirect_to(latest_snapshots_path)
+      end
     end
 
     # :nocov:
