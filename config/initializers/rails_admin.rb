@@ -23,14 +23,11 @@ RailsAdmin.config do |config|
       message = <<-message
         You are not an admin in test IdE.
 
-        To override this for a development user, add a role with an
-        entitlement of `urn:mace:aaf.edu.au:ide:internal:aaf-admin` and
-        add an entry to `subject_roles` linking your subject and new role.
+        To override this for a development user, add an entry to
+        `subject_roles` linking your subject and the admin role.
 
         `rails c` eg.
-        > r = Role.create!(
-            name: 'auto',
-            entitlement: 'urn:mace:aaf.edu.au:ide:internal:aaf-admin')
+        > r = Role.find_by(name: 'AAF Admin')
         > s = Subject.find_by(mail: 'jefferey.kohler@ernser.example.edu')
         > s.roles << r
       message

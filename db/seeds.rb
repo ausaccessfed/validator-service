@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+admin_role = Role.create!(name: 'AAF Admin',
+                          entitlement:
+                            'urn:mace:aaf.edu.au:ide:internal:aaf-admin')
+
+Permission.create!(role: admin_role,
+                   value: 'app:validator:admin:*')
+
 FederationAttribute.destroy_all
 
 core = Category.create!(

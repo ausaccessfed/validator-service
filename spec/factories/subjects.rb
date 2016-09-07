@@ -25,7 +25,7 @@ FactoryGirl.define do
     end
 
     trait :admin do
-      transient { permission '*' }
+      transient { permission 'app:validator:admin:*' }
 
       after(:create) do |subject, attrs|
         role = create(

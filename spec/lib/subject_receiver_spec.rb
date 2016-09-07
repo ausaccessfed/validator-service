@@ -39,10 +39,11 @@ RSpec.describe Authentication::SubjectReceiver do
                primary_alias: faa)
       end
 
-      entitlements = 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
+      entitlement = 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
+      FactoryGirl.create(:role, entitlement: entitlement)
 
       stub_ide(shared_token: attrs['HTTP_AUEDUPERSONSHAREDTOKEN'],
-               entitlements: [entitlements])
+               entitlements: [entitlement])
     end
 
     context 'creating subject and associated records' do

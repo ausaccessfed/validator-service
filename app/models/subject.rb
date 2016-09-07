@@ -27,10 +27,9 @@ class Subject < ApplicationRecord
 
   def entitlements=(values)
     assigned = values.map do |value|
-      Role.for_entitlement(value).tap do |r|
-        roles << r unless roles.include?(r)
-      end
-    end
+      r = Role.find_by(entitlement: value)
+      roles << r unless roles.include?(r)
+    end.flatten
 
     subject_roles.where.not(role: assigned).destroy_all
   end
@@ -50,7 +49,9 @@ class Subject < ApplicationRecord
   end
 
   def admin?
-    roles.any?(&:admin_entitlements?)
+    permissions.any? do |permission|
+      permission.starts_with?('app:validator:admin:')
+    end
   end
 
   class << self
