@@ -43,6 +43,13 @@ class Subject < ApplicationRecord
     roles.any?(&:admin_entitlements?)
   end
 
+  def shared_token
+    snapshots.last.attribute_values.find_by(
+      federation_attribute_id:
+        FederationAttribute.internal_aliases[:auedupersonsharedtoken].id
+    ).try(:value)
+  end
+
   class << self
     def create_from_receiver(attrs)
       subject = Subject.most_recent(attrs)

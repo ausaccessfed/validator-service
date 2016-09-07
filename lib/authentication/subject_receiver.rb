@@ -29,7 +29,7 @@ module Authentication
         subject = Subject.create_from_receiver(existing_attributes)
         Snapshot.create_from_receiver(subject, existing_attributes)
 
-        subject.entitlements = entitlements(subject.auedupersonsharedtoken)
+        subject.entitlements = entitlements(subject.shared_token)
 
         subject
       end
