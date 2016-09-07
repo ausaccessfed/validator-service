@@ -80,28 +80,32 @@ RSpec.describe Subject, type: :model do
   end
 
   describe '#valid_identifier_history?' do
-    let(:subject) { FactoryGirl.create(:subject) }
+    let(:subject) { Subject.create(attributes_for(:subject)) }
+
+    let(:attrs) do
+      Authentication::AttributeHelpers
+        .federation_attributes(attributes_for(:shib_env)[:env])
+    end
+
     before :each do
       create_federation_attributes
     end
 
     it 'is valid' do
+      Snapshot.create_from_receiver(subject, attrs)
+      Snapshot.create_from_receiver(subject, attrs)
+
       expect(subject.valid_identifier_history?).to eql true
     end
 
-    describe 'is invalid' do
-      it 'invalid auedupersonsharedtoken' do
-        future_time = DateTime.current + 10.minutes
+    it 'is invalid' do
+      Snapshot.create_from_receiver(subject, attrs)
+      Snapshot.create_from_receiver(
+        subject,
+        attrs.merge('HTTP_AUEDUPERSONSHAREDTOKEN' => '¯\_(ツ)_/¯')
+      )
 
-        FactoryGirl.create(
-          :subject,
-          targeted_id: subject.targeted_id,
-          created_at: future_time,
-          updated_at: future_time
-        )
-
-        expect(subject.valid_identifier_history?).to eql false
-      end
+      expect(subject.valid_identifier_history?).to eql false
     end
   end
 

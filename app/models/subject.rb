@@ -28,7 +28,13 @@ class Subject < ApplicationRecord
   end
 
   def valid_identifier_history?
-    Subject.where(targeted_id: targeted_id).count == 1
+    snapshots.map do |snapshot|
+      snapshot.attribute_values
+              .find_by(
+                federation_attribute_id:
+                FederationAttribute.internal_aliases[:auedupersonsharedtoken].id
+              )
+    end.compact.uniq(&:value).size == 1
   end
 
   def subject_attributes(attrs)
