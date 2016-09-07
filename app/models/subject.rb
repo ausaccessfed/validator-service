@@ -33,8 +33,10 @@ class Subject < ApplicationRecord
 
   def subject_attributes(attrs)
     self.name = Subject.best_guess_name(attrs)
-    self.mail = attrs['HTTP_MAIL']
-    self.targeted_id = attrs['HTTP_TARGETED_ID']
+    self.mail = attrs[FederationAttribute.internal_aliases[:mail].http_header]
+    self.targeted_id = attrs[
+      FederationAttribute.internal_aliases[:targeted_id].http_header
+    ]
   end
 
   def admin?
@@ -58,13 +60,15 @@ class Subject < ApplicationRecord
     end
 
     def best_guess_name(attrs)
-      attrs['HTTP_DISPLAYNAME'] ||
-        attrs['HTTP_CN'] ||
+      attrs[FederationAttribute.internal_aliases[:displayname].http_header] ||
+        attrs[FederationAttribute.internal_aliases[:cn].http_header] ||
         combined_name
     end
 
     def combined_name(attrs)
-      "#{attrs['HTTP_GIVENNAME']} #{attrs['HTTP_SURNAME']}".strip
+      "#{attrs[FederationAttribute.internal_aliases[:givenname].http_header]} "\
+      "#{attrs[FederationAttribute.internal_aliases[:surname].http_header]}"
+        .strip
     end
   end
 

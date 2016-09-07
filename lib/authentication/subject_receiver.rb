@@ -11,7 +11,9 @@ module Authentication
     def receive(env)
       attrs = map_attributes(env)
 
-      return super if attrs['HTTP_TARGETED_ID']
+      return super if attrs[
+        FederationAttribute.internal_aliases[:targeted_id].http_header
+      ]
 
       finish(env, true)
     end

@@ -59,6 +59,12 @@ class FederationAttribute < ApplicationRecord
         surname: 'oid:2.5.4.4'
       }
     end
+
+    def internal_aliases
+      Hash[oids.map do |name, oid|
+        [name, find_by(oid: oid)]
+      end]
+    end
   end
 
   # :nocov:
