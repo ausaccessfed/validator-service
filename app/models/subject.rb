@@ -57,8 +57,16 @@ class Subject < ApplicationRecord
   end
 
   class << self
+    def find_from_attributes(attrs)
+      Subject.find_by(
+        targeted_id: attrs[
+          FederationAttribute.internal_aliases[:targeted_id].http_header
+        ]
+      )
+    end
+
     def create_from_receiver(attrs)
-      subject = Subject.most_recent(attrs)
+      subject = find_from_attributes(attrs)
 
       unless subject
         subject = Subject.new
