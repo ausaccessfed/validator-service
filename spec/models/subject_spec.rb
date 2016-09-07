@@ -105,36 +105,6 @@ RSpec.describe Subject, type: :model do
   context 'class' do
     let(:subject) { FactoryGirl.create(:subject) }
 
-    describe '.most_recent' do
-      describe 'finds record' do
-        describe 'chooses the most recent subject' do
-          it 'with invalid auedupersonsharedtoken' do
-            future_time = DateTime.current + 10.minutes
-
-            subject2 = FactoryGirl.create(
-              :subject,
-              targeted_id: subject.targeted_id,
-              created_at: future_time,
-              updated_at: future_time
-            )
-
-            expect(
-              Subject.most_recent(
-                'HTTP_TARGETED_ID' => subject.targeted_id,
-                'HTTP_AUEDUPERSONSHAREDTOKEN' =>
-                  subject.auedupersonsharedtoken
-              )
-            ).to eql subject2
-          end
-        end
-      end
-
-      it 'does not find record' do
-        expect(Subject.most_recent(
-                 'HTTP_TARGETED_ID' => '',
-                 'HTTP_AUEDUPERSONSHAREDTOKEN' => ''
-        )).to eql nil
-      end
     end
 
     describe '.combined_name' do

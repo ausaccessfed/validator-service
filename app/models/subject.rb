@@ -35,7 +35,6 @@ class Subject < ApplicationRecord
     self.name = Subject.best_guess_name(attrs)
     self.mail = attrs['HTTP_MAIL']
     self.targeted_id = attrs['HTTP_TARGETED_ID']
-    self.auedupersonsharedtoken = attrs['HTTP_AUEDUPERSONSHAREDTOKEN']
   end
 
   def admin?
@@ -58,12 +57,6 @@ class Subject < ApplicationRecord
       subject
     end
 
-    def most_recent(attrs)
-      Subject.order(created_at: :desc).find_by(
-        targeted_id: attrs['HTTP_TARGETED_ID']
-      )
-    end
-
     def best_guess_name(attrs)
       attrs['HTTP_DISPLAYNAME'] ||
         attrs['HTTP_CN'] ||
@@ -83,10 +76,6 @@ class Subject < ApplicationRecord
       field :targeted_id do
         label 'Targeted ID'
       end
-
-      field :auedupersonsharedtoken do
-        label 'Shared Token'
-      end
     end
 
     field :name
@@ -96,10 +85,6 @@ class Subject < ApplicationRecord
 
     field :targeted_id do
       label 'Targeted ID'
-    end
-
-    field :auedupersonsharedtoken do
-      label 'Shared Token'
     end
 
     show do
