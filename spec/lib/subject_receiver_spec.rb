@@ -22,19 +22,7 @@ RSpec.describe Authentication::SubjectReceiver do
   before do
     allow(subject_receiver).to receive(:ide_config).and_return(ide_config)
 
-    %w(HTTP_TARGETED_ID
-       HTTP_AUEDUPERSONSHAREDTOKEN
-       HTTP_MAIL
-       HTTP_DISPLAYNAME).each do |http_header|
-      faa = FederationAttributeAlias.create!(
-        name: http_header.sub('HTTP_', '').downcase
-      )
-
-      create(:federation_attribute,
-             http_header: http_header,
-             federation_attribute_aliases: [faa],
-             primary_alias: faa)
-    end
+    create_federation_attributes
 
     entitlements = 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
 

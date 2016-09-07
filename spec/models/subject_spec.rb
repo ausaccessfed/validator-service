@@ -81,6 +81,9 @@ RSpec.describe Subject, type: :model do
 
   describe '#valid_identifier_history?' do
     let(:subject) { FactoryGirl.create(:subject) }
+    before :each do
+      create_federation_attributes
+    end
 
     it 'is valid' do
       expect(subject.valid_identifier_history?).to eql true
@@ -105,6 +108,8 @@ RSpec.describe Subject, type: :model do
   context 'class' do
     let(:subject) { FactoryGirl.create(:subject) }
 
+    before :each do
+      create_federation_attributes
     end
 
     describe '.combined_name' do

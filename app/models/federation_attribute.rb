@@ -47,6 +47,18 @@ class FederationAttribute < ApplicationRecord
 
       attrs.keep_if { |k, _v| headers.include?(k) }
     end
+
+    def oids
+      {
+        targeted_id: 'oid:1.3.6.1.4.1.5923.1.1.1.10',
+        auedupersonsharedtoken: 'oid:1.3.6.1.4.1.27856.1.2.5',
+        mail: 'oid:0.9.2342.19200300.100.1.3',
+        displayname: 'oid:2.16.840.1.113730.3.1.241',
+        cn: 'oid:2.5.4.3',
+        givenname: 'oid:2.5.4.42',
+        surname: 'oid:2.5.4.4'
+      }
+    end
   end
 
   # :nocov:
