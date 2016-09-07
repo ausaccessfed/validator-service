@@ -27,7 +27,7 @@ gem 'pdfkit'
 
 gem 'coffee-script'
 
-gem 'remotipart', github: 'mshibuya/remotipart'
+gem 'remotipart', github: 'mshibuya/remotipart', require: false
 gem 'rails_admin', '>= 1.0.0.rc'
 gem 'ckeditor'
 
