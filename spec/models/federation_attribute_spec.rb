@@ -63,7 +63,7 @@ RSpec.describe FederationAttribute, type: :model do
       {
         'HTTP_DISPLAYNAME' => shib_env['HTTP_DISPLAYNAME'],
         'HTTP_O' => shib_env['HTTP_O'],
-        'HTTP_CN' => shib_env['HTTP_CN']
+        'HTTP_COMMONNAME' => shib_env['HTTP_COMMONNAME']
       }
     end
 
@@ -88,7 +88,7 @@ RSpec.describe FederationAttribute, type: :model do
         has_existing_attributes
 
         expect(subject.existing_headers).to eq(%w(
-                                                 HTTP_CN
+                                                 HTTP_COMMONNAME
                                                  HTTP_DISPLAYNAME
                                                  HTTP_O
                                                ))
@@ -100,7 +100,7 @@ RSpec.describe FederationAttribute, type: :model do
         has_existing_attributes
 
         expect(subject.existing_attributes(shib_env))
-          .to eql('HTTP_CN' => shib_env['HTTP_CN'],
+          .to eql('HTTP_COMMONNAME' => shib_env['HTTP_COMMONNAME'],
                   'HTTP_DISPLAYNAME' => shib_env['HTTP_DISPLAYNAME'],
                   'HTTP_O' => shib_env['HTTP_O'])
       end

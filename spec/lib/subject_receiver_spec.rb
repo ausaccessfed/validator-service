@@ -9,8 +9,7 @@ RSpec.describe Authentication::SubjectReceiver do
       host: 'ide.example.edu',
       cert: 'spec/api.crt',
       key: 'spec/api.key',
-      admin_entitlements: ['urn:mace:aaf.edu.au:ide:internal:aaf-admin',
-                           'urn:mace:aaf.edu.au:ide:internal:aaf-validator']
+      admin_entitlements: ['urn:mace:aaf.edu.au:ide:internal:aaf-admin']
     }
   end
 
@@ -24,10 +23,10 @@ RSpec.describe Authentication::SubjectReceiver do
 
     create_federation_attributes
 
-    entitlements = 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
+    entitlement = 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
 
     stub_ide(shared_token: attrs['HTTP_AUEDUPERSONSHAREDTOKEN'],
-             entitlements: [entitlements])
+             entitlements: [entitlement])
   end
 
   describe '#receive' do
@@ -129,7 +128,8 @@ RSpec.describe Authentication::SubjectReceiver do
           %w(
             HTTP_TARGETED_ID
             HTTP_AUEDUPERSONSHAREDTOKEN
-            HTTP_DISPLAYNAME HTTP_CN
+            HTTP_DISPLAYNAME
+            HTTP_COMMONNAME
             HTTP_PRINCIPALNAME
             HTTP_MAIL
             HTTP_O

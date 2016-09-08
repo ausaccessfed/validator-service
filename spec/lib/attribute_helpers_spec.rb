@@ -9,7 +9,7 @@ RSpec.describe Authentication::AttributeHelpers do
       HTTP_TARGETED_ID
       HTTP_AUEDUPERSONSHAREDTOKEN
       HTTP_DISPLAYNAME
-      HTTP_CN
+      HTTP_COMMONNAME
       HTTP_PRINCIPALNAME
       HTTP_MAIL
       HTTP_O
