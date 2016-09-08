@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class Subject < ApplicationRecord
   include Accession::Principal
+  include SubjectAdmin
 
   has_many :subject_roles
   has_many :roles, through: :subject_roles
@@ -100,36 +101,4 @@ class Subject < ApplicationRecord
       ]}".strip
     end
   end
-
-  # :nocov:
-  rails_admin do
-    list do
-      field :name
-
-      field :targeted_id do
-        label 'Targeted ID'
-      end
-    end
-
-    field :name
-    field :mail
-    field :enabled
-    field :complete
-
-    field :targeted_id do
-      label 'Targeted ID'
-    end
-
-    show do
-      field :snapshots
-
-      field :created_at
-      field :updated_at
-
-      fields :created_at, :updated_at do
-        label label.titleize
-      end
-    end
-  end
-  # :nocov:
 end
