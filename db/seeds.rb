@@ -24,6 +24,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.27856.1.2.5',
+  internal_alias: 'auedupersonsharedtoken',
   http_header: 'HTTP_AUEDUPERSONSHAREDTOKEN',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -54,7 +55,8 @@ end
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.3',
-  http_header: 'HTTP_COMMONNAME',
+  internal_alias: 'cn',
+  http_header: 'HTTP_CN',
   federation_attribute_aliases: faas,
   primary_alias_id: faas.first.id,
   category_attributes: [
@@ -68,6 +70,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:2.16.840.1.113730.3.1.241',
+  internal_alias: 'displayname',
   http_header: 'HTTP_DISPLAYNAME',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -82,7 +85,8 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.1',
-  http_header: 'HTTP_EDUPERSONAFFILIATION',
+  internal_alias: 'unscoped_affiliation',
+  http_header: 'HTTP_UNSCOPED_AFFILIATION',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   singular: false,
@@ -97,7 +101,8 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.11',
-  http_header: 'HTTP_EDUPERSONASSURANCE',
+  internal_alias: 'assurance',
+  http_header: 'HTTP_ASSURANCE',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   singular: false,
@@ -112,7 +117,8 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.7',
-  http_header: 'HTTP_EDUPERSONENTITLEMENT',
+  internal_alias: 'entitlement',
+  http_header: 'HTTP_ENTITLEMENT',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   singular: false,
@@ -127,7 +133,8 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.9',
-  http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION',
+  internal_alias: 'affiliation',
+  http_header: 'HTTP_AFFILIATION',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   singular: false,
@@ -142,6 +149,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.10',
+  internal_alias: 'target_id',
   http_header: 'HTTP_TARGETED_ID',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -161,6 +169,7 @@ end
 
 FederationAttribute.create!(
   oid: 'oid:0.9.2342.19200300.100.1.3',
+  internal_alias: 'mail',
   http_header: 'HTTP_MAIL',
   federation_attribute_aliases: faas,
   primary_alias_id: faas.first.id,
@@ -180,6 +189,7 @@ end
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.10',
+  internal_alias: 'o',
   http_header: 'HTTP_O',
   federation_attribute_aliases: faas,
   primary_alias_id: faas.first.id,
@@ -248,6 +258,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.42',
+  internal_alias: 'givenname',
   http_header: 'HTTP_GIVENNAME',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -262,6 +273,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:0.9.2342.19200300.100.1.41',
+  internal_alias: 'mobilenumber',
   http_header: 'HTTP_MOBILENUMBER',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -290,6 +302,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.16',
+  internal_alias: 'postaladdress',
   http_header: 'HTTP_POSTALADDRESS',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -333,7 +346,8 @@ end
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.4',
-  http_header: 'HTTP_SURNAME',
+  internal_alias: 'sn',
+  http_header: 'HTTP_SN',
   federation_attribute_aliases: faas,
   primary_alias_id: faas.first.id,
   category_attributes: [
@@ -347,6 +361,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.20',
+  internal_alias: 'telephonenumber',
   http_header: 'HTTP_TELEPHONENUMBER',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -361,7 +376,8 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.6',
-  http_header: 'HTTP_PRINCIPALNAME',
+  internal_alias: 'eppn',
+  http_header: 'HTTP_EPPN',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   category_attributes: [

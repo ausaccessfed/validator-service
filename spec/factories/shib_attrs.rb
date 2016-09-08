@@ -18,6 +18,8 @@ FactoryGirl.define do
 
   factory :shib_env, class: Hash do
     env do
+      scoped_affiliation = "#{valid_affiliations.sample}@#{idp_domain}"
+
       {
         'SCRIPT_NAME' => '/auth',
         'QUERY_STRING' => "identity=#{token}",
@@ -52,19 +54,14 @@ FactoryGirl.define do
         'HTTP_AUEDUPERSONSHAREDTOKEN' => token,
         'HTTP_DISPLAYNAME' => name,
         'HTTP_CN' => name,
-        'HTTP_PRINCIPALNAME' => name,
+        'HTTP_EPPN' => name,
         'HTTP_MAIL' => Faker::Internet.email,
         'HTTP_O' => Faker::Company.name,
         'HTTP_HOMEORGANIZATION' => Faker::Internet.domain_name,
         'HTTP_HOMEORGANIZATIONTYPE' => 'urn:mace:terena.org:schac:' \
           'homeOrganizationType:au:university',
-        'HTTP_EDUPERSONAFFILIATION' => rand(2...10).times do
-                                         valid_affiliations.sample
-                                       end,
-        'HTTP_EDUPERSONSCOPEDAFFILIATION' => rand(2...10).times do
-                                               valid_affiliations.sample + \
-                                                 '@' + idp_domain
-                                             end
+        'HTTP_UNSCOPED_AFFILIATION' => valid_affiliations.sample,
+        'HTTP_SCOPED_AFFILIATION' => scoped_affiliation
       }
     end
   end

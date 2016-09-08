@@ -9,5 +9,6 @@ FactoryGirl.define do
     regexp_triggers_failure { Faker::Boolean.boolean }
     singular { Faker::Boolean.boolean }
     http_header { "HTTP_#{Faker::Lorem.word.upcase}" }
+    internal_alias { Faker::Lorem.word }
   end
 end

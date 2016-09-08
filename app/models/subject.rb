@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class Subject < ApplicationRecord
   include Accession::Principal
+  include SubjectAdmin
 
   has_many :subject_roles
   has_many :roles, through: :subject_roles
@@ -8,14 +9,6 @@ class Subject < ApplicationRecord
   has_many :snapshots
 
   valhammer
-
-  scope :from_attributes, lambda { |attributes|
-    where(targeted_id: attributes['HTTP_TARGETED_ID'])
-      .or(
-        where(auedupersonsharedtoken:
-          attributes['HTTP_AUEDUPERSONSHAREDTOKEN'])
-      ).order(created_at: :asc)
-  }
 
   def permissions
     roles.flat_map { |role| role.permissions.map(&:value) }
@@ -36,26 +29,49 @@ class Subject < ApplicationRecord
   end
 
   def valid_identifier_history?
-    Subject.from_attributes(
-      'HTTP_TARGETED_ID' => targeted_id,
-      'HTTP_AUEDUPERSONSHAREDTOKEN' => auedupersonsharedtoken
-    ).count == 1
+    snapshots.map do |snapshot|
+      snapshot.attribute_values
+              .find_by(
+                federation_attribute_id:
+                FederationAttribute.find_by(
+                  internal_alias: :auedupersonsharedtoken
+                ).id
+              )
+    end.compact.uniq(&:value).size == 1
   end
 
   def subject_attributes(attrs)
     self.name = Subject.best_guess_name(attrs)
-    self.mail = attrs['HTTP_MAIL']
-    self.targeted_id = attrs['HTTP_TARGETED_ID']
-    self.auedupersonsharedtoken = attrs['HTTP_AUEDUPERSONSHAREDTOKEN']
+    self.mail = attrs[
+      FederationAttribute.find_by(internal_alias: :mail).http_header
+    ]
+    self.targeted_id = attrs[
+      FederationAttribute.find_by(internal_alias: :targeted_id).http_header
+    ]
   end
 
   def admin?
     roles.any?(&:admin_entitlements?)
   end
 
+  def shared_token
+    snapshots.last.attribute_values.find_by(
+      federation_attribute_id:
+        FederationAttribute.find_by(internal_alias: :auedupersonsharedtoken).id
+    ).try(:value)
+  end
+
   class << self
+    def find_from_attributes(attrs)
+      Subject.find_by(
+        targeted_id: attrs[
+          FederationAttribute.find_by(internal_alias: :targeted_id).http_header
+        ]
+      )
+    end
+
     def create_from_receiver(attrs)
-      subject = Subject.most_recent(attrs)
+      subject = find_from_attributes(attrs)
 
       unless subject
         subject = Subject.new
@@ -69,58 +85,20 @@ class Subject < ApplicationRecord
       subject
     end
 
-    def most_recent(attrs)
-      Subject.from_attributes(attrs).last
-    end
-
     def best_guess_name(attrs)
-      attrs['HTTP_DISPLAYNAME'] ||
-        attrs['HTTP_CN'] ||
-        combined_name
+      attrs[
+        FederationAttribute.find_by(internal_alias: :displayname).http_header
+      ] || attrs[
+        FederationAttribute.find_by(internal_alias: :cn).http_header
+      ] || combined_name
     end
 
     def combined_name(attrs)
-      "#{attrs['HTTP_GIVENNAME']} #{attrs['HTTP_SURNAME']}".strip
+      "#{attrs[
+        FederationAttribute.find_by(internal_alias: :givenname).http_header
+      ]} #{attrs[
+        FederationAttribute.find_by(internal_alias: :sn).http_header
+      ]}".strip
     end
   end
-
-  # :nocov:
-  rails_admin do
-    list do
-      field :name
-
-      field :targeted_id do
-        label 'Targeted ID'
-      end
-
-      field :auedupersonsharedtoken do
-        label 'Shared Token'
-      end
-    end
-
-    field :name
-    field :mail
-    field :enabled
-    field :complete
-
-    field :targeted_id do
-      label 'Targeted ID'
-    end
-
-    field :auedupersonsharedtoken do
-      label 'Shared Token'
-    end
-
-    show do
-      field :snapshots
-
-      field :created_at
-      field :updated_at
-
-      fields :created_at, :updated_at do
-        label label.titleize
-      end
-    end
-  end
-  # :nocov:
 end

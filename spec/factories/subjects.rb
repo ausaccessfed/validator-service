@@ -8,7 +8,6 @@ FactoryGirl.define do
     name { Faker::Name.name }
     mail { Faker::Internet.email }
     targeted_id { "#{idp}!#{sp}!#{SecureRandom.uuid}" }
-    auedupersonsharedtoken { SecureRandom.urlsafe_base64(19) }
 
     enabled { true }
     complete { true }

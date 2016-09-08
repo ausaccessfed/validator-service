@@ -6,6 +6,17 @@ module Authentication
   class SubjectReceiver
     include ShibRack::DefaultReceiver
     include SuperIdentity::Client
+    include Rails.application.routes.url_helpers
+
+    def receive(env)
+      attrs = map_attributes(env)
+
+      return super if attrs[
+        FederationAttribute.find_by(internal_alias: :targeted_id).http_header
+      ]
+
+      finish(env, true)
+    end
 
     def map_attributes(env)
       Authentication::AttributeHelpers.federation_attributes(env)
@@ -18,14 +29,18 @@ module Authentication
         subject = Subject.create_from_receiver(existing_attributes)
         Snapshot.create_from_receiver(subject, existing_attributes)
 
-        subject.entitlements = entitlements(subject.auedupersonsharedtoken)
+        subject.entitlements = entitlements(subject.shared_token)
 
         subject
       end
     end
 
-    def finish(_env)
-      redirect_to('/snapshots/latest')
+    def finish(_env, failed = false)
+      if failed
+        redirect_to(root_path(no_targeted_id: true))
+      else
+        redirect_to(latest_snapshots_path)
+      end
     end
 
     # :nocov:
