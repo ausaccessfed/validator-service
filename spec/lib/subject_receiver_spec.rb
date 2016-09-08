@@ -129,14 +129,14 @@ RSpec.describe Authentication::SubjectReceiver do
             HTTP_TARGETED_ID
             HTTP_AUEDUPERSONSHAREDTOKEN
             HTTP_DISPLAYNAME
-            HTTP_COMMONNAME
-            HTTP_PRINCIPALNAME
+            HTTP_CN
+            HTTP_EPPN
             HTTP_MAIL
             HTTP_O
             HTTP_HOMEORGANIZATION
             HTTP_HOMEORGANIZATIONTYPE
-            HTTP_EDUPERSONAFFILIATION
-            HTTP_EDUPERSONSCOPEDAFFILIATION
+            HTTP_UNSCOPED_AFFILIATION
+            HTTP_SCOPED_AFFILIATION
           )
         )
     end

@@ -53,15 +53,15 @@ FactoryGirl.define do
         'HTTP_TARGETED_ID' => "#{idp}!#{sp}!#{SecureRandom.uuid}",
         'HTTP_AUEDUPERSONSHAREDTOKEN' => token,
         'HTTP_DISPLAYNAME' => name,
-        'HTTP_COMMONNAME' => name,
-        'HTTP_PRINCIPALNAME' => name,
+        'HTTP_CN' => name,
+        'HTTP_EPPN' => name,
         'HTTP_MAIL' => Faker::Internet.email,
         'HTTP_O' => Faker::Company.name,
         'HTTP_HOMEORGANIZATION' => Faker::Internet.domain_name,
         'HTTP_HOMEORGANIZATIONTYPE' => 'urn:mace:terena.org:schac:' \
           'homeOrganizationType:au:university',
-        'HTTP_EDUPERSONAFFILIATION' => valid_affiliations.sample,
-        'HTTP_EDUPERSONSCOPEDAFFILIATION' => scoped_affiliation
+        'HTTP_UNSCOPED_AFFILIATION' => valid_affiliations.sample,
+        'HTTP_SCOPED_AFFILIATION' => scoped_affiliation
       }
     end
   end

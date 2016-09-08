@@ -55,8 +55,8 @@ end
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.3',
-  internal_alias: 'commonname',
-  http_header: 'HTTP_COMMONNAME',
+  internal_alias: 'cn',
+  http_header: 'HTTP_CN',
   federation_attribute_aliases: faas,
   primary_alias_id: faas.first.id,
   category_attributes: [
@@ -85,8 +85,8 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.1',
-  internal_alias: 'edupersonaffiliation',
-  http_header: 'HTTP_EDUPERSONAFFILIATION',
+  internal_alias: 'unscoped_affiliation',
+  http_header: 'HTTP_UNSCOPED_AFFILIATION',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   singular: false,
@@ -101,8 +101,8 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.11',
-  internal_alias: 'edupersonassurance',
-  http_header: 'HTTP_EDUPERSONASSURANCE',
+  internal_alias: 'assurance',
+  http_header: 'HTTP_ASSURANCE',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   singular: false,
@@ -117,8 +117,8 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.7',
-  internal_alias: 'edupersonentitlement',
-  http_header: 'HTTP_EDUPERSONENTITLEMENT',
+  internal_alias: 'entitlement',
+  http_header: 'HTTP_ENTITLEMENT',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   singular: false,
@@ -133,8 +133,8 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.9',
-  internal_alias: 'edupersonscopedaffiliation',
-  http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION',
+  internal_alias: 'affiliation',
+  http_header: 'HTTP_AFFILIATION',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   singular: false,
@@ -346,8 +346,8 @@ end
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.4',
-  internal_alias: 'surname',
-  http_header: 'HTTP_SURNAME',
+  internal_alias: 'sn',
+  http_header: 'HTTP_SN',
   federation_attribute_aliases: faas,
   primary_alias_id: faas.first.id,
   category_attributes: [
@@ -376,8 +376,8 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.6',
-  internal_alias: 'prinipalname',
-  http_header: 'HTTP_PRINCIPALNAME',
+  internal_alias: 'eppn',
+  http_header: 'HTTP_EPPN',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   category_attributes: [

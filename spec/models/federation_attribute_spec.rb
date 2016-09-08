@@ -63,7 +63,7 @@ RSpec.describe FederationAttribute, type: :model do
       {
         'HTTP_DISPLAYNAME' => shib_env['HTTP_DISPLAYNAME'],
         'HTTP_O' => shib_env['HTTP_O'],
-        'HTTP_COMMONNAME' => shib_env['HTTP_COMMONNAME']
+        'HTTP_CN' => shib_env['HTTP_CN']
       }
     end
 
@@ -71,8 +71,8 @@ RSpec.describe FederationAttribute, type: :model do
       only_existing_attributes
         .merge('HTTP_HOMEORGANIZATIONTYPE' =>
                  shib_env['HTTP_HOMEORGANIZATIONTYPE'],
-               'HTTP_EDUPERSONSCOPEDAFFILIATION' =>
-                 shib_env['HTTP_EDUPERSONAFFILIATION'])
+               'HTTP_SCOPED_AFFILIATION' =>
+                 shib_env['HTTP_SCOPED_AFFILIATION'])
     end
 
     let(:has_existing_attributes) do
@@ -88,7 +88,7 @@ RSpec.describe FederationAttribute, type: :model do
         has_existing_attributes
 
         expect(subject.existing_headers).to eq(%w(
-                                                 HTTP_COMMONNAME
+                                                 HTTP_CN
                                                  HTTP_DISPLAYNAME
                                                  HTTP_O
                                                ))
@@ -100,7 +100,7 @@ RSpec.describe FederationAttribute, type: :model do
         has_existing_attributes
 
         expect(subject.existing_attributes(shib_env))
-          .to eql('HTTP_COMMONNAME' => shib_env['HTTP_COMMONNAME'],
+          .to eql('HTTP_CN' => shib_env['HTTP_CN'],
                   'HTTP_DISPLAYNAME' => shib_env['HTTP_DISPLAYNAME'],
                   'HTTP_O' => shib_env['HTTP_O'])
       end
@@ -131,7 +131,7 @@ RSpec.describe FederationAttribute, type: :model do
         has_existing_attributes
 
         expect(subject.new_attributes(with_new_attributes).keys).to eql(
-          %w(HTTP_HOMEORGANIZATIONTYPE HTTP_EDUPERSONSCOPEDAFFILIATION)
+          %w(HTTP_HOMEORGANIZATIONTYPE HTTP_SCOPED_AFFILIATION)
         )
       end
 

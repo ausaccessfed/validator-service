@@ -89,7 +89,7 @@ class Subject < ApplicationRecord
       attrs[
         FederationAttribute.find_by(internal_alias: :displayname).http_header
       ] || attrs[
-        FederationAttribute.find_by(internal_alias: :commonname).http_header
+        FederationAttribute.find_by(internal_alias: :cn).http_header
       ] || combined_name
     end
 
@@ -97,7 +97,7 @@ class Subject < ApplicationRecord
       "#{attrs[
         FederationAttribute.find_by(internal_alias: :givenname).http_header
       ]} #{attrs[
-        FederationAttribute.find_by(internal_alias: :surname).http_header
+        FederationAttribute.find_by(internal_alias: :sn).http_header
       ]}".strip
     end
   end
