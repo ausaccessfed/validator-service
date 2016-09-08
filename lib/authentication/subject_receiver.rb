@@ -18,7 +18,7 @@ module Authentication
         subject = Subject.create_from_receiver(existing_attributes)
         Snapshot.create_from_receiver(subject, existing_attributes)
 
-        Authentication::SubjectReceiver.assign_entitlements(
+        assign_entitlements(
           subject,
           entitlements(subject.auedupersonsharedtoken)
         )
@@ -37,17 +37,17 @@ module Authentication
     end
     # :nocov:
 
-    class << self
-      def assign_entitlements(subject, values)
-        assigned = values.map do |value|
-          r = Role.find_by(entitlement: value)
-          subject.roles << r unless subject.roles.include?(r)
+    private
 
-          r
-        end
+    def assign_entitlements(subject, values)
+      assigned = values.map do |value|
+        r = Role.find_by(entitlement: value)
+        subject.roles << r unless subject.roles.include?(r)
 
-        subject.subject_roles.where.not(role: assigned).destroy_all
+        r
       end
+
+      subject.subject_roles.where.not(role: assigned).destroy_all
     end
   end
 end
