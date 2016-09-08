@@ -76,16 +76,11 @@ RSpec.describe FederationAttribute, type: :model do
     end
 
     let(:has_existing_attributes) do
-      only_existing_attributes.each do |http_header, _value|
-        faa = FederationAttributeAlias.create!(
-          name: http_header.sub('HTTP_', '').downcase
-        )
-
-        create(:federation_attribute,
-               http_header: http_header,
-               federation_attribute_aliases: [faa],
-               primary_alias: faa)
-      end
+      create_federation_attributes(
+        only_existing_attributes.keys.map do |http_header|
+          http_header.sub(/^HTTP_/, '').downcase.to_sym
+        end
+      )
     end
 
     describe '.existing_headers' do
