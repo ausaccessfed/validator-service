@@ -15,32 +15,8 @@ RailsAdmin.config do |config|
     # history_show
   end
 
-  config.authenticate_with do |controller|
-    ensure_authenticated
-    @access_checked = true
-
-    unless subject.admin?
-      message = <<-message
-        You are not an admin in test IdE.
-
-        To override this for a development user, add a role with an
-        entitlement of `urn:mace:aaf.edu.au:ide:internal:aaf-admin` and
-        add an entry to `subject_roles` linking your subject and new role.
-
-        `rails c` eg.
-        > r = Role.create!(
-            name: 'auto',
-            entitlement: 'urn:mace:aaf.edu.au:ide:internal:aaf-admin')
-        > s = Subject.find_by(mail: 'jefferey.kohler@ernser.example.edu')
-        > s.roles << r
-      message
-
-      Rails.logger.debug message
-
-      flash[:notice] = simple_format(message) if Rails.env.development?
-
-      redirect_to controller.main_app.root_path
-    end
+  config.authenticate_with do |_controller|
+    check_access!('app:validator:admin:web_interface')
   end
 
   # Note: These are strings to stop `bin/setup`, etc. from crashing.

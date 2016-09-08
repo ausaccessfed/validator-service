@@ -23,8 +23,9 @@ FactoryGirl.define do
       end
     end
 
+    # :nocov:
     trait :admin do
-      transient { permission '*' }
+      transient { permission 'app:validator:admin:*' }
 
       after(:create) do |subject, attrs|
         role = create(
@@ -36,5 +37,6 @@ FactoryGirl.define do
         role.subjects << subject
       end
     end
+    # :nocov:
   end
 end

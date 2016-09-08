@@ -18,16 +18,6 @@ class Subject < ApplicationRecord
     enabled?
   end
 
-  def entitlements=(values)
-    assigned = values.map do |value|
-      Role.for_entitlement(value).tap do |r|
-        roles << r unless roles.include?(r)
-      end
-    end
-
-    subject_roles.where.not(role: assigned).destroy_all
-  end
-
   def valid_identifier_history?
     snapshots.map do |snapshot|
       snapshot.attribute_values
@@ -48,10 +38,6 @@ class Subject < ApplicationRecord
     self.targeted_id = attrs[
       FederationAttribute.find_by(internal_alias: :targeted_id).http_header
     ]
-  end
-
-  def admin?
-    roles.any?(&:admin_entitlements?)
   end
 
   def shared_token

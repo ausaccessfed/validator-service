@@ -24,6 +24,7 @@ RSpec.describe Authentication::SubjectReceiver do
     create_federation_attributes
 
     entitlement = 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
+    FactoryGirl.create(:role, entitlement: entitlement)
 
     stub_ide(shared_token: attrs['HTTP_AUEDUPERSONSHAREDTOKEN'],
              entitlements: [entitlement])
@@ -147,6 +148,36 @@ RSpec.describe Authentication::SubjectReceiver do
 
     it 'redirects to the latest snapshot after a successful login' do
       expect(result).to eql([302, { 'Location' => '/snapshots/latest' }, []])
+    end
+  end
+
+  describe '#assign_entitlements' do
+    let(:subject) { FactoryGirl.create(:subject) }
+
+    before :each do
+      FactoryGirl.create(:permission, value: 'app:validator:admin:*')
+    end
+
+    it 'assigns roles' do
+      expect(subject.roles.size).to eql 0
+
+      subject_receiver.send(:assign_entitlements,
+                            subject,
+                            ['urn:mace:aaf.edu.au:ide:internal:aaf-admin'])
+
+      expect(subject.roles.size).to eql 1
+    end
+
+    it 'removes roles' do
+      expect(subject.roles.size).to eql 0
+      subject_receiver.send(:assign_entitlements,
+                            subject,
+                            ['urn:mace:aaf.edu.au:ide:internal:aaf-admin'])
+      expect(subject.roles.size).to eql 1
+
+      subject_receiver.send(:assign_entitlements, subject, [])
+
+      expect(subject.roles.reload.size).to eql 0
     end
   end
 end

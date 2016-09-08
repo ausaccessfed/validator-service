@@ -29,7 +29,10 @@ module Authentication
         subject = Subject.create_from_receiver(existing_attributes)
         Snapshot.create_from_receiver(subject, existing_attributes)
 
-        subject.entitlements = entitlements(subject.shared_token)
+        assign_entitlements(
+          subject,
+          entitlements(subject.shared_token)
+        )
 
         subject
       end
@@ -48,5 +51,18 @@ module Authentication
       Rails.application.config.validator_service.ide
     end
     # :nocov:
+
+    private
+
+    def assign_entitlements(subject, values)
+      assigned = values.map do |value|
+        r = Role.find_by(entitlement: value)
+        subject.roles << r unless subject.roles.include?(r)
+
+        r
+      end
+
+      subject.subject_roles.where.not(role: assigned).destroy_all
+    end
   end
 end
