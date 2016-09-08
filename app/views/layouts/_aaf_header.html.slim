@@ -7,5 +7,5 @@
     - else
       = nav_first_item('Welcome', main_app.root_path)
     = nav_first_item('Documentation', main_app.documentation_path)
-    - if @subject && @subject.permits?('app:validator:admin:*')
+    - if @subject && @subject.permits?('app:validator:admin:web_interface')
       = nav_first_item('Admin', rails_admin.dashboard_path)

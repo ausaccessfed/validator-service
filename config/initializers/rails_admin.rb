@@ -16,7 +16,7 @@ RailsAdmin.config do |config|
   end
 
   config.authenticate_with do |_controller|
-    check_access!('app:validator:admin:*')
+    check_access!('app:validator:admin:web_interface')
   end
 
   # Note: These are strings to stop `bin/setup`, etc. from crashing.
