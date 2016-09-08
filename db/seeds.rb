@@ -24,6 +24,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.27856.1.2.5',
+  internal_alias: 'auedupersonsharedtoken',
   http_header: 'HTTP_AUEDUPERSONSHAREDTOKEN',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -54,6 +55,7 @@ end
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.3',
+  internal_alias: 'commonname',
   http_header: 'HTTP_COMMONNAME',
   federation_attribute_aliases: faas,
   primary_alias_id: faas.first.id,
@@ -68,6 +70,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:2.16.840.1.113730.3.1.241',
+  internal_alias: 'displayname',
   http_header: 'HTTP_DISPLAYNAME',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -82,6 +85,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.1',
+  internal_alias: 'edupersonaffiliation',
   http_header: 'HTTP_EDUPERSONAFFILIATION',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -97,6 +101,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.11',
+  internal_alias: 'edupersonassurance',
   http_header: 'HTTP_EDUPERSONASSURANCE',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -112,6 +117,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.7',
+  internal_alias: 'edupersonentitlement',
   http_header: 'HTTP_EDUPERSONENTITLEMENT',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -127,6 +133,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.9',
+  internal_alias: 'edupersonscopedaffiliation',
   http_header: 'HTTP_EDUPERSONSCOPEDAFFILIATION',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -142,6 +149,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.10',
+  internal_alias: 'target_id',
   http_header: 'HTTP_TARGETED_ID',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -161,6 +169,7 @@ end
 
 FederationAttribute.create!(
   oid: 'oid:0.9.2342.19200300.100.1.3',
+  internal_alias: 'mail',
   http_header: 'HTTP_MAIL',
   federation_attribute_aliases: faas,
   primary_alias_id: faas.first.id,
@@ -180,6 +189,7 @@ end
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.10',
+  internal_alias: 'o',
   http_header: 'HTTP_O',
   federation_attribute_aliases: faas,
   primary_alias_id: faas.first.id,
@@ -248,6 +258,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.42',
+  internal_alias: 'givenname',
   http_header: 'HTTP_GIVENNAME',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -262,6 +273,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:0.9.2342.19200300.100.1.41',
+  internal_alias: 'mobilenumber',
   http_header: 'HTTP_MOBILENUMBER',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -290,6 +302,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.16',
+  internal_alias: 'postaladdress',
   http_header: 'HTTP_POSTALADDRESS',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -333,6 +346,7 @@ end
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.4',
+  internal_alias: 'surname',
   http_header: 'HTTP_SURNAME',
   federation_attribute_aliases: faas,
   primary_alias_id: faas.first.id,
@@ -347,6 +361,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.20',
+  internal_alias: 'telephonenumber',
   http_header: 'HTTP_TELEPHONENUMBER',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
@@ -361,6 +376,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.6',
+  internal_alias: 'prinipalname',
   http_header: 'HTTP_PRINCIPALNAME',
   federation_attribute_aliases: [faa],
   primary_alias: faa,

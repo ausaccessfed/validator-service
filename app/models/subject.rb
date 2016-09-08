@@ -32,16 +32,20 @@ class Subject < ApplicationRecord
       snapshot.attribute_values
               .find_by(
                 federation_attribute_id:
-                FederationAttribute.internal_aliases[:auedupersonsharedtoken].id
+                FederationAttribute.find_by(
+                  internal_alias: :auedupersonsharedtoken
+                ).id
               )
     end.compact.uniq(&:value).size == 1
   end
 
   def subject_attributes(attrs)
     self.name = Subject.best_guess_name(attrs)
-    self.mail = attrs[FederationAttribute.internal_aliases[:mail].http_header]
+    self.mail = attrs[
+      FederationAttribute.find_by(internal_alias: :mail).http_header
+    ]
     self.targeted_id = attrs[
-      FederationAttribute.internal_aliases[:targeted_id].http_header
+      FederationAttribute.find_by(internal_alias: :targeted_id).http_header
     ]
   end
 
@@ -52,7 +56,7 @@ class Subject < ApplicationRecord
   def shared_token
     snapshots.last.attribute_values.find_by(
       federation_attribute_id:
-        FederationAttribute.internal_aliases[:auedupersonsharedtoken].id
+        FederationAttribute.find_by(internal_alias: :auedupersonsharedtoken).id
     ).try(:value)
   end
 
@@ -60,7 +64,7 @@ class Subject < ApplicationRecord
     def find_from_attributes(attrs)
       Subject.find_by(
         targeted_id: attrs[
-          FederationAttribute.internal_aliases[:targeted_id].http_header
+          FederationAttribute.find_by(internal_alias: :targeted_id).http_header
         ]
       )
     end
@@ -81,15 +85,19 @@ class Subject < ApplicationRecord
     end
 
     def best_guess_name(attrs)
-      attrs[FederationAttribute.internal_aliases[:displayname].http_header] ||
-        attrs[FederationAttribute.internal_aliases[:cn].http_header] ||
-        combined_name
+      attrs[
+        FederationAttribute.find_by(internal_alias: :displayname).http_header
+      ] || attrs[
+        FederationAttribute.find_by(internal_alias: :commonname).http_header
+      ] || combined_name
     end
 
     def combined_name(attrs)
-      "#{attrs[FederationAttribute.internal_aliases[:givenname].http_header]} "\
-      "#{attrs[FederationAttribute.internal_aliases[:surname].http_header]}"
-        .strip
+      "#{attrs[
+        FederationAttribute.find_by(internal_alias: :givenname).http_header
+      ]} #{attrs[
+        FederationAttribute.find_by(internal_alias: :surname).http_header
+      ]}".strip
     end
   end
 

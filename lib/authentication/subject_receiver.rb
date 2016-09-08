@@ -12,7 +12,7 @@ module Authentication
       attrs = map_attributes(env)
 
       return super if attrs[
-        FederationAttribute.internal_aliases[:targeted_id].http_header
+        FederationAttribute.find_by(internal_alias: :targeted_id).http_header
       ]
 
       finish(env, true)
