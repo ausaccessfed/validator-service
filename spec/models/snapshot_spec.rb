@@ -49,16 +49,7 @@ RSpec.describe Snapshot, type: :model do
     end
 
     before :each do
-      %w(HTTP_TARGETED_ID HTTP_MAIL HTTP_DISPLAYNAME).each do |http_header|
-        faa = FederationAttributeAlias.create!(
-          name: http_header.sub('HTTP_', '').downcase
-        )
-
-        create(:federation_attribute,
-               http_header: http_header,
-               federation_attribute_aliases: [faa],
-               primary_alias: faa)
-      end
+      create_federation_attributes([:targeted_id, :mail, :displayname])
     end
 
     let(:subject) { Subject.create(attributes_for(:subject)) }

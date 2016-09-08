@@ -9,43 +9,54 @@ RSpec.describe Authentication::SubjectReceiver do
       host: 'ide.example.edu',
       cert: 'spec/api.crt',
       key: 'spec/api.key',
-      admin_entitlements: ['urn:mace:aaf.edu.au:ide:internal:aaf-admin',
-                           'urn:mace:aaf.edu.au:ide:internal:aaf-validator']
+      admin_entitlements: ['urn:mace:aaf.edu.au:ide:internal:aaf-admin']
     }
+  end
+
+  let(:attrs) do
+    Authentication::AttributeHelpers
+      .federation_attributes(attributes_for(:shib_env)[:env])
   end
 
   before do
     allow(subject_receiver).to receive(:ide_config).and_return(ide_config)
+
+    create_federation_attributes
+
+    entitlement = 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
+
+    stub_ide(shared_token: attrs['HTTP_AUEDUPERSONSHAREDTOKEN'],
+             entitlements: [entitlement])
+  end
+
+  describe '#receive' do
+    it 'continues if it has a targeted ID' do
+      allow(subject_receiver).to receive(:map_attributes) do
+        attributes_for(:shib_env)[:env]
+      end
+
+      env = { 'rack.session' => { 'subject_id' => 0 } }
+
+      expect(subject_receiver.receive(env)).to eql(
+        [302, { 'Location' => '/snapshots/latest' }, []]
+      )
+    end
+
+    it 'redirects if it has no targeted ID' do
+      allow(subject_receiver).to receive(:map_attributes) do
+        envs = attributes_for(:shib_env)[:env]
+        envs.delete('HTTP_TARGETED_ID')
+
+        envs
+      end
+
+      expect(subject_receiver.receive({})).to eql(
+        [302, { 'Location' => '/?no_targeted_id=true' }, []]
+      )
+    end
   end
 
   describe '#subject' do
-    let(:attrs) do
-      Authentication::AttributeHelpers
-        .federation_attributes(attributes_for(:shib_env)[:env])
-    end
-
-    before :each do
-      %w(HTTP_TARGETED_ID
-         HTTP_AUEDUPERSONSHAREDTOKEN
-         HTTP_MAIL
-         HTTP_DISPLAYNAME).each do |http_header|
-        faa = FederationAttributeAlias.create!(
-          name: http_header.sub('HTTP_', '').downcase
-        )
-
-        create(:federation_attribute,
-               http_header: http_header,
-               federation_attribute_aliases: [faa],
-               primary_alias: faa)
-      end
-
-      entitlement = 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
-      FactoryGirl.create(:role, entitlement: entitlement)
-
-      stub_ide(shared_token: attrs['HTTP_AUEDUPERSONSHAREDTOKEN'],
-               entitlements: [entitlement])
-    end
-
     context 'creating subject and associated records' do
       let(:subject) { subject_receiver.subject({}, attrs) }
 
@@ -117,14 +128,15 @@ RSpec.describe Authentication::SubjectReceiver do
           %w(
             HTTP_TARGETED_ID
             HTTP_AUEDUPERSONSHAREDTOKEN
-            HTTP_DISPLAYNAME HTTP_CN
-            HTTP_PRINCIPALNAME
+            HTTP_DISPLAYNAME
+            HTTP_CN
+            HTTP_EPPN
             HTTP_MAIL
             HTTP_O
             HTTP_HOMEORGANIZATION
             HTTP_HOMEORGANIZATIONTYPE
-            HTTP_EDUPERSONAFFILIATION
-            HTTP_EDUPERSONSCOPEDAFFILIATION
+            HTTP_UNSCOPED_AFFILIATION
+            HTTP_SCOPED_AFFILIATION
           )
         )
     end

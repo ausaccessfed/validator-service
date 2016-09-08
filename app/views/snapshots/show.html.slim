@@ -9,9 +9,7 @@ h2
     =< link_to 'View your most recent attributes in your latest snapshot.', latest_snapshots_path
 - unless @subject.valid_identifier_history?
   .alert.alert-danger role="alert"
-    | You have an invalid identifier history.  Either your
-    =<> link_to 'eduPersonTargetedID', documentation_attribute_path('oid:1.3.6.1.4.1.5923.1.1.1.10'), target: '_blank'
-    | or
+    | Warning: Your
     =<> link_to 'auEduPersonSharedToken', documentation_attribute_path('oid:1.3.6.1.4.1.27856.1.2.5'), target: '_blank'
     | is changing over time.
 

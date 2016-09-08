@@ -4,7 +4,7 @@ config = YAML.load_file(File.expand_path('../deploy.yml', __FILE__))
 puma_config = config['puma']
 
 preload_app!
-daemonize
+daemonize unless ENV.fetch('RAILS_ENV') == 'development'
 
 port puma_config['port']
 environment ENV.fetch('RAILS_ENV') { 'development' }

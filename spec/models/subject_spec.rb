@@ -66,136 +66,40 @@ RSpec.describe Subject, type: :model do
   end
 
   describe '#valid_identifier_history?' do
-    let(:subject) { FactoryGirl.create(:subject) }
+    let(:subject) { Subject.create(attributes_for(:subject)) }
+
+    let(:attrs) do
+      Authentication::AttributeHelpers
+        .federation_attributes(attributes_for(:shib_env)[:env])
+    end
+
+    before :each do
+      create_federation_attributes
+    end
 
     it 'is valid' do
+      Snapshot.create_from_receiver(subject, attrs)
+      Snapshot.create_from_receiver(subject, attrs)
+
       expect(subject.valid_identifier_history?).to eql true
     end
 
-    describe 'is invalid' do
-      it 'invalid targeted id' do
-        future_time = DateTime.current + 10.minutes
+    it 'is invalid' do
+      Snapshot.create_from_receiver(subject, attrs)
+      Snapshot.create_from_receiver(
+        subject,
+        attrs.merge('HTTP_AUEDUPERSONSHAREDTOKEN' => '¯\_(ツ)_/¯')
+      )
 
-        FactoryGirl.create(
-          :subject,
-          targeted_id: subject.targeted_id,
-          created_at: future_time,
-          updated_at: future_time
-        )
-
-        expect(subject.valid_identifier_history?).to eql false
-      end
-
-      it 'invalid auedupersonsharedtoken' do
-        future_time = DateTime.current + 10.minutes
-
-        FactoryGirl.create(
-          :subject,
-          auedupersonsharedtoken: subject.auedupersonsharedtoken,
-          created_at: future_time,
-          updated_at: future_time
-        )
-
-        expect(subject.valid_identifier_history?).to eql false
-      end
+      expect(subject.valid_identifier_history?).to eql false
     end
   end
 
   context 'class' do
     let(:subject) { FactoryGirl.create(:subject) }
 
-    describe '.from_attributes' do
-      describe 'finds record' do
-        it 'by targeted_id' do
-          result = Subject.from_attributes(
-            'HTTP_TARGETED_ID' => subject.targeted_id,
-            'HTTP_AUEDUPERSONSHAREDTOKEN' => ''
-          )
-
-          expect(result.count).to eql 1
-          expect(result.first).to eql subject
-        end
-
-        it 'by auedupersonsharedtoken' do
-          result = Subject.from_attributes(
-            'HTTP_TARGETED_ID' => '',
-            'HTTP_AUEDUPERSONSHAREDTOKEN' =>
-              subject.auedupersonsharedtoken
-          )
-
-          expect(result.count).to eql 1
-          expect(result.first).to eql subject
-        end
-
-        it 'by both' do
-          result = Subject.from_attributes(
-            'HTTP_TARGETED_ID' => subject.targeted_id,
-            'HTTP_AUEDUPERSONSHAREDTOKEN' =>
-              subject.auedupersonsharedtoken
-          )
-
-          expect(result.count).to eql 1
-          expect(result.first).to eql subject
-        end
-      end
-
-      it 'does not find record' do
-        expect(Subject.from_attributes(
-          'HTTP_TARGETED_ID' => '',
-          'HTTP_AUEDUPERSONSHAREDTOKEN' => ''
-        ).count).to eql 0
-      end
-    end
-
-    describe '.most_recent' do
-      describe 'finds record' do
-        describe 'chooses the most recent subject' do
-          it 'with invalid targeted id' do
-            future_time = DateTime.current + 10.minutes
-
-            subject2 = FactoryGirl.create(
-              :subject,
-              targeted_id: subject.targeted_id,
-              created_at: future_time,
-              updated_at: future_time
-            )
-
-            expect(
-              Subject.most_recent(
-                'HTTP_TARGETED_ID' => subject.targeted_id,
-                'HTTP_AUEDUPERSONSHAREDTOKEN' =>
-                  subject.auedupersonsharedtoken
-              )
-            ).to eql subject2
-          end
-
-          it 'with invalid auedupersonsharedtoken' do
-            future_time = DateTime.current + 10.minutes
-
-            subject2 = FactoryGirl.create(
-              :subject,
-              auedupersonsharedtoken: subject.auedupersonsharedtoken,
-              created_at: future_time,
-              updated_at: future_time
-            )
-
-            expect(
-              Subject.most_recent(
-                'HTTP_TARGETED_ID' => subject.targeted_id,
-                'HTTP_AUEDUPERSONSHAREDTOKEN' =>
-                  subject.auedupersonsharedtoken
-              )
-            ).to eql subject2
-          end
-        end
-      end
-
-      it 'does not find record' do
-        expect(Subject.most_recent(
-                 'HTTP_TARGETED_ID' => '',
-                 'HTTP_AUEDUPERSONSHAREDTOKEN' => ''
-        )).to eql nil
-      end
+    before :each do
+      create_federation_attributes
     end
 
     describe '.combined_name' do
@@ -214,14 +118,14 @@ RSpec.describe Subject, type: :model do
       end
 
       it 'has surname' do
-        expect(Subject.combined_name('HTTP_SURNAME' => surname)).to eql(
+        expect(Subject.combined_name('HTTP_SN' => surname)).to eql(
           surname
         )
       end
 
       it 'has both' do
         expect(Subject.combined_name('HTTP_GIVENNAME' => given_name,
-                                     'HTTP_SURNAME' => surname)).to eql(
+                                     'HTTP_SN' => surname)).to eql(
                                        given_name + ' ' + surname
                                      )
       end
