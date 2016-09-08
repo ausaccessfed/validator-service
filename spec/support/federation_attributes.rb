@@ -41,7 +41,6 @@ module FederationAttributes
       mobilenumber: 'oid:0.9.2342.19200300.100.1.41',
       o: 'oid:2.5.4.10',
       postaladdress: 'oid:2.5.4.16',
-      principalname: 'oid:1.3.6.1.4.1.5923.1.1.1.6',
       sn: 'oid:2.5.4.4',
       targeted_id: 'oid:1.3.6.1.4.1.5923.1.1.1.10',
       telephonenumber: 'oid:2.5.4.20'

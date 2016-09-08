@@ -132,14 +132,14 @@ RSpec.describe Subject, type: :model do
       end
 
       it 'has surname' do
-        expect(Subject.combined_name('HTTP_SURNAME' => surname)).to eql(
+        expect(Subject.combined_name('HTTP_SN' => surname)).to eql(
           surname
         )
       end
 
       it 'has both' do
         expect(Subject.combined_name('HTTP_GIVENNAME' => given_name,
-                                     'HTTP_SURNAME' => surname)).to eql(
+                                     'HTTP_SN' => surname)).to eql(
                                        given_name + ' ' + surname
                                      )
       end
