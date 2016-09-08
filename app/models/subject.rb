@@ -50,12 +50,6 @@ class Subject < ApplicationRecord
     self.auedupersonsharedtoken = attrs['HTTP_AUEDUPERSONSHAREDTOKEN']
   end
 
-  def admin?
-    permissions.any? do |permission|
-      permission.starts_with?('app:validator:admin:')
-    end
-  end
-
   class << self
     def create_from_receiver(attrs)
       subject = Subject.most_recent(attrs)
