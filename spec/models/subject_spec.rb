@@ -116,18 +116,32 @@ RSpec.describe Subject, type: :model do
   end
 
   describe '#entitlements=' do
-    it 'assigns roles' do
+    let(:subject) { FactoryGirl.create(:subject) }
+
+    before :each do
       FactoryGirl.create(
         :role,
         entitlement: 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
       )
       FactoryGirl.create(:permission, value: 'app:validator:admin:*')
+    end
 
+    it 'assigns roles' do
       expect(subject.roles.size).to eql 0
 
       subject.entitlements = ['urn:mace:aaf.edu.au:ide:internal:aaf-admin']
 
       expect(subject.roles.size).to eql 1
+    end
+
+    it 'removes roles' do
+      expect(subject.roles.size).to eql 0
+      subject.entitlements = ['urn:mace:aaf.edu.au:ide:internal:aaf-admin']
+      expect(subject.roles.size).to eql 1
+
+      subject.entitlements = []
+
+      expect(subject.roles.reload.size).to eql 0
     end
   end
 

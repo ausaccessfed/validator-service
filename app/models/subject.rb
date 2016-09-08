@@ -29,7 +29,9 @@ class Subject < ApplicationRecord
     assigned = values.map do |value|
       r = Role.find_by(entitlement: value)
       roles << r unless roles.include?(r)
-    end.flatten
+
+      r
+    end
 
     subject_roles.where.not(role: assigned).destroy_all
   end
