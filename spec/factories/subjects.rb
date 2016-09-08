@@ -24,6 +24,7 @@ FactoryGirl.define do
       end
     end
 
+    # :nocov:
     trait :admin do
       transient { permission 'app:validator:admin:*' }
 
@@ -37,5 +38,6 @@ FactoryGirl.define do
         role.subjects << subject
       end
     end
+    # :nocov:
   end
 end

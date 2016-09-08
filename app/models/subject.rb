@@ -25,17 +25,6 @@ class Subject < ApplicationRecord
     enabled?
   end
 
-  def entitlements=(values)
-    assigned = values.map do |value|
-      r = Role.find_by(entitlement: value)
-      roles << r unless roles.include?(r)
-
-      r
-    end
-
-    subject_roles.where.not(role: assigned).destroy_all
-  end
-
   def valid_identifier_history?
     Subject.from_attributes(
       'HTTP_TARGETED_ID' => targeted_id,
