@@ -156,7 +156,7 @@ faa = FederationAttributeAlias.create!(
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.5923.1.1.1.10',
-  internal_alias: 'target_id',
+  internal_alias: 'targeted_id',
   http_header: 'HTTP_TARGETED_ID',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
