@@ -12,7 +12,7 @@ environment env
 workers 2
 threads 8, 32
 tag 'validator'
-pidfile 'tmp/pids/puma.pid'
+pidfile 'tmp/pids/server.pid'
 
 stdout_redirect puma_config['stdout'],
                 puma_config['stderr'],
