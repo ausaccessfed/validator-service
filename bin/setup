@@ -29,5 +29,8 @@ load_seeds
 clean_logs
 clean_tempfiles
 
+FileUtils.mkdir_p 'tmp/pids' unless File.exist?('tmp/pids')
+FileUtils.mkdir_p 'tmp/logs' unless File.exist?('tmp/logs')
+
 puts "\n== Restarting application server =="
 system 'bin/rails restart'
