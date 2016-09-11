@@ -14,11 +14,12 @@
   %body.rails_admin
     #loading.label.label-warning{style: 'display:none; position:fixed; right:20px; bottom:20px; z-index:100000'}= t('admin.loading')
     = render 'layouts/aaf_header'
-    .container-fluid
-      .row
-        .col-sm-3.col-sm-offset-0.col-md-2.col-md-offset-1.custom-sidebar-nav
-          = render "layouts/rails_admin/sidebar_navigation"
-        .col-sm-7.col-md-8
-          .content{:'data-pjax-container' => true}= render template: 'layouts/rails_admin/pjax'
+    %section.content
+      .container-fluid
+        .row
+          .col-sm-3.custom-sidebar-nav
+            = render "layouts/rails_admin/sidebar_navigation"
+          .col-sm-9
+            .content{:'data-pjax-container' => true}= render template: 'layouts/rails_admin/pjax'
     = render 'layouts/aaf_footer'
 
