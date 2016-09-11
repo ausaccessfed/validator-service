@@ -31,5 +31,5 @@ God.watch do |w|
   w.start = 'bundle exec puma -C config/puma.rb -d'
   w.restart = -> { God.registry['puma'].signal('USR2') }
 
-  w.pid_file = File.join(PID_FILE_DIRECTORY, 'puma.pid')
+  w.pid_file = File.join(PID_FILE_DIRECTORY, 'server.pid')
 end

@@ -15,7 +15,7 @@ include Gumboot::Strap
 
 puts "\n== Installing configuration files =="
 link_global_configuration %w(api-client.crt api-client.key)
-update_local_configuration %w(validator_service.yml)
+update_local_configuration %w(validator_service.yml deploy.yml)
 
 puts "\n== Loading Rails environment =="
 require_relative '../config/environment'
@@ -28,6 +28,9 @@ load_seeds
 
 clean_logs
 clean_tempfiles
+
+FileUtils.mkdir_p 'tmp/pids' unless File.exist?('tmp/pids')
+FileUtils.mkdir_p 'tmp/logs' unless File.exist?('tmp/logs')
 
 puts "\n== Restarting application server =="
 system 'bin/rails restart'
