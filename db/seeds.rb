@@ -82,25 +82,27 @@ http://tools.ietf.org/html/rfc4648#page-7</a>',
  released with the displayName it cannot be relied upon to preserve anonymity.'
 )
 
-# FederationAttribute.create!(
-#   oid: nil,
-#   http_header: 'HTTP_AUTHENTICATIONMETHOD',
-#   federation_attribute_aliases: [
-#     FederationAttributeAlias.new(
-#       name: 'authenticationMethod'
-#     )
-#   ],
-#   category_attributes: [
-#     CategoryAttribute.new(presence: true, category: core)
-#   ],
-#   description: 'Defines the method(s) used to verify the person\'s identity.',
-#   notes_on_format: 'A valid URI according to RFC 3986.
-# <br /><br />
-# e.g. urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport',
-#   notes_on_usage: 'The authoritative definition for this attribute can be found
-#  <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0
-# -os.pdf" target="_blank">here</a> in the SAML 2 specification.'
-# )
+faa = FederationAttributeAlias.create!(
+  name: 'authenticationMethod'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:1.3.6.1.4.1.9967.1.6.1.2',
+  internal_alias: 'authenticationmethod',
+  http_header: 'HTTP_AUTHENTICATIONMETHOD',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: true, category: core)
+  ],
+  description: 'Defines the method(s) used to verify the person\'s identity.',
+  notes_on_format: 'A valid URI according to RFC 3986.
+<br /><br />
+e.g. urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport',
+  notes_on_usage: 'The authoritative definition for this attribute can be found
+ <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0
+-os.pdf" target="_blank">here</a> in the SAML 2 specification.'
+)
 
 faas = %w(
   cn
@@ -856,16 +858,21 @@ FederationAttribute.create!(
   notes_on_privacy: ''
 )
 
-faa = FederationAttributeAlias.create!(
-  name: 'homeOrganization'
-)
+faas = %w(
+  homeOrganization
+  schacHomeOrganization
+).map do |name|
+  FederationAttributeAlias.create!(
+    name: name
+  )
+end
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.25178.1.2.9',
   internal_alias: 'homeorganization',
   http_header: 'HTTP_HOMEORGANIZATION',
-  federation_attribute_aliases: [faa],
-  primary_alias: faa,
+  federation_attribute_aliases: faas,
+  primary_alias: faas.first,
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
@@ -875,16 +882,21 @@ FederationAttribute.create!(
   notes_on_privacy: ''
 )
 
-faa = FederationAttributeAlias.create!(
-  name: 'homeOrganizationType'
-)
+faas = %w(
+  homeOrganizationType
+  schacHomeOrganizationType
+).map do |name|
+  FederationAttributeAlias.create!(
+    name: name
+  )
+end
 
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.25178.1.2.10',
   internal_alias: 'homeorganizationtype',
   http_header: 'HTTP_HOMEORGANIZATIONTYPE',
-  federation_attribute_aliases: [faa],
-  primary_alias: faa,
+  federation_attribute_aliases: faas,
+  primary_alias: faas.first,
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
@@ -894,16 +906,21 @@ FederationAttribute.create!(
   notes_on_privacy: ''
 )
 
-faa = FederationAttributeAlias.create!(
-  name: 'organizationalUnit'
-)
+faas = %w(
+  organizationalUnit
+  ou
+).map do |name|
+  FederationAttributeAlias.create!(
+    name: name
+  )
+end
 
 FederationAttribute.create!(
   oid: 'oid:2.5.4.11',
   internal_alias: 'organizationalunit',
   http_header: 'HTTP_ORGANIZATIONALUNIT',
-  federation_attribute_aliases: [faa],
-  primary_alias: faa,
+  federation_attribute_aliases: faas,
+  primary_alias: faas.first,
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
@@ -948,6 +965,314 @@ FederationAttribute.create!(
     CategoryAttribute.new(presence: false, category: optional)
   ],
   description: 'The users central LDAP directory username.',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'title'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.5.4.12',
+  internal_alias: 'title',
+  http_header: 'HTTP_TITLE',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'description'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.5.4.13',
+  internal_alias: 'description',
+  http_header: 'HTTP_DESCRIPTION',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'initials'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.5.4.43',
+  internal_alias: 'initials',
+  http_header: 'HTTP_INITIALS',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+
+faa = FederationAttributeAlias.create!(
+  name: 'employeeType'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.16.840.1.113730.3.1.4',
+  internal_alias: 'employeetype',
+  http_header: 'HTTP_EMPLOYEETYPE',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+
+faa = FederationAttributeAlias.create!(
+  name: 'carLicense'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.16.840.1.113730.3.1.1',
+  internal_alias: 'carlicense',
+  http_header: 'HTTP_CARLICENSE',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'preferredLanguage'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.16.840.1.113730.3.1.39',
+  internal_alias: 'preferredlanguage',
+  http_header: 'HTTP_PREFERREDLANGUAGE',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+
+faa = FederationAttributeAlias.create!(
+  name: 'manager'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:0.9.2342.19200300.100.1.10',
+  internal_alias: 'manager',
+  http_header: 'HTTP_MANAGER',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'seeAlso'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.5.4.34',
+  internal_alias: 'seealso',
+  http_header: 'HTTP_SEEALSO',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'facsimileTelephoneNumber'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.5.4.23',
+  internal_alias: 'facsimiletelephonenumber',
+  http_header: 'HTTP_FACSIMILETELEPHONENUMBER',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'street'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.5.4.9',
+  internal_alias: 'street',
+  http_header: 'HTTP_STREET',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'postOfficeBox'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.5.4.18',
+  internal_alias: 'postofficebox',
+  http_header: 'HTTP_POSTOFFICEBOX',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'postalCode'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.5.4.17',
+  internal_alias: 'postalcode',
+  http_header: 'HTTP_POSTALCODE',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'st'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.5.4.8',
+  internal_alias: 'st',
+  http_header: 'HTTP_ST',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'l'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.5.4.7',
+  internal_alias: 'l',
+  http_header: 'HTTP_L',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'physicalDeliveryOfficeName'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:2.5.4.19',
+  internal_alias: 'physicaldeliveryofficename',
+  http_header: 'HTTP_PHYSICALDELIVERYOFFICENAME',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
+  notes_on_format: '',
+  notes_on_usage: '',
+  notes_on_privacy: ''
+)
+
+
+faa = FederationAttributeAlias.create!(
+  name: 'eduPersonOrcid'
+)
+
+FederationAttribute.create!(
+  oid: 'oid:1.3.6.1.4.1.5923.1.1.1.16',
+  internal_alias: 'edupersonorcid',
+  http_header: 'HTTP_EDUPERSONORCID',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: '',
   notes_on_format: '',
   notes_on_usage: '',
   notes_on_privacy: ''
