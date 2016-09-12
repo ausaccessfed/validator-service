@@ -18,8 +18,7 @@ module ApplicationHelper
             'glyphicon',
             'glyphicon-remove-sign',
             'validator-error'
-          ],
-          row_classes: []
+          ]
         }
       end
 
@@ -32,8 +31,7 @@ module ApplicationHelper
             'glyphicon',
             'glyphicon-remove-sign',
             'validator-error'
-          ],
-          row_classes: []
+          ]
         }
       end
 
@@ -46,8 +44,7 @@ module ApplicationHelper
             'glyphicon',
             'glyphicon-ok-sign',
             'validator-success'
-          ],
-          row_classes: []
+          ]
         }
       end
 
@@ -60,8 +57,7 @@ module ApplicationHelper
             'glyphicon',
             'glyphicon-exclamation-sign',
             'validator-warning'
-          ],
-          row_classes: []
+          ]
         }
       end
 
@@ -74,8 +70,7 @@ module ApplicationHelper
             'glyphicon',
             'glyphicon-exclamation-sign',
             'validator-warning'
-          ],
-          row_classes: []
+          ]
         }
       end
     end

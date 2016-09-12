@@ -31,7 +31,7 @@ p
         tbody
           - category.validation_order(@attribute_values).each do |state, attributes|
             - attributes.each do |attribute, value|
-              tr class="#{state[:row_classes].join(' ')}"
+              tr
                 td.col-xs-2 = attribute.name
                 td.col-xs-9
                   - if value
