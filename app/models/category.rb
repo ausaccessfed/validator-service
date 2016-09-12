@@ -10,6 +10,24 @@ class Category < ApplicationRecord
   validates :order, numericality:
     { only_integer: true, greater_than_or_equal_to: 1 }
 
+  def validation_order(attribute_values)
+    ordered_attributes = federation_attributes
+      .includes(:federation_attribute_aliases)
+      .order('federation_attribute_aliases.name')
+
+    matched_attributes = Hash[ordered_attributes.map do |fa|
+      value = attribute_values.find_by(federation_attribute: fa).try(:value)
+
+      [fa, value]
+    end]
+
+    grouped_attributes = matched_attributes.group_by do |fa, value|
+      AttributeValue.validation_state(self, fa, value)
+    end
+
+    grouped_attributes.sort_by { |key, value| key[:order] }
+  end
+
   # :nocov:
   rails_admin do
     list do

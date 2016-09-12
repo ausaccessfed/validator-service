@@ -29,31 +29,27 @@ p
             th.text-center Status
             th.text-center.hidden-print Details
         tbody
-          - category.federation_attributes.each do|attribute|
-            - attribute_value = @attribute_values.find_by(federation_attribute: attribute)
-
-            - value = attribute_value.try(:value)
-            - state = AttributeValue.validation_state(category, attribute, value)
-
-            tr class="#{state[:row_classes].join(' ')}"
-              td.col-xs-2 = attribute.name
-              td.col-xs-9
-                - if value
-                  .hidden-print
-                    pre
-                      code=value
+          - category.validation_order(@attribute_values).each do |state, attributes|
+            - attributes.each do |attribute, value|
+              tr class="#{state[:row_classes].join(' ')}"
+                td.col-xs-2 = attribute.name
+                td.col-xs-9
+                  - if value
+                    .hidden-print
+                      pre
+                        code=value
+                    .visible-print-block
+                      = value
+                  - else
+                    i Not supplied
+                td.text-center.hidden-print
+                  i class="#{state[:icon_classes].join(' ')}" data-toggle="tooltip" title="#{state[:message]}"
+                td
+                  .text-center.hidden-print
+                    = link_to documentation_attribute_path(attribute.oid), target: '_blank'
+                      i.glyphicon.glyphicon-book
                   .visible-print-block
-                    = value
-                - else
-                  i Not supplied
-              td.text-center.hidden-print
-                i class="#{state[:icon_classes].join(' ')}" data-toggle="tooltip" title="#{state[:message]}"
-              td
-                .text-center.hidden-print
-                  = link_to documentation_attribute_path(attribute.oid), target: '_blank'
-                    i.glyphicon.glyphicon-book
-                .visible-print-block
-                  =< state[:state].titleize
+                    =< state[:state].titleize
 
 .hidden-print
   = link_to snapshot_path(@snapshot, format: 'pdf'), class: 'btn btn-primary' do
