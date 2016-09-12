@@ -11,21 +11,19 @@ class Category < ApplicationRecord
     { only_integer: true, greater_than_or_equal_to: 1 }
 
   def validation_order(attribute_values)
-    ordered_attributes = federation_attributes
-      .includes(:federation_attribute_aliases)
-      .order('federation_attribute_aliases.name')
+    matched_attributes = Hash[federation_attributes.name_ordered.map do |fa|
+      attribute_value = attribute_values.find do |av|
+        av.federation_attribute_id == fa.id
+      end
 
-    matched_attributes = Hash[ordered_attributes.map do |fa|
-      value = attribute_values.find_by(federation_attribute: fa).try(:value)
-
-      [fa, value]
+      [fa, attribute_value.try(:value)]
     end]
 
     grouped_attributes = matched_attributes.group_by do |fa, value|
       AttributeValue.validation_state(self, fa, value)
     end
 
-    grouped_attributes.sort_by { |key, value| key[:order] }
+    grouped_attributes.sort_by { |key, _value| key[:order] }
   end
 
   # :nocov:
