@@ -21,6 +21,11 @@ class FederationAttribute < ApplicationRecord
       .where(federation_attribute_aliases: { name: id })
   }
 
+  scope :name_ordered, lambda {
+    includes(:federation_attribute_aliases)
+      .order('federation_attribute_aliases.name')
+  }
+
   def aliases
     federation_attribute_aliases.where
                                 .not(federation_attribute_aliases:
