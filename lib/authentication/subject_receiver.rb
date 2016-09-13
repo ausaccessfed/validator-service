@@ -40,7 +40,7 @@ module Authentication
 
     def finish(_env, failed = false)
       if failed
-        redirect_to(root_path(no_targeted_id: true))
+        redirect_to(root_path(persistent_id_missing: true))
       else
         redirect_to(latest_snapshots_path)
       end

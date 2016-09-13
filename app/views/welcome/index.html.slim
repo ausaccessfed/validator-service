@@ -1,11 +1,18 @@
-- if params[:no_targeted_id]
+- if params[:persistent_id_missing]
   = error_message('<b>Error</b>'.html_safe) do
-    | You are missing an
-    b<> eduPersonTargetedID
-    | and we cannot complete your request.
+    | Although you've successfully logged in, your organisation has not released the minimal set of identity data this application requires to function.
+    br
+    | This is a backend technical issue and has not been caused by any action you've taken. We're very sorry for the inconvenience.
     br
     br
-    | Please contact your Identity Provider Administrator.
+    | AAF support is available to assist in resolving this error in partnership with technical staff at your organisation.
+    br
+    | Please contact AAF support on
+    =<> mail_to 'support@aaf.edu.au'
+    | so we can assist.
+    br
+    br
+    | For IdP administrators: Your attribute release policy has not allowed a persistent identifier to be released to this service.
 
 .alert
   h2 Attribute Valiator
