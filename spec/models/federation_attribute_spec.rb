@@ -33,6 +33,22 @@ RSpec.describe FederationAttribute, type: :model do
         eql federation_attribute
       )
     end
+
+    it '.name_ordered' do
+      a = :targeted_id
+      b = :mail
+      c = :displayname
+
+      create_federation_attributes([a, b, c])
+
+      expect(FederationAttribute.name_ordered.to_a).to(
+        eql [
+          FederationAttribute.find_by(internal_alias: c),
+          FederationAttribute.find_by(internal_alias: b),
+          FederationAttribute.find_by(internal_alias: a)
+        ]
+      )
+    end
   end
 
   describe '#name' do
