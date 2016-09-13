@@ -35,6 +35,8 @@ class Snapshot < ApplicationRecord
 
       attributes.each do |db_attribute|
         parse_attribute_values(db_attribute, attrs).each do |value|
+          next if value.blank?
+
           snapshot.attribute_values << AttributeValue.create!(
             value: value,
             federation_attribute: db_attribute
