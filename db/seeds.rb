@@ -1027,7 +1027,6 @@ FederationAttribute.create!(
   notes_on_privacy: ''
 )
 
-
 faa = FederationAttributeAlias.create!(
   name: 'employeeType'
 )
@@ -1046,7 +1045,6 @@ FederationAttribute.create!(
   notes_on_usage: '',
   notes_on_privacy: ''
 )
-
 
 faa = FederationAttributeAlias.create!(
   name: 'carLicense'
@@ -1085,7 +1083,6 @@ FederationAttribute.create!(
   notes_on_usage: '',
   notes_on_privacy: ''
 )
-
 
 faa = FederationAttributeAlias.create!(
   name: 'manager'
@@ -1257,7 +1254,6 @@ FederationAttribute.create!(
   notes_on_usage: '',
   notes_on_privacy: ''
 )
-
 
 faa = FederationAttributeAlias.create!(
   name: 'eduPersonOrcid'
