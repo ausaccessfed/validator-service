@@ -31,13 +31,13 @@ class Snapshot < ApplicationRecord
     end
 
     def assign_attributes(attrs, snapshot)
-      attributes = FederationAttribute.where(http_header: attrs.keys)
+      FederationAttribute.where(http_header: attrs.keys).find_each do |db_attr|
+        parse_attribute_values(db_attr, attrs).each do |value|
+          next if value.blank?
 
-      attributes.each do |db_attribute|
-        parse_attribute_values(db_attribute, attrs).each do |value|
           snapshot.attribute_values << AttributeValue.create!(
             value: value,
-            federation_attribute: db_attribute
+            federation_attribute: db_attr
           )
         end
       end
