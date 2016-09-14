@@ -35,6 +35,9 @@ FederationAttribute.create!(
   http_header: 'HTTP_AUEDUPERSONSHAREDTOKEN',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
+  regexp:
+    '\A[\w\-]{27}\z',
+  regexp_triggers_failure: true,
   category_attributes: [
     CategoryAttribute.new(presence: true, category: core)
   ],
@@ -169,6 +172,9 @@ FederationAttribute.create!(
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   singular: false,
+  regexp: '\A(faculty|student|staff|employee|member|affiliate' \
+          '|alum|library-walk-in)\z',
+  regexp_triggers_failure: true,
   category_attributes: [
     CategoryAttribute.new(presence: true, category: core)
   ],
@@ -385,6 +391,9 @@ FederationAttribute.create!(
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   singular: false,
+  regexp: '\A(faculty|student|staff|employee|member|affiliate' \
+          '|alum|library-walk-in)\z',
+  regexp_triggers_failure: true,
   category_attributes: [
     CategoryAttribute.new(presence: true, category: core)
   ],
@@ -486,6 +495,9 @@ FederationAttribute.create!(
   http_header: 'HTTP_TARGETED_ID',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
+  regexp:
+    '\A(?=[\S]{0,256}$)[^!]+![^!]+![^!]+\z',
+  regexp_triggers_failure: true,
   category_attributes: [
     CategoryAttribute.new(presence: true, category: core)
   ],
@@ -570,6 +582,8 @@ FederationAttribute.create!(
   http_header: 'HTTP_MAIL',
   federation_attribute_aliases: faas,
   primary_alias_id: faas.first.id,
+  regexp: '\A\S+@\S+\z',
+  regexp_triggers_failure: true,
   category_attributes: [
     CategoryAttribute.new(presence: true, category: core)
   ],
@@ -1265,6 +1279,9 @@ FederationAttribute.create!(
   http_header: 'HTTP_EDUPERSONORCID',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
+  regexp:
+    '\A(http(|s):\/\/orcid.org\/)[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9X]{4}\z',
+  regexp_triggers_failure: true,
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
