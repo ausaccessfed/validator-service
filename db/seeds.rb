@@ -997,7 +997,8 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
+  description: 'Specifies the designated position or function of the object ' \
+               'within an organsation.',
   notes_on_format: '',
   notes_on_usage: '',
   notes_on_privacy: ''
@@ -1016,7 +1017,7 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
+  description: 'Specifies text which describes the associated object.',
   notes_on_format: '',
   notes_on_usage: '',
   notes_on_privacy: ''
@@ -1035,7 +1036,8 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
+  description: 'Contains the initials of some or all of an individual\'s' \
+               ' names, but not the surname(s)',
   notes_on_format: '',
   notes_on_usage: '',
   notes_on_privacy: ''
@@ -1054,8 +1056,9 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
-  notes_on_format: '',
+  description: 'Type of employment for a person.',
+  notes_on_format: 'See IETF <a href="http://www.ietf.org/rfc/rfc2798.txt">' \
+                   'RFC 2798</a>.',
   notes_on_usage: '',
   notes_on_privacy: ''
 )
@@ -1073,8 +1076,9 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
-  notes_on_format: '',
+  description: 'Vehicle license or registration plate.',
+  notes_on_format: 'See IETF <a href="http://www.ietf.org/rfc/rfc2798.txt">' \
+                   'RFC 2798</a>.',
   notes_on_usage: '',
   notes_on_privacy: ''
 )
@@ -1092,8 +1096,9 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
-  notes_on_format: '',
+  description: 'Preferred written or spoken language for a person.',
+  notes_on_format: 'See IETF <a href="http://www.ietf.org/rfc/rfc2798.txt">' \
+                   'RFC 2798</a>.',
   notes_on_usage: '',
   notes_on_privacy: ''
 )
@@ -1131,7 +1136,11 @@ FederationAttribute.create!(
     CategoryAttribute.new(presence: false, category: optional)
   ],
   description: '',
-  notes_on_format: '',
+  notes_on_format: 'This node is defined in
+  <a href="http://itu.int/ITU-T/X.520">Annex A of Rec. ITU-T X.520
+  (February 2001)</a> and in <a href="http://www.iso.org/iso/catalogue_detail' \
+  '?csnumber=32258">ISO/IEC 9594-6: 2001</a>: "The Directory: Selected
+  attribute types".',
   notes_on_usage: '',
   notes_on_privacy: ''
 )
@@ -1149,8 +1158,12 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
-  notes_on_format: '',
+  description: 'Facsimile telephone number',
+  notes_on_format: 'This node is defined in
+  <a href="http://itu.int/ITU-T/X.520">Annex A of Rec. ITU-T X.520
+  (February 2001)</a> and in <a href="http://www.iso.org/iso/catalogue_detail' \
+  '?csnumber=32258">ISO/IEC 9594-6: 2001</a>: "The Directory: Selected
+  attribute types".',
   notes_on_usage: '',
   notes_on_privacy: ''
 )
@@ -1168,8 +1181,12 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
-  notes_on_format: '',
+  description: 'Street address',
+  notes_on_format: 'This node is defined in
+  <a href="http://itu.int/ITU-T/X.520">Annex A of Rec. ITU-T X.520
+  (February 2001)</a> and in <a href="http://www.iso.org/iso/catalogue_detail' \
+  '?csnumber=32258">ISO/IEC 9594-6: 2001</a>: "The Directory: Selected
+  attribute types".',
   notes_on_usage: '',
   notes_on_privacy: ''
 )
@@ -1187,8 +1204,12 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
-  notes_on_format: '',
+  description: 'Post office box',
+  notes_on_format: 'This node is defined in
+  <a href="http://itu.int/ITU-T/X.520">Annex A of Rec. ITU-T X.520
+  (February 2001)</a> and in <a href="http://www.iso.org/iso/catalogue_detail' \
+  '?csnumber=32258">ISO/IEC 9594-6: 2001</a>: "The Directory: Selected
+  attribute types".',
   notes_on_usage: '',
   notes_on_privacy: ''
 )
@@ -1206,8 +1227,12 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
-  notes_on_format: '',
+  description: 'Postal code',
+  notes_on_format: 'This node is defined in
+  <a href="http://itu.int/ITU-T/X.520">Annex A of Rec. ITU-T X.520
+  (February 2001)</a> and in <a href="http://www.iso.org/iso/catalogue_detail' \
+  '?csnumber=32258">ISO/IEC 9594-6: 2001</a>: "The Directory: Selected
+  attribute types".',
   notes_on_usage: '',
   notes_on_privacy: ''
 )
@@ -1225,8 +1250,12 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
-  notes_on_format: '',
+  description: 'State or Province name',
+  notes_on_format: 'This node is defined in
+  <a href="http://itu.int/ITU-T/X.520">Annex A of Rec. ITU-T X.520
+  (February 2001)</a> and in <a href="http://www.iso.org/iso/catalogue_detail' \
+  '?csnumber=32258">ISO/IEC 9594-6: 2001</a>: "The Directory: Selected
+  attribute types".',
   notes_on_usage: '',
   notes_on_privacy: ''
 )
@@ -1244,8 +1273,12 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
-  notes_on_format: '',
+  description: 'Locality Name',
+  notes_on_format: 'This node is defined in
+  <a href="http://itu.int/ITU-T/X.520">Annex A of Rec. ITU-T X.520
+  (February 2001)</a> and in <a href="http://www.iso.org/iso/catalogue_detail' \
+  '?csnumber=32258">ISO/IEC 9594-6: 2001</a>: "The Directory: Selected
+  attribute types".',
   notes_on_usage: '',
   notes_on_privacy: ''
 )
@@ -1264,7 +1297,11 @@ FederationAttribute.create!(
     CategoryAttribute.new(presence: false, category: optional)
   ],
   description: '',
-  notes_on_format: '',
+  notes_on_format: 'This node is defined in
+  <a href="http://itu.int/ITU-T/X.520">Annex A of Rec. ITU-T X.520
+  (February 2001)</a> and in <a href="http://www.iso.org/iso/catalogue_detail' \
+  '?csnumber=32258">ISO/IEC 9594-6: 2001</a>: "The Directory: Selected
+  attribute types".',
   notes_on_usage: '',
   notes_on_privacy: ''
 )
@@ -1285,7 +1322,13 @@ FederationAttribute.create!(
   category_attributes: [
     CategoryAttribute.new(presence: false, category: optional)
   ],
-  description: '',
+  description: 'ORCID iDs are persistent digital identifiers for individual
+  researchers. Their primary purpose is to unambiguously and definitively
+  link them with their scholarly work products. ORCID iDs are assigned,
+  managed and maintained by the ORCID organization. Values MUST be valid
+  ORCID identifiers in the ORCID-preferred URL representation. Each value
+  represents an ORCID identifier registered with ORCID.org as belonging
+  to the principal.',
   notes_on_format: '',
   notes_on_usage: '',
   notes_on_privacy: ''
