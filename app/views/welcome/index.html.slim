@@ -1,0 +1,47 @@
+- if params[:persistent_id_missing]
+  = error_message('<b>Error</b>'.html_safe) do
+    | Although you've successfully logged in, your organisation has not released the minimal set of identity data this application requires to function.
+    br
+    | This is a backend technical issue and has not been caused by any action you've taken. We're very sorry for the inconvenience.
+    br
+    br
+    | AAF support is available to assist in resolving this error in partnership with technical staff at your organisation.
+    br
+    | Please contact AAF support on
+    =<> mail_to 'support@aaf.edu.au'
+    | so we can assist.
+    br
+    br
+    | For IdP administrators: Your attribute release policy has not allowed a persistent identifier to be released to this service.
+
+.alert
+  h2 Attribute Valiator
+  p
+    | This service will validate the attributes provided about you from your identity provider ensuring they are provided in a format that is suitable for consumption by AAF connected services.
+
+  br
+  p
+    = link_to latest_snapshots_path, class: 'btn btn-primary btn-lg', role: 'button' do
+      i.glyphicon.glyphicon-user>
+      | &nbsp;Show me my attributes
+    end
+  br
+
+.alert
+  p
+    h5 Identity Provider Administrators
+
+  p
+    ' If you're the administrator of an Identity Provider and
+    strong
+      ' this is the first time
+    ' you've accessed this validator please ensure you've
+    => link_to 'configured automated attribute release', 'http://support.aaf.edu.au/entries/22545567-Automating-Attribute-Release'
+    ' or correctly setup manual attribute release policies for your users before continuing to ensure you don't have connectivity problems with services such as this.
+
+  p
+    | If you need further assistance you can
+    =<> link_to 'access the online AAF support desk', 'http://support.aaf.edu.au'
+    | or alternatively you can
+    =< mail_to 'support@aaf.edu.au', 'email AAF support'
+    | .

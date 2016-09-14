@@ -1,0 +1,58 @@
+h2
+  | Snapshot ID: &nbsp;#{@snapshot.id}
+  small
+    | Taken on #{@snapshot.taken_at}
+
+- unless @snapshot.latest?(@subject)
+  .alert.alert-warning role="alert"
+    | This is not your most recent snapshot.
+    =< link_to 'View your most recent attributes in your latest snapshot.', latest_snapshots_path
+- unless @subject.valid_identifier_history?
+  .alert.alert-danger role="alert"
+    | Warning: Your
+    =<> link_to 'auEduPersonSharedToken', documentation_attribute_path('oid:1.3.6.1.4.1.27856.1.2.5'), target: '_blank'
+    | is changing over time.
+
+p
+  input type="search" id="search" class="form-control hidden-print" placeholder="Search..."
+
+- @categories.each do |category|
+  .panel.panel-default
+    .panel-heading
+      h4 = category.name
+    .panel-body
+      table.table.table-striped.snapshot-table
+        thead
+          tr
+            th Attribute
+            th Supplied Value
+            th.text-center Status
+            th.text-center.hidden-print Details
+        tbody
+          - category.validation_order(@attribute_values).each do |state, attributes|
+            - attributes.each do |attribute, value|
+              tr
+                td.col-xs-2 = attribute.name
+                td.col-xs-9
+                  - if value
+                    .hidden-print
+                      pre
+                        code=value
+                    .visible-print-block
+                      = value
+                  - else
+                    i Not supplied
+                td.text-center.hidden-print
+                  i class="#{state[:icon_classes].join(' ')}" data-toggle="tooltip" title="#{state[:message]}"
+                td
+                  .text-center.hidden-print
+                    = link_to documentation_attribute_path(attribute.oid), target: '_blank'
+                      i.glyphicon.glyphicon-book
+                  .visible-print-block
+                    =< state[:state].titleize
+
+.hidden-print
+  = link_to snapshot_path(@snapshot, format: 'pdf'), class: 'btn btn-primary' do
+    i.glyphicon.glyphicon-download-alt
+    | &nbsp;&nbsp; Export as a PDF
+  end

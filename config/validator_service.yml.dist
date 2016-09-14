@@ -1,0 +1,11 @@
+---
+environment_string: Development
+ide:
+  host: ide.dev.aaf.edu.au
+  cert: config/api-client.crt
+  key: config/api-client.key
+  admin_entitlements:
+    - urn:mace:aaf.edu.au:ide:internal:aaf-admin
+url_options:
+  base_url: 'http://localhost:3000'
+time_zone: Australia/Brisbane
