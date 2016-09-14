@@ -1,7 +1,7 @@
 ---
 environment_string: Development
 ide:
-  host: ide.test.aaf.edu.au
+  host: ide.dev.aaf.edu.au
   cert: config/api-client.crt
   key: config/api-client.key
   admin_entitlements:
