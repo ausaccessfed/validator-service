@@ -346,7 +346,7 @@ FederationAttribute.create!(
   primary_alias: faa,
   singular: false,
   category_attributes: [
-    CategoryAttribute.new(presence: true, category: core)
+    CategoryAttribute.new(presence: false, category: core)
   ],
   description: 'URI (either URN or URL) that indicates a set of rights to
   specific resources.',
