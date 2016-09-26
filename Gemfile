@@ -32,6 +32,7 @@ gem 'rails_admin', '>= 1.0.0.rc'
 gem 'ckeditor'
 
 group :development, :test do
+  gem 'bullet'
   gem 'pry'
   gem 'rspec-rails', '~> 3.5.0.beta4'
   gem 'shoulda-matchers'
