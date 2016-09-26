@@ -91,6 +91,9 @@ GEM
       debug_inspector (>= 0.0.1)
     brakeman (3.3.5)
     builder (3.2.2)
+    bullet (5.1.1)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     capybara (2.8.1)
       addressable
       mime-types (>= 1.16)
@@ -346,6 +349,7 @@ GEM
     uglifier (3.0.2)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.1.0)
+    uniform_notifier (1.10.0)
     valhammer (0.2.2)
       activerecord (> 4.1)
     web-console (2.3.0)
@@ -372,6 +376,7 @@ DEPENDENCIES
   aaf-gumboot!
   aaf-lipstick!
   accession
+  bullet
   capybara
   ckeditor
   coffee-script

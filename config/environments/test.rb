@@ -22,4 +22,10 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
 
   config.shib_rack.test_mode = true
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.raise = true
+  end
 end
