@@ -5,6 +5,12 @@ class CategoryAttribute < ApplicationRecord
 
   valhammer
 
+  class << self
+    def sort_by_order(enum)
+      enum.sort_by { |key, _value| key[:order] }
+    end
+  end
+
   # :nocov:
   rails_admin do
     parent Category
