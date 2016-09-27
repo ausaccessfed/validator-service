@@ -162,7 +162,10 @@ RSpec.describe Category, type: :model do
 
     it 'groups for multi-value attributes, taking order into consideration' do
       fa = FederationAttribute.find_by(internal_alias: 'targeted_id')
-      fa.update_attribute(:regexp, '[a-zA-Z]+')
+      fa.update_attributes(
+        regexp: '[a-zA-Z]+',
+        regexp_triggers_failure: false
+      )
       second_attribute_value.update_attribute(:value, 123)
 
       expect(category.grouped_attributes(attribute_values)).to(
