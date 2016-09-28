@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# :nocov:
 if Rails.env.production?
   SecureHeaders::Configuration.default do |config|
     config.cookies = {
@@ -54,3 +55,4 @@ if Rails.env.production?
     }
   end
 end
+# :nocov:

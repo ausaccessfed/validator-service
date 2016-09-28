@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# :nocov:
 if Rails.env.production?
   SecureHeaders::Configuration.override(:default) do |config|
     config.csp[:style_src] << 'https://fonts.googleapis.com'
@@ -6,3 +7,4 @@ if Rails.env.production?
     config.csp[:font_src] << 'https://fonts.gstatic.com'
   end
 end
+# :nocov:
