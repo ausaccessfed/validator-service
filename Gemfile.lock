@@ -43,6 +43,14 @@ GIT
       guard-compat (~> 1.1)
       rspec (>= 3.5.0.beta, < 4.0)
 
+GIT
+  remote: https://github.com/twitter/secureheaders
+  revision: 4c471a158465b8e6e58b246c8433f28165a681a1
+  tag: v3.5.0.pre
+  specs:
+    secure_headers (3.5.0.pre)
+      useragent
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -402,6 +410,7 @@ DEPENDENCIES
   rspec-rails (~> 3.5.0.beta4)
   rubocop
   sass-rails
+  secure_headers!
   shib-rack!
   shoulda-matchers
   simplecov
