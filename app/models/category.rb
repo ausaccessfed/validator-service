@@ -16,13 +16,11 @@ class Category < ApplicationRecord
 
   def matched_attributes(all_attribute_values)
     federation_attributes.name_ordered.map do |fa|
-      attribute_values = all_attribute_values.select do |av|
+      attr_values = all_attribute_values.select do |av|
         fa.id == av.federation_attribute_id
       end
 
-      attribute_values = [nil] if attribute_values.empty?
-
-      [fa, attribute_values.map { |x| x.try(:value) }]
+      [fa, attr_values.empty? ? [nil] : attr_values.map { |x| x.try(:value) }]
     end
   end
 
