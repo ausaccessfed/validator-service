@@ -38,8 +38,6 @@ if Rails.env.production?
       report_uri: ['https://aaf.report-uri.io/r/default/csp/enforce']
     }
 
-    config.csp_report_only = config.csp.merge(report_uri: ['https://aaf.report-uri.io/r/default/csp/reportOnly'])
-
     config.hpkp = {
       report_only: false,
       max_age: 60.days.to_i,
