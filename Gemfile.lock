@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/mshibuya/remotipart.git
-  revision: 88d9a7d55bde66acb6cf3a3c6036a5a1fc991d5e
+  revision: 7e244e78e148430b7720e6cf8f86263d6a1dfddf
   specs:
-    remotipart (1.2.1)
+    remotipart (1.3.0)
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-gumboot
@@ -243,7 +243,7 @@ GEM
       nokogiri (~> 1.6.0)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rails_admin (1.0.0.rc)
+    rails_admin (1.0.0)
       builder (~> 3.1)
       coffee-rails (~> 4.0)
       font-awesome-rails (>= 3.0, < 5)
@@ -254,7 +254,7 @@ GEM
       nested_form (~> 0.3)
       rack-pjax (>= 0.7)
       rails (>= 4.0, < 6)
-      remotipart (~> 1.0)
+      remotipart (~> 1.3)
       sass-rails (>= 4.0, < 6)
     railties (5.0.0.1)
       actionpack (= 5.0.0.1)
@@ -397,7 +397,7 @@ DEPENDENCIES
   puma
   rails (>= 5.0.0, < 5.1)
   rails-controller-testing
-  rails_admin (>= 1.0.0.rc)
+  rails_admin
   remotipart!
   rspec-rails (~> 3.5.0.beta4)
   rubocop
