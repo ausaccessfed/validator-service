@@ -20,11 +20,9 @@ class Category < ApplicationRecord
         fa.id == av.federation_attribute_id
       end
 
-      attribute_values = attribute_values.map { |x| x.try(:value) }
-
       attribute_values = [nil] if attribute_values.empty?
 
-      [fa, attribute_values]
+      [fa, attribute_values.map { |x| x.try(:value) }]
     end
   end
 
