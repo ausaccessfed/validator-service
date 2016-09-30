@@ -13,7 +13,7 @@ if Rails.env.production?
       report_only: false,
       max_age: 60.days.to_i,
       include_subdomains: true,
-      report_uri: app_config.secure_headers[:hpkp][:report_uri]
+      report_uri: app_config.secure_headers[:hpkp][:report_uri],
       pins: [
         {
           sha256: app_config.secure_headers[:hpkp][:pins].first
