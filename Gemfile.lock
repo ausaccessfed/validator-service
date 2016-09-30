@@ -43,15 +43,12 @@ GIT
       guard-compat (~> 1.1)
       rspec (>= 3.5.0.beta, < 4.0)
 
-PATH
-  remote: ../aaf-secure_headers
-  specs:
-    aaf-secure_headers (0.1.0)
-      secure_headers (~> 3.5.0.pre)
-
 GEM
   remote: https://rubygems.org/
   specs:
+    aaf-secure_headers (0.1.0)
+      activesupport
+      secure_headers (~> 3.5.0.pre)
     accession (1.0.0)
     actioncable (5.0.0.1)
       actionpack (= 5.0.0.1)
@@ -384,7 +381,7 @@ PLATFORMS
 DEPENDENCIES
   aaf-gumboot!
   aaf-lipstick!
-  aaf-secure_headers!
+  aaf-secure_headers
   accession
   bullet
   capybara
