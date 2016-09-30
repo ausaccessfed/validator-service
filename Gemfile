@@ -4,10 +4,6 @@ source 'https://rubygems.org'
 gem 'rails', '>= 5.0.0', '< 5.1'
 gem 'mysql2'
 
-gem 'secure_headers',
-    git: 'https://github.com/twitter/secureheaders',
-    tag: 'v3.5.0.pre'
-
 gem 'valhammer'
 gem 'accession'
 gem 'super-identity'
@@ -34,6 +30,10 @@ gem 'coffee-script'
 gem 'remotipart', github: 'mshibuya/remotipart', require: false
 gem 'rails_admin'
 gem 'ckeditor'
+
+group :production do
+  gem 'aaf-secure_headers'
+end
 
 group :development, :test do
   gem 'bullet'

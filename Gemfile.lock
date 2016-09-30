@@ -43,13 +43,11 @@ GIT
       guard-compat (~> 1.1)
       rspec (>= 3.5.0.beta, < 4.0)
 
-GIT
-  remote: https://github.com/twitter/secureheaders
-  revision: 4c471a158465b8e6e58b246c8433f28165a681a1
-  tag: v3.5.0.pre
+PATH
+  remote: ../aaf-secure_headers
   specs:
-    secure_headers (3.5.0.pre)
-      useragent
+    aaf-secure_headers (0.1.0)
+      secure_headers (~> 3.5.0.pre)
 
 GEM
   remote: https://rubygems.org/
@@ -314,6 +312,8 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    secure_headers (3.5.0.pre)
+      useragent
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
@@ -384,6 +384,7 @@ PLATFORMS
 DEPENDENCIES
   aaf-gumboot!
   aaf-lipstick!
+  aaf-secure_headers!
   accession
   bullet
   capybara
@@ -410,7 +411,6 @@ DEPENDENCIES
   rspec-rails (~> 3.5.0.beta4)
   rubocop
   sass-rails
-  secure_headers!
   shib-rack!
   shoulda-matchers
   simplecov
