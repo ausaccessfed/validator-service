@@ -5,7 +5,7 @@ if Rails.env.production?
 
   SecureHeaders::Configuration.override(:default) do |config|
     config.csp[:style_src] << "'unsafe-inline'"
-    config.csp[:object_src] << "'self'"
+    config.csp[:object_src] = ["'self'"]
 
     config.csp[:report_uri] << app_config.secure_headers[:csp][:report_uri]
   end
