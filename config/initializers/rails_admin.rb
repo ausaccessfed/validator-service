@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 # :nocov:
 RailsAdmin.config do |config|
+  config.parent_controller = '::ApplicationController'
+
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
