@@ -1,3 +1,5 @@
+/ https://github.com/sferik/rails_admin/blob/master/app/views/rails_admin/main/show.html.haml
+
 - @model_config.show.with(object: @object, view: self, controller: self.controller).visible_groups.each do |fieldset|
   - unless (fields = fieldset.with(object: @object, view: self, controller: self.controller).visible_fields).empty?
     - if !(values = fields.map{ |f| f.formatted_value.presence }).compact.empty? || !RailsAdmin::config.compact_show_view
