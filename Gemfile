@@ -28,8 +28,12 @@ gem 'pdfkit'
 gem 'coffee-script'
 
 gem 'remotipart', github: 'mshibuya/remotipart', require: false
-gem 'rails_admin', '>= 1.0.0.rc'
+gem 'rails_admin'
 gem 'ckeditor'
+
+group :production do
+  gem 'aaf-secure_headers'
+end
 
 group :development, :test do
   gem 'bullet'
