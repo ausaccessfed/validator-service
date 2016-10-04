@@ -46,7 +46,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    aaf-secure_headers (0.1.0)
+    aaf-secure_headers (1.0.0)
       activesupport
       secure_headers (~> 3.5.0.pre)
     accession (1.0.0)
