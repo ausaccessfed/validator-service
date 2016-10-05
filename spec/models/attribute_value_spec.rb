@@ -15,7 +15,7 @@ RSpec.describe AttributeValue, type: :model do
 
   let(:federation_attribute) do
     create(:federation_attribute,
-           regexp: '^[a-zA-Z\s\-\.]+$',
+           regexp: '^[a-zA-Z\s\-\.\\\']+$',
            regexp_triggers_failure: false,
            federation_attribute_aliases: [federation_attribute_alias],
            primary_alias_id: federation_attribute_alias.id,
@@ -26,7 +26,7 @@ RSpec.describe AttributeValue, type: :model do
 
   let(:strict_federation_attribute) do
     create(:federation_attribute,
-           regexp: '^[a-zA-Z\s\-\.]+$',
+           regexp: '^[a-zA-Z\s\-\.\\\']+$',
            regexp_triggers_failure: true,
            federation_attribute_aliases: [federation_attribute_alias],
            primary_alias_id: federation_attribute_alias.id,
@@ -37,7 +37,7 @@ RSpec.describe AttributeValue, type: :model do
 
   let(:required_federation_attribute) do
     create(:federation_attribute,
-           regexp: '^[a-zA-Z\s\-\.]+$',
+           regexp: '^[a-zA-Z\s\-\.\\\']+$',
            regexp_triggers_failure: false,
            federation_attribute_aliases: [federation_attribute_alias],
            primary_alias_id: federation_attribute_alias.id,
