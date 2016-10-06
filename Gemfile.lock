@@ -13,19 +13,6 @@ GIT
       accession (~> 1.0)
 
 GIT
-  remote: https://github.com/ausaccessfed/aaf-lipstick
-  revision: f2ab562108275a73e95f317c7eabd51191a4c50e
-  branch: develop
-  specs:
-    aaf-lipstick (1.1.0)
-      erubis
-      kramdown (~> 1.5)
-      rmagick
-      sprockets (~> 3.0)
-      tilt
-      will_paginate
-
-GIT
   remote: https://github.com/ausaccessfed/shib-rack
   revision: ab24a7d0ad2bedb2fa342e64eaa057cfb4100cce
   branch: develop
@@ -46,6 +33,13 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    aaf-lipstick (2.0.0)
+      erubis
+      kramdown (~> 1.5)
+      rmagick
+      sprockets (~> 3.0)
+      tilt
+      will_paginate
     aaf-secure_headers (1.0.0)
       activesupport
       secure_headers (~> 3.5.0.pre)
@@ -380,7 +374,7 @@ PLATFORMS
 
 DEPENDENCIES
   aaf-gumboot!
-  aaf-lipstick!
+  aaf-lipstick
   aaf-secure_headers
   accession
   bullet
