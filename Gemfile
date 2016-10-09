@@ -7,9 +7,7 @@ gem 'mysql2'
 gem 'valhammer'
 gem 'accession'
 gem 'super-identity'
-gem 'aaf-lipstick',
-    git: 'https://github.com/ausaccessfed/aaf-lipstick',
-    branch: 'develop'
+gem 'aaf-lipstick'
 gem 'slim-rails'
 gem 'sass-rails', require: false
 gem 'uglifier', require: false
