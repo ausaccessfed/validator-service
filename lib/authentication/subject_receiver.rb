@@ -57,12 +57,12 @@ module Authentication
     def assign_entitlements(subject, values)
       assigned = values.map do |value|
         r = Role.find_by(entitlement: value)
-        subject.roles << r unless subject.roles.include?(r)
+        subject.roles << r unless !r || subject.roles.include?(r)
 
         r
       end
 
-      subject.subject_roles.where.not(role: assigned).destroy_all
+      subject.subject_roles.where.not(role: assigned).destroy_all if assigned
     end
   end
 end
