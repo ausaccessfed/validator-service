@@ -7,7 +7,9 @@ gem 'mysql2'
 gem 'valhammer'
 gem 'accession'
 gem 'super-identity'
-gem 'aaf-lipstick'
+gem 'aaf-lipstick',
+    git: 'https://github.com/ausaccessfed/aaf-lipstick.git',
+    branch: 'feature/errors'
 gem 'slim-rails'
 gem 'sass-rails', require: false
 gem 'uglifier', require: false
@@ -60,5 +62,5 @@ group :development, :test do
   gem 'terminal-notifier-guard', require: false
   gem 'aaf-gumboot',
       git: 'https://github.com/ausaccessfed/aaf-gumboot',
-      branch: 'feature/rails-5-updates'
+      branch: 'feature/error-pages-compat'
 end

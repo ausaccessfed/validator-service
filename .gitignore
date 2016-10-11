@@ -11,3 +11,7 @@ config/api-client.*
 config/deploy.yml
 config/event_encryption_key.pem
 .DS_Store
+public/404.html
+public/422.html
+public/500.html
+
