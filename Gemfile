@@ -9,7 +9,7 @@ gem 'accession'
 gem 'super-identity'
 gem 'aaf-lipstick',
     git: 'https://github.com/ausaccessfed/aaf-lipstick.git',
-    branch: 'feature/errors'
+    branch: 'develop'
 gem 'slim-rails'
 gem 'sass-rails', require: false
 gem 'uglifier', require: false
