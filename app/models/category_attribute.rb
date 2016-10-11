@@ -18,8 +18,14 @@ class CategoryAttribute < ApplicationRecord
     label label.titleize
 
     list do
-      field :category
+      field :category do
+        searchable [:name]
+        queryable true
+      end
       field :federation_attribute do
+        # NOTE: This is not accurate, but close enough in most cases.
+        searchable [:internal_alias]
+        queryable true
         label label.titleize
       end
     end

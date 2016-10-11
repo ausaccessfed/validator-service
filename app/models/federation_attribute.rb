@@ -60,6 +60,8 @@ class FederationAttribute < ApplicationRecord
 
     list do
       field :primary_alias do
+        searchable [federation_attribute_aliases: :name]
+        queryable true
         label label.titleize
       end
 
