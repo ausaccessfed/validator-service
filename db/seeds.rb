@@ -392,7 +392,7 @@ FederationAttribute.create!(
   primary_alias: faa,
   singular: false,
   regexp: '\A(faculty|student|staff|employee|member|affiliate' \
-          '|alum|library-walk-in)\z',
+          '|alum|library-walk-in)@.+\z',
   regexp_triggers_failure: true,
   category_attributes: [
     CategoryAttribute.new(presence: true, category: core)
