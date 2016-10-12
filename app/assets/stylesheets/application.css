@@ -31,3 +31,7 @@
 .validator-error {
   color: red;
 }
+
+.word-break {
+  word-break: break-all;
+}
