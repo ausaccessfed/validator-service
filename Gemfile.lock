@@ -6,11 +6,26 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-gumboot
-  revision: 02a88c078c64b06f80fac547ee2ed5ba39c3e826
-  branch: feature/rails-5-updates
+  revision: 6194c7cd6dff7a909a9a0e1330e8fbc46e0c1b11
+  branch: feature/error-pages-compat
   specs:
     aaf-gumboot (0.0.1)
       accession (~> 1.0)
+
+GIT
+  remote: https://github.com/ausaccessfed/aaf-lipstick.git
+  revision: e20f27d6a96c6df37132983add19ff180a8f51a6
+  branch: develop
+  specs:
+    aaf-lipstick (2.0.0)
+      actionpack
+      activerecord
+      erubis
+      kramdown (~> 1.5)
+      rmagick
+      sprockets (~> 3.0)
+      tilt
+      will_paginate
 
 GIT
   remote: https://github.com/ausaccessfed/shib-rack
@@ -33,13 +48,6 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    aaf-lipstick (2.0.0)
-      erubis
-      kramdown (~> 1.5)
-      rmagick
-      sprockets (~> 3.0)
-      tilt
-      will_paginate
     aaf-secure_headers (1.0.0)
       activesupport
       secure_headers (~> 3.5.0.pre)
@@ -82,7 +90,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    arel (7.1.2)
+    arel (7.1.4)
     ast (2.3.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -192,9 +200,8 @@ GEM
     nenv (0.3.0)
     nested_form (0.3.2)
     nio4r (1.2.1)
-    nokogiri (1.6.8)
+    nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -202,7 +209,6 @@ GEM
     parser (2.3.1.4)
       ast (~> 2.2)
     pdfkit (0.8.2)
-    pkg-config (1.1.7)
     poltergeist (1.10.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -374,7 +380,7 @@ PLATFORMS
 
 DEPENDENCIES
   aaf-gumboot!
-  aaf-lipstick
+  aaf-lipstick!
   aaf-secure_headers
   accession
   bullet
