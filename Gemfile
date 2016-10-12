@@ -8,7 +8,7 @@ gem 'valhammer'
 gem 'accession'
 gem 'super-identity'
 gem 'aaf-lipstick',
-    git: 'https://github.com/ausaccessfed/aaf-lipstick',
+    git: 'https://github.com/ausaccessfed/aaf-lipstick.git',
     branch: 'develop'
 gem 'slim-rails'
 gem 'sass-rails', require: false
@@ -28,10 +28,15 @@ gem 'pdfkit'
 gem 'coffee-script'
 
 gem 'remotipart', github: 'mshibuya/remotipart', require: false
-gem 'rails_admin', '>= 1.0.0.rc'
+gem 'rails_admin'
 gem 'ckeditor'
 
+group :production do
+  gem 'aaf-secure_headers'
+end
+
 group :development, :test do
+  gem 'bullet'
   gem 'pry'
   gem 'rspec-rails', '~> 3.5.0.beta4'
   gem 'shoulda-matchers'
@@ -57,5 +62,5 @@ group :development, :test do
   gem 'terminal-notifier-guard', require: false
   gem 'aaf-gumboot',
       git: 'https://github.com/ausaccessfed/aaf-gumboot',
-      branch: 'feature/rails-5-updates'
+      branch: 'feature/error-pages-compat'
 end

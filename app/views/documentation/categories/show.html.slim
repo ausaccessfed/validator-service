@@ -11,4 +11,7 @@ dl.dl-horizontal
   dd = @federation_category.description
 
   dt Attributes
-  dd == @category_attributes.map { |name, path| link_to(name, path) }.join(', ')
+  dd
+    ul
+      - @category_attributes.map do |name, path|
+        li == link_to(name, path)

@@ -179,5 +179,15 @@ RSpec.describe Authentication::SubjectReceiver do
 
       expect(subject.roles.reload.size).to eql 0
     end
+
+    it 'handles roles not available' do
+      expect(subject.roles.size).to eql 0
+
+      subject_receiver.send(:assign_entitlements,
+                            subject,
+                            ['urn:mace:aaf.edu.au:ide:researcher:1'])
+
+      expect(subject.roles.size).to eql 0
+    end
   end
 end

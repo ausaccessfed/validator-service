@@ -1,10 +1,16 @@
 h2
-  | Snapshots
+  | My Snapshot History
 
-ul
-  - @snapshots.each do |snapshot|
-    li
-      => link_to snapshot.name, snapshot_path(snapshot)
-      | (
-      = snapshot.taken_at
-      | )
+table.table
+  thead
+    tr
+      th Name
+      th Taken At
+  tbody
+    - @snapshots.each do |snapshot|
+      tr
+        td
+          = link_to snapshot.name, snapshot_path(snapshot)
+        td
+          = snapshot.taken_at
+

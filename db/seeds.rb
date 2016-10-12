@@ -92,7 +92,7 @@ faa = FederationAttributeAlias.create!(
 FederationAttribute.create!(
   oid: 'oid:1.3.6.1.4.1.9967.1.6.1.2',
   internal_alias: 'authenticationmethod',
-  http_header: 'HTTP_AUTHENTICATIONMETHOD',
+  http_header: 'HTTP_SHIB_AUTHENTICATION_METHOD',
   federation_attribute_aliases: [faa],
   primary_alias: faa,
   category_attributes: [
@@ -392,7 +392,7 @@ FederationAttribute.create!(
   primary_alias: faa,
   singular: false,
   regexp: '\A(faculty|student|staff|employee|member|affiliate' \
-          '|alum|library-walk-in)\z',
+          '|alum|library-walk-in)@.+\z',
   regexp_triggers_failure: true,
   category_attributes: [
     CategoryAttribute.new(presence: true, category: core)

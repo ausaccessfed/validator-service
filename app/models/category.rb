@@ -10,20 +10,28 @@ class Category < ApplicationRecord
   validates :order, numericality:
     { only_integer: true, greater_than_or_equal_to: 1 }
 
-  def validation_order(attribute_values)
-    matched_attributes = Hash[federation_attributes.name_ordered.map do |fa|
-      attribute_value = attribute_values.find do |av|
-        av.federation_attribute_id == fa.id
+  def validation_order(all_attribute_values)
+    CategoryAttribute.sort_by_order(grouped_attributes(all_attribute_values))
+  end
+
+  def matched_attributes(all_attribute_values)
+    federation_attributes.name_ordered.map do |fa|
+      attr_values = all_attribute_values.select do |av|
+        fa.id == av.federation_attribute_id
       end
 
-      [fa, attribute_value.try(:value)]
-    end]
-
-    grouped_attributes = matched_attributes.group_by do |fa, value|
-      AttributeValue.validation_state(self, fa, value)
+      [fa, attr_values.empty? ? [nil] : attr_values.map { |x| x.try(:value) }]
     end
+  end
 
-    grouped_attributes.sort_by { |key, _value| key[:order] }
+  def grouped_attributes(all_attribute_values)
+    matched_attributes(all_attribute_values).group_by do |fa, values|
+      states = values.map do |value|
+        AttributeValue.validation_state(self, fa, value)
+      end
+
+      CategoryAttribute.sort_by_order(states).first
+    end.to_a
   end
 
   # :nocov:

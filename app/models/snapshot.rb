@@ -62,7 +62,10 @@ class Snapshot < ApplicationRecord
         label label.upcase
       end
 
-      field :subject
+      field :subject do
+        searchable [:name]
+        queryable true
+      end
     end
 
     field :subject

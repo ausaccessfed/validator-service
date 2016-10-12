@@ -21,9 +21,9 @@ class AttributeValue < ApplicationRecord
         unless Regexp.new(federation_attribute.regexp).match(attribute_value)
           if federation_attribute.regexp_triggers_failure?
             return ApplicationHelper::ResponseFor.invalid_attribute
-          else
-            return ApplicationHelper::ResponseFor.imperfect_attribute
           end
+
+          return ApplicationHelper::ResponseFor.imperfect_attribute
         end
       end
 

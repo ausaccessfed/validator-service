@@ -30,4 +30,10 @@ Rails.application.configure do
   config.assets.debug = true
 
   config.shib_rack.development_mode = true
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.raise = true
+  end
 end

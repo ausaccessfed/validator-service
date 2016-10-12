@@ -1,4 +1,3 @@
-@import 'bootstrap/bootstrap';
 @import 'aaf-lipstick';
 @import 'rails_admin/bootstrap/_variables' ;
 
@@ -33,4 +32,8 @@
       padding-left: ($grid-gutter-width * 2);
     }
   }
+}
+
+.normal-white-space {
+  white-space: normal !important;
 }
