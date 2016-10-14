@@ -16,14 +16,16 @@ class Snapshot < ApplicationRecord
     created_at.to_formatted_s(:rfc822)
   end
 
-  def latest?(subject)
-    Snapshot.latest(subject) == self
   def number(explicit_subject = nil)
     explicit_subject ||= subject
 
     Snapshot.where(subject: explicit_subject).ids.index(id) + 1
   end
 
+  def latest?(explicit_subject = nil)
+    explicit_subject ||= subject
+
+    Snapshot.latest(explicit_subject) == self
   end
 
   class << self
