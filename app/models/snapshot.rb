@@ -69,8 +69,10 @@ class Snapshot < ApplicationRecord
   rails_admin do
     list do
       field :id do
-        label label.upcase
+        label 'Internal ID'
       end
+
+      field :name
 
       field :subject do
         searchable [:name]
@@ -78,12 +80,22 @@ class Snapshot < ApplicationRecord
       end
     end
 
-    field :subject
-    field :attribute_values do
-      label label.titleize
+    edit do
+      field :subject
+
+      field :attribute_values do
+        label label.titleize
+      end
     end
 
     show do
+      field :name
+      field :subject
+
+      field :attribute_values do
+        label label.titleize
+      end
+
       field :created_at
       field :updated_at
 
