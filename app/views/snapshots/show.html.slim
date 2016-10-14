@@ -4,6 +4,9 @@ h2
     | Taken on #{@snapshot.taken_at}
 
 - unless @snapshot.latest?(@subject)
+- if @admin_viewer
+  .alert.alert-warning role="alert"
+    | Note:  This is not your snapshot.  You are viewing this snapshot as an admin.
   .alert.alert-warning role="alert"
     | This is not your most recent snapshot.
     =< link_to 'View your most recent attributes in your latest snapshot.', latest_snapshots_path

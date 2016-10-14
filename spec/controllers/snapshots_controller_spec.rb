@@ -98,6 +98,10 @@ RSpec.describe SnapshotsController, type: :controller do
           expect(response).to have_http_status(:not_found)
         end
 
+        it 'assigns' do
+          expect(assigns(:admin_viewer)).to eql nil
+        end
+
         it { is_expected.to render_template('dynamic_errors/not_found') }
       end
     end
@@ -151,6 +155,8 @@ RSpec.describe SnapshotsController, type: :controller do
 
           expect(assigns(:categories).size).to eql 1
           expect(assigns(:categories).first).to be_instance_of(Category)
+
+          expect(assigns(:admin_viewer)).to eql true
         end
 
         it { is_expected.to render_template('snapshots/show') }

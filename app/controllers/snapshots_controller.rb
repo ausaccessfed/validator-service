@@ -19,6 +19,8 @@ class SnapshotsController < ApplicationController
                   @subject.snapshots.find(params[:id])
                 end
 
+    @admin_viewer = @subject != @snapshot.subject
+
     show_actions
   end
 
