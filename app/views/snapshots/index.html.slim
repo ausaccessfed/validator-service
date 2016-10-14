@@ -12,5 +12,5 @@ table.table
         td
           = link_to snapshot.name, snapshot_path(snapshot)
         td
-          = snapshot.taken_at
+          = local_time(snapshot.created_at, :validator_date_format)
 
