@@ -39,7 +39,7 @@ module ApplicationHelper
         {
           state: 'valid',
           order: 4,
-          message: 'This attribute forefills all requirements.',
+          message: 'This attribute fulfils all requirements.',
           icon_classes: [
             'glyphicon',
             'glyphicon-ok-sign',
