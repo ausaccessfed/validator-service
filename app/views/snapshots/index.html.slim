@@ -10,7 +10,7 @@ table.table
     - @snapshots.each do |snapshot|
       tr
         td
-          = link_to snapshot.name, snapshot_path(snapshot)
+          = link_to snapshot.name(snapshot.subject), snapshot_path(snapshot)
         td
           = snapshot.taken_at
 

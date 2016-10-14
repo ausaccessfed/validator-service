@@ -1,5 +1,5 @@
 h2
-  | Snapshot ID: &nbsp;#{@snapshot.id}
+  = @snapshot.name(@snapshot.subject)
   small
     | Taken on #{@snapshot.taken_at}
 

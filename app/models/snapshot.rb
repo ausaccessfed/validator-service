@@ -6,8 +6,10 @@ class Snapshot < ApplicationRecord
 
   valhammer
 
-  def name
-    "Snapshot #{id}"
+  def name(explicit_subject = nil)
+    explicit_subject ||= subject
+
+    "Snapshot #{number(explicit_subject)}"
   end
 
   def taken_at
@@ -16,6 +18,12 @@ class Snapshot < ApplicationRecord
 
   def latest?(subject)
     Snapshot.latest(subject) == self
+  def number(explicit_subject = nil)
+    explicit_subject ||= subject
+
+    Snapshot.where(subject: explicit_subject).ids.index(id) + 1
+  end
+
   end
 
   class << self
