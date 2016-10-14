@@ -5,6 +5,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :ensure_authenticated
   after_action :ensure_access_checked
+  before_action :apply_rails_admin_csp
+
+  # :nocov:
+  def apply_rails_admin_csp
+    return false unless defined?(rails_admin_controller?) &&
+                        rails_admin_controller?
+
+    use_secure_headers_override(:rails_admin)
+  end
+  # :nocov:
 
   def subject
     subject = session[:subject_id] && Subject.find_by(id: session[:subject_id])

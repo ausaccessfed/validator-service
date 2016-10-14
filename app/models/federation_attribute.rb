@@ -104,9 +104,9 @@ class FederationAttribute < ApplicationRecord
     end
 
     edit do
-      field :notes_on_format, :ck_editor
-      field :notes_on_usage, :ck_editor
-      field :notes_on_privacy, :ck_editor
+      field :notes_on_format
+      field :notes_on_usage
+      field :notes_on_privacy
 
       fields :notes_on_format, :notes_on_usage, :notes_on_privacy do
         label label.titleize
