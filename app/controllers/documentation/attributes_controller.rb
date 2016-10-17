@@ -7,7 +7,9 @@ module Documentation
     before_action :set_documentation_attribute, only: [:show]
 
     def index
-      @federation_attributes = FederationAttribute.name_ordered.all
+      @federation_attributes = FederationAttribute.name_ordered
+                                                  .includes(:primary_alias)
+                                                  .all
     end
 
     def show
