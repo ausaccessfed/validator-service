@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 class SnapshotsController < ApplicationController
   before_action :public_action
+  prepend_before_action :eager, only: [:latest, :show]
 
   def latest
-    @snapshot = @subject.snapshots.last
+    @snapshot = @subject.snapshots.provisioned.last
 
     show_actions
   end
@@ -13,7 +14,7 @@ class SnapshotsController < ApplicationController
   end
 
   def show
-    @snapshot = @subject.snapshots.find(params[:id])
+    @snapshot = @subject.snapshots.provisioned.find(params[:id])
 
     show_actions
   end
@@ -25,5 +26,9 @@ class SnapshotsController < ApplicationController
     @categories = Category.enabled.order(:order).all
 
     render :show
+  end
+
+  def eager
+    @subject = Subject.includes(:snapshots).find_by(id: session[:subject_id])
   end
 end

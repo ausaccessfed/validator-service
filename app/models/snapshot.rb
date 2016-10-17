@@ -6,6 +6,10 @@ class Snapshot < ApplicationRecord
 
   valhammer
 
+  scope :provisioned, lambda {
+    includes(snapshot_attribute_values: [:attribute_value])
+  }
+
   def name
     "Snapshot #{id}"
   end
