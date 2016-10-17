@@ -23,8 +23,7 @@ class CategoryAttribute < ApplicationRecord
         queryable true
       end
       field :federation_attribute do
-        # NOTE: This is not accurate, but close enough in most cases.
-        searchable [:internal_alias]
+        searchable [:internal_alias, :oid]
         queryable true
         label label.titleize
       end

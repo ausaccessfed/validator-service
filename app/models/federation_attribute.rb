@@ -54,8 +54,16 @@ class FederationAttribute < ApplicationRecord
     end
   end
 
+  def custom_label_method
+    "#{internal_alias} (#{oid})"
+  end
+
   # :nocov:
   rails_admin do
+    object_label_method do
+      :custom_label_method
+    end
+
     label label.titleize
 
     list do
