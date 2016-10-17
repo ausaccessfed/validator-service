@@ -13,7 +13,13 @@ class SnapshotsController < ApplicationController
   end
 
   def show
-    @snapshot = @subject.snapshots.find(params[:id])
+    @snapshot = if @subject.permits?('app:validator:admin:web_interface')
+                  Snapshot.find(params[:id])
+                else
+                  @subject.snapshots.find(params[:id])
+                end
+
+    @admin_viewer = @subject != @snapshot.subject
 
     show_actions
   end
