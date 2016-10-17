@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Snapshot < ApplicationRecord
   has_many :snapshot_attribute_values
   has_many :attribute_values, through: :snapshot_attribute_values
@@ -8,10 +9,6 @@ class Snapshot < ApplicationRecord
 
   def name
     "Snapshot #{id}"
-  end
-
-  def taken_at
-    created_at.to_formatted_s(:rfc822)
   end
 
   def latest?(subject)
