@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Snapshot < ApplicationRecord
   has_many :snapshot_attribute_values
   has_many :attribute_values, through: :snapshot_attribute_values
@@ -10,10 +11,6 @@ class Snapshot < ApplicationRecord
     explicit_subject ||= subject
 
     "Snapshot #{number(explicit_subject)}"
-  end
-
-  def taken_at
-    created_at.to_formatted_s(:rfc822)
   end
 
   def number(explicit_subject = nil)

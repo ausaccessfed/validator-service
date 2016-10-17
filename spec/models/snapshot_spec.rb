@@ -12,10 +12,6 @@ RSpec.describe Snapshot, type: :model do
     expect(snapshot.name).to eql 'Snapshot 1'
   end
 
-  it '#taken_at' do
-    expect(snapshot.taken_at).to eql snapshot.created_at.to_formatted_s(:rfc822)
-  end
-
   describe '#latest?' do
     it 'is the latest' do
       subject.snapshots << snapshot
