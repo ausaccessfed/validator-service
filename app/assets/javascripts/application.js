@@ -12,4 +12,5 @@
 //
 //= require aaf-lipstick
 //= require filterTable/jquery.filtertable
+//= require local_time
 //= require_tree .
