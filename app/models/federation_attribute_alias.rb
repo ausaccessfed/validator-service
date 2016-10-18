@@ -12,18 +12,27 @@ class FederationAttributeAlias < ApplicationRecord
 
     list do
       field :name
+
+      field :federation_attribute do
+        label label.titleize
+      end
     end
 
-    field :name
-    field :federation_attribute do
-      label label.titleize
+    edit do
+      field :name
+      field :federation_attribute do
+        label label.titleize
+      end
     end
 
     show do
+      field :name
+      field :federation_attribute
+
       field :created_at
       field :updated_at
 
-      fields :created_at, :updated_at do
+      fields :federation_attribute, :created_at, :updated_at do
         label label.titleize
       end
     end
