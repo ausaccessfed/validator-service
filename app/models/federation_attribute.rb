@@ -29,7 +29,7 @@ class FederationAttribute < ApplicationRecord
   def aliases
     federation_attribute_aliases.where
                                 .not(federation_attribute_aliases:
-                                  { id: primary_alias.id })
+                                  { id: primary_alias_id })
   end
 
   def sync_name
