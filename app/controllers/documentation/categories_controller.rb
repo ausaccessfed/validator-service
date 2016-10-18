@@ -14,9 +14,11 @@ module Documentation
       @category_attributes = @federation_category
                              .federation_attributes
                              .name_ordered
-                             .includes(:primary_alias)
                              .map do |attribute|
-        [attribute.name, documentation_attribute_path(attribute.oid)]
+        [
+          attribute.primary_alias_name,
+          documentation_attribute_path(attribute.oid)
+        ]
       end
     end
 

@@ -15,7 +15,7 @@ class Category < ApplicationRecord
   end
 
   def matched_attributes(all_attribute_values)
-    federation_attributes.includes(:primary_alias).name_ordered.map do |fa|
+    federation_attributes.name_ordered.map do |fa|
       attr_values = all_attribute_values.select do |av|
         fa.id == av.federation_attribute_id
       end
