@@ -9,8 +9,10 @@ class ApplicationController < ActionController::Base
 
   # :nocov:
   def apply_rails_admin_csp
-    return false unless defined?(rails_admin_controller?) &&
-                        rails_admin_controller?
+    rails_admin_controller = defined?(rails_admin_controller?) &&
+                             rails_admin_controller?
+
+    return false if !Rails.env.production? || !rails_admin_controller
 
     use_secure_headers_override(:rails_admin)
   end

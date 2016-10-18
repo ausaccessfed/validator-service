@@ -11,12 +11,22 @@ class Snapshot < ApplicationRecord
     includes(snapshot_attribute_values: [:attribute_value])
   }
 
-  def name
-    "Snapshot #{id}"
+  def name(explicit_subject = nil)
+    explicit_subject ||= subject
+
+    "Snapshot #{number(explicit_subject)}"
   end
 
-  def latest?(subject)
-    Snapshot.latest(subject) == self
+  def number(explicit_subject = nil)
+    explicit_subject ||= subject
+
+    Snapshot.where(subject: explicit_subject).ids.index(id) + 1
+  end
+
+  def latest?(explicit_subject = nil)
+    explicit_subject ||= subject
+
+    Snapshot.latest(explicit_subject) == self
   end
 
   class << self
@@ -60,8 +70,10 @@ class Snapshot < ApplicationRecord
   rails_admin do
     list do
       field :id do
-        label label.upcase
+        label 'Internal ID'
       end
+
+      field :name
 
       field :subject do
         searchable [:name]
@@ -69,12 +81,22 @@ class Snapshot < ApplicationRecord
       end
     end
 
-    field :subject
-    field :attribute_values do
-      label label.titleize
+    edit do
+      field :subject
+
+      field :attribute_values do
+        label label.titleize
+      end
     end
 
     show do
+      field :name
+      field :subject
+
+      field :attribute_values do
+        label label.titleize
+      end
+
       field :created_at
       field :updated_at
 

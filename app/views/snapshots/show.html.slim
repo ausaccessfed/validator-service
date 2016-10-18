@@ -1,5 +1,5 @@
 h2
-  | Snapshot ID: &nbsp;#{@snapshot.id}
+  = @snapshot.name(@snapshot.subject)
   small
     | Taken on #{local_time(@snapshot.created_at, :validator_date_format)}
 

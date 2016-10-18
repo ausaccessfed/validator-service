@@ -9,7 +9,7 @@ RSpec.describe Snapshot, type: :model do
   it { expect(snapshot).to be_valid }
 
   it '#name' do
-    expect(snapshot.name).to eql "Snapshot #{snapshot.id}"
+    expect(snapshot.name).to eql 'Snapshot 1'
   end
 
   describe '#latest?' do
