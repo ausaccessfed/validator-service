@@ -10,7 +10,7 @@ class FederationAttribute < ApplicationRecord
 
   valhammer
 
-  delegate :name, to: :primary_alias, allow_nil: true
+  after_commit :sync_name, on: [:create, :update]
 
   scope :fuzzy_lookup, lambda { |id|
     alias_lookup(id) + where(oid: id)
@@ -30,6 +30,10 @@ class FederationAttribute < ApplicationRecord
     federation_attribute_aliases.where
                                 .not(federation_attribute_aliases:
                                   { id: primary_alias.id })
+  end
+
+  def sync_name
+    update_attribute(:primary_alias_name, primary_alias.name)
   end
 
   class << self
