@@ -56,7 +56,7 @@ RSpec.describe AttributeValue, type: :model do
   end
 
   it '#name' do
-    expect(attribute_value.name).to eql federation_attribute.name
+    expect(attribute_value.name).to eql federation_attribute.primary_alias_name
   end
 
   it '#custom_label_method' do
