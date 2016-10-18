@@ -6,7 +6,14 @@ RailsAdmin.config do |config|
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
-    new
+    new do
+      only %w(
+        Category
+        CategoryAttribute
+        FederationAttribute
+        FederationAttributeAlias
+      )
+    end
     edit
     export
     show
