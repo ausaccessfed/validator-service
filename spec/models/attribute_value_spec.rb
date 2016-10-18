@@ -55,13 +55,9 @@ RSpec.describe AttributeValue, type: :model do
     expect(attribute_value).not_to be_valid
   end
 
-  it '#name' do
-    expect(attribute_value.name).to eql federation_attribute.primary_alias_name
-  end
-
   it '#custom_label_method' do
     expect(attribute_value.custom_label_method).to(
-      eql "#{federation_attribute.primary_alias.name}: #{attribute_value.value}"
+      eql attribute_value.value
     )
   end
 
