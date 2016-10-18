@@ -35,5 +35,12 @@ Rails.application.configure do
     Bullet.enable = true
     Bullet.bullet_logger = true
     Bullet.raise = true
+
+    Bullet.add_whitelist type: :unused_eager_loading,
+                         class_name: 'FederationAttribute',
+                         association: :primary_alias
+    Bullet.add_whitelist type: :unused_eager_loading,
+                         class_name: 'FederationAttributeAlias',
+                         association: :federation_attribute
   end
 end
