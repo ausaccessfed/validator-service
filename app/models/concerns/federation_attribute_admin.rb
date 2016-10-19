@@ -1,83 +1,85 @@
 # frozen_string_literal: true
-module SubjectAdmin
+module FederationAttributeAdmin
   extend ActiveSupport::Concern
 
   # :nocov:
-  rails_admin do
-    object_label_method do
-      :custom_label_method
-    end
-
-    label label.titleize
-
-    list do
-      field :primary_alias do
-        searchable [:primary_alias_name]
-        queryable true
-        label label.titleize
+  included do
+    rails_admin do
+      object_label_method do
+        :custom_label_method
       end
 
-      field :description
-    end
+      label label.titleize
 
-    show do
-      field :oid do
-        label label.upcase
+      list do
+        field :primary_alias do
+          searchable [:primary_alias_name]
+          queryable true
+          label label.titleize
+        end
+
+        field :description
       end
 
-      field :primary_alias
-      field :federation_attribute_aliases
+      show do
+        field :oid do
+          label label.upcase
+        end
 
-      field :http_header do
-        label 'HTTP Header'
+        field :primary_alias
+        field :federation_attribute_aliases
+
+        field :http_header do
+          label 'HTTP Header'
+        end
+
+        field :description
+        field :singular
+
+        field :regexp
+        field :regexp_triggers_failure
+
+        field :notes_on_format
+        field :notes_on_usage
+        field :notes_on_privacy
+
+        field :created_at
+        field :updated_at
+
+        fields :regexp_triggers_failure, :primary_alias,
+               :federation_attribute_aliases, :notes_on_format, :notes_on_usage,
+               :notes_on_privacy, :created_at, :updated_at do
+          label label.titleize
+        end
       end
 
-      field :description
-      field :singular
+      edit do
+        field :oid do
+          label label.upcase
+        end
 
-      field :regexp
-      field :regexp_triggers_failure
+        field :primary_alias
+        field :federation_attribute_aliases
 
-      field :notes_on_format
-      field :notes_on_usage
-      field :notes_on_privacy
+        field :http_header do
+          label 'HTTP Header'
+        end
 
-      field :created_at
-      field :updated_at
+        field :description
+        field :singular
 
-      fields :regexp_triggers_failure, :primary_alias,
-             :federation_attribute_aliases, :notes_on_format, :notes_on_usage,
-             :notes_on_privacy, :created_at, :updated_at do
-        label label.titleize
-      end
-    end
+        field :regexp
+        field :regexp_triggers_failure
 
-    edit do
-      field :oid do
-        label label.upcase
-      end
+        field :notes_on_format
+        field :notes_on_usage
+        field :notes_on_privacy
 
-      field :primary_alias
-      field :federation_attribute_aliases
-
-      field :http_header do
-        label 'HTTP Header'
-      end
-
-      field :description
-      field :singular
-
-      field :regexp
-      field :regexp_triggers_failure
-
-      field :notes_on_format
-      field :notes_on_usage
-      field :notes_on_privacy
-
-      fields :regexp_triggers_failure, :primary_alias,
-             :federation_attribute_aliases, :notes_on_format, :notes_on_usage,
-             :notes_on_privacy do
-        label label.titleize
+        fields :regexp_triggers_failure, :primary_alias,
+               :federation_attribute_aliases, :notes_on_format, :notes_on_usage,
+               :notes_on_privacy do
+          label label.titleize
+        end
       end
     end
   end

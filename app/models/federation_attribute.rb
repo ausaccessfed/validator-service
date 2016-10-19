@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class FederationAttribute < ApplicationRecord
+  include FederationAttributeAdmin
+
   has_many :category_attributes
   has_many :categories, through: :category_attributes
 
