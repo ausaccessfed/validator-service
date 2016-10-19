@@ -35,7 +35,7 @@ p
           - category.validation_order(@attribute_values).each do |grouping_state, attributes|
             - attributes.each do |attribute, values|
               tr
-                td.col-xs-2 = attribute.name
+                td.col-xs-2 = attribute.primary_alias_name
                 td.col-xs-9
                   - values.each do |value|
                     .hidden-print

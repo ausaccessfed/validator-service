@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class FederationAttribute < ApplicationRecord
+  include FederationAttributeAdmin
+
   has_many :category_attributes
   has_many :categories, through: :category_attributes
 
@@ -10,7 +12,7 @@ class FederationAttribute < ApplicationRecord
 
   valhammer
 
-  delegate :name, to: :primary_alias, allow_nil: true
+  after_commit :sync_name, on: [:create, :update]
 
   scope :fuzzy_lookup, lambda { |id|
     alias_lookup(id) + where(oid: id)
@@ -29,7 +31,15 @@ class FederationAttribute < ApplicationRecord
   def aliases
     federation_attribute_aliases.where
                                 .not(federation_attribute_aliases:
-                                  { id: primary_alias.id })
+                                  { id: primary_alias_id })
+  end
+
+  def sync_name
+    update_attribute(:primary_alias_name, primary_alias.name)
+  end
+
+  def custom_label_method
+    primary_alias_name
   end
 
   class << self
@@ -53,65 +63,4 @@ class FederationAttribute < ApplicationRecord
       attrs.keep_if { |k, _v| headers.include?(k) }
     end
   end
-
-  # :nocov:
-  rails_admin do
-    label label.titleize
-
-    list do
-      field :primary_alias do
-        searchable [federation_attribute_aliases: :name]
-        queryable true
-        label label.titleize
-      end
-
-      field :description
-    end
-
-    field :oid do
-      label label.upcase
-    end
-
-    field :primary_alias
-    field :federation_attribute_aliases
-    field :http_header do
-      label 'HTTP Header'
-    end
-
-    field :description
-    field :singular
-
-    field :regexp
-    field :regexp_triggers_failure
-
-    fields :primary_alias, :federation_attribute_aliases,
-           :regexp_triggers_failure do
-      label label.titleize
-    end
-
-    show do
-      field :notes_on_format
-      field :notes_on_usage
-      field :notes_on_privacy
-
-      field :created_at
-      field :updated_at
-
-      fields :notes_on_format, :notes_on_usage, :notes_on_privacy, :created_at,
-             :updated_at do
-        label label.titleize
-      end
-    end
-
-    edit do
-      field :notes_on_format
-      field :notes_on_usage
-      field :notes_on_privacy
-
-      fields :notes_on_format, :notes_on_usage, :notes_on_privacy do
-        label label.titleize
-      end
-    end
-  end
-  # :nocov:
 end

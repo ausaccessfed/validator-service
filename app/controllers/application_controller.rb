@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   def ensure_authenticated
     return force_authentication unless session[:subject_id]
 
-    @subject = Subject.find_by(id: session[:subject_id])
+    @subject ||= Subject.find_by(id: session[:subject_id])
     raise(Unauthorized, 'Subject invalid') unless @subject
     raise(Unauthorized, 'Subject not functional') unless @subject.functioning?
   end

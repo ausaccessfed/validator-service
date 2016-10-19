@@ -5,8 +5,6 @@ class AttributeValue < ApplicationRecord
 
   valhammer
 
-  delegate :name, to: :federation_attribute
-
   class << self
     def validation_state(category, federation_attribute, attribute_value)
       if attribute_value
@@ -52,6 +50,6 @@ class AttributeValue < ApplicationRecord
   # :nocov:
 
   def custom_label_method
-    "#{federation_attribute.primary_alias.name}: #{value}"
+    value
   end
 end

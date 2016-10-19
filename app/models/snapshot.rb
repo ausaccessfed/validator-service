@@ -7,6 +7,10 @@ class Snapshot < ApplicationRecord
 
   valhammer
 
+  scope :provisioned, lambda {
+    includes(snapshot_attribute_values: [:attribute_value])
+  }
+
   def name(explicit_subject = nil)
     explicit_subject ||= subject
 
