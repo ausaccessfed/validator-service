@@ -6,7 +6,14 @@ RailsAdmin.config do |config|
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
-    new
+    new do
+      only %w(
+        Category
+        CategoryAttribute
+        FederationAttribute
+        FederationAttributeAlias
+      )
+    end
     edit
     export
     show
@@ -32,5 +39,16 @@ RailsAdmin.config do |config|
     Snapshot
     Subject
   )
+end
+
+if Rails.env.production?
+  SecureHeaders::Configuration.override(:rails_admin) do |config|
+    config.csp[:style_src] << "'unsafe-inline'"
+    config.csp[:connect_src] = ["'self'"]
+    config.csp[:script_src] = config.csp[:script_src] + [
+      "'sha256-73+D8uQwNyLmkFjvaILshPLBcTjapyK9P5FGfkepYxE='",
+      "'unsafe-eval'"
+    ]
+  end
 end
 # :nocov:

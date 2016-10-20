@@ -38,7 +38,7 @@ RSpec.describe Subject, type: :model do
 
       it 'subject has multiple roles with multiple permissions' do
         res = []
-        subject.roles.each do |result|
+        subject.roles.includes(:permissions).each do |result|
           result.permissions.each do |permission|
             res << permission.value
           end

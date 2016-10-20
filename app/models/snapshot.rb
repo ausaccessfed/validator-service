@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Snapshot < ApplicationRecord
   has_many :snapshot_attribute_values
   has_many :attribute_values, through: :snapshot_attribute_values
@@ -6,16 +7,26 @@ class Snapshot < ApplicationRecord
 
   valhammer
 
-  def name
-    "Snapshot #{id}"
+  scope :provisioned, lambda {
+    includes(snapshot_attribute_values: [:attribute_value])
+  }
+
+  def name(explicit_subject = nil)
+    explicit_subject ||= subject
+
+    "Snapshot #{number(explicit_subject)}"
   end
 
-  def taken_at
-    created_at.to_formatted_s(:rfc822)
+  def number(explicit_subject = nil)
+    explicit_subject ||= subject
+
+    Snapshot.where(subject: explicit_subject).ids.index(id) + 1
   end
 
-  def latest?(subject)
-    Snapshot.latest(subject) == self
+  def latest?(explicit_subject = nil)
+    explicit_subject ||= subject
+
+    Snapshot.latest(explicit_subject) == self
   end
 
   class << self
@@ -59,8 +70,10 @@ class Snapshot < ApplicationRecord
   rails_admin do
     list do
       field :id do
-        label label.upcase
+        label 'Internal ID'
       end
+
+      field :name
 
       field :subject do
         searchable [:name]
@@ -68,12 +81,22 @@ class Snapshot < ApplicationRecord
       end
     end
 
-    field :subject
-    field :attribute_values do
-      label label.titleize
+    edit do
+      field :subject
+
+      field :attribute_values do
+        label label.titleize
+      end
     end
 
     show do
+      field :name
+      field :subject
+
+      field :attribute_values do
+        label label.titleize
+      end
+
       field :created_at
       field :updated_at
 

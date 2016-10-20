@@ -2,7 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe SnapshotsController, type: :controller do
+  let(:admin_subject) { create(:subject, :admin) }
   let(:subject) { create(:subject) }
+  let(:subject2) { create(:subject) }
 
   let(:attrs) do
     Authentication::AttributeHelpers
@@ -12,9 +14,19 @@ RSpec.describe SnapshotsController, type: :controller do
   let!(:category) { create(:category) }
 
   let(:has_snapshot) do
-    create_federation_attributes([:targeted_id, :mail, :displayname])
-
     Snapshot.create_from_receiver(subject, attrs)
+  end
+
+  let(:admin_has_snapshot) do
+    Snapshot.create_from_receiver(admin_subject, attrs)
+  end
+
+  let(:subject2_has_snapshot) do
+    Snapshot.create_from_receiver(subject2, attrs)
+  end
+
+  before(:each) do
+    create_federation_attributes([:targeted_id, :mail, :displayname])
   end
 
   describe '#latest' do
@@ -49,27 +61,106 @@ RSpec.describe SnapshotsController, type: :controller do
     context 'when the user is logged in' do
       before do
         has_snapshot
+        subject2_has_snapshot
 
         session[:subject_id] = subject.id
-        get :show, params: { id: subject.snapshots.first }
       end
 
-      it 'should render ok' do
-        expect(response).to have_http_status(:ok)
+      context 'own snapshot' do
+        before(:each) do
+          get :show, params: { id: subject.snapshots.first }
+        end
+
+        it 'should render ok' do
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'assigns' do
+          expect(assigns(:snapshot)).to be_instance_of(Snapshot)
+
+          expect(assigns(:attribute_values).size).to eql 3
+          expect(assigns(:attribute_values).first)
+            .to be_instance_of(AttributeValue)
+
+          expect(assigns(:categories).size).to eql 1
+          expect(assigns(:categories).first).to be_instance_of(Category)
+        end
+
+        it { is_expected.to render_template('snapshots/show') }
       end
 
-      it 'assigns' do
-        expect(assigns(:snapshot)).to be_instance_of(Snapshot)
+      context "other subject's snapshot" do
+        before(:each) do
+          get :show, params: { id: subject2.snapshots.first }
+        end
 
-        expect(assigns(:attribute_values).size).to eql 3
-        expect(assigns(:attribute_values).first)
-          .to be_instance_of(AttributeValue)
+        it 'should render not found' do
+          expect(response).to have_http_status(:not_found)
+        end
 
-        expect(assigns(:categories).size).to eql 1
-        expect(assigns(:categories).first).to be_instance_of(Category)
+        it 'assigns' do
+          expect(assigns(:admin_viewer)).to eql nil
+        end
+
+        it { is_expected.to render_template('dynamic_errors/not_found') }
+      end
+    end
+
+    context 'when admin is logged in' do
+      before do
+        admin_has_snapshot
+        subject2_has_snapshot
+
+        session[:subject_id] = admin_subject.id
       end
 
-      it { is_expected.to render_template('snapshots/show') }
+      context 'own snapshot' do
+        before(:each) do
+          get :show, params: { id: admin_subject.snapshots.first }
+        end
+
+        it 'should render ok' do
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'assigns' do
+          expect(assigns(:snapshot)).to be_instance_of(Snapshot)
+
+          expect(assigns(:attribute_values).size).to eql 3
+          expect(assigns(:attribute_values).first)
+            .to be_instance_of(AttributeValue)
+
+          expect(assigns(:categories).size).to eql 1
+          expect(assigns(:categories).first).to be_instance_of(Category)
+        end
+
+        it { is_expected.to render_template('snapshots/show') }
+      end
+
+      context "other subject's snapshot" do
+        before(:each) do
+          get :show, params: { id: subject2.snapshots.first }
+        end
+
+        it 'should render ok' do
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'assigns' do
+          expect(assigns(:snapshot)).to be_instance_of(Snapshot)
+
+          expect(assigns(:attribute_values).size).to eql 3
+          expect(assigns(:attribute_values).first)
+            .to be_instance_of(AttributeValue)
+
+          expect(assigns(:categories).size).to eql 1
+          expect(assigns(:categories).first).to be_instance_of(Category)
+
+          expect(assigns(:admin_viewer)).to eql true
+        end
+
+        it { is_expected.to render_template('snapshots/show') }
+      end
     end
   end
 

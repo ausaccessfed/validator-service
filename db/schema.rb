@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908003616) do
+ActiveRecord::Schema.define(version: 20161017113931) do
 
   create_table "api_subject_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer  "role_id",        null: false
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20160908003616) do
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
     t.string   "internal_alias",                                       null: false
+    t.string   "primary_alias_name"
     t.index ["http_header"], name: "index_federation_attributes_on_http_header", unique: true, using: :btree
     t.index ["internal_alias"], name: "index_federation_attributes_on_internal_alias", unique: true, using: :btree
     t.index ["oid"], name: "index_federation_attributes_on_oid", unique: true, using: :btree

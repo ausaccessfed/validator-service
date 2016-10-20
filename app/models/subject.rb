@@ -11,7 +11,9 @@ class Subject < ApplicationRecord
   valhammer
 
   def permissions
-    roles.flat_map { |role| role.permissions.map(&:value) }
+    roles.includes(:permissions).flat_map do |role|
+      role.permissions.map(&:value)
+    end
   end
 
   def functioning?

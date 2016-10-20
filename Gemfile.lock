@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/mshibuya/remotipart.git
-  revision: 7e244e78e148430b7720e6cf8f86263d6a1dfddf
+  revision: cd653ddc43bb09767b8f2802d6e27b3e00ef992f
   specs:
-    remotipart (1.3.0)
+    remotipart (1.3.1)
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-gumboot
@@ -11,21 +11,6 @@ GIT
   specs:
     aaf-gumboot (0.0.1)
       accession (~> 1.0)
-
-GIT
-  remote: https://github.com/ausaccessfed/aaf-lipstick.git
-  revision: e20f27d6a96c6df37132983add19ff180a8f51a6
-  branch: develop
-  specs:
-    aaf-lipstick (2.0.0)
-      actionpack
-      activerecord
-      erubis
-      kramdown (~> 1.5)
-      rmagick
-      sprockets (~> 3.0)
-      tilt
-      will_paginate
 
 GIT
   remote: https://github.com/ausaccessfed/shib-rack
@@ -48,6 +33,15 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    aaf-lipstick (2.1.0)
+      actionpack
+      activerecord
+      erubis
+      kramdown (~> 1.5)
+      rmagick
+      sprockets (~> 3.0)
+      tilt
+      will_paginate
     aaf-secure_headers (1.0.0)
       activesupport
       secure_headers (~> 3.5.0.pre)
@@ -99,21 +93,14 @@ GEM
     bullet (5.4.2)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.10.0)
-    capybara (2.9.1)
+    capybara (2.10.1)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    ckeditor (4.2.0)
-      cocaine
-      orm_adapter (~> 0.5.0)
-    climate_control (0.0.3)
-      activesupport (>= 3.0)
     cliver (0.3.2)
-    cocaine (0.5.8)
-      climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
@@ -185,6 +172,8 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
+    local_time (1.0.3)
+      coffee-rails
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.10)
@@ -205,11 +194,10 @@ GEM
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    orm_adapter (0.5.0)
     parser (2.3.1.4)
       ast (~> 2.2)
     pdfkit (0.8.2)
-    poltergeist (1.10.0)
+    poltergeist (1.11.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
@@ -276,7 +264,7 @@ GEM
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
       rspec-mocks (~> 3.5.0)
-    rspec-core (3.5.3)
+    rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -300,7 +288,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
-    ruby_dep (1.4.0)
+    ruby_dep (1.5.0)
     safe_yaml (1.0.4)
     sass (3.4.22)
     sass-rails (5.0.6)
@@ -309,7 +297,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    secure_headers (3.5.0.pre)
+    secure_headers (3.5.0)
       useragent
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
@@ -380,12 +368,11 @@ PLATFORMS
 
 DEPENDENCIES
   aaf-gumboot!
-  aaf-lipstick!
+  aaf-lipstick
   aaf-secure_headers
   accession
   bullet
   capybara
-  ckeditor
   coffee-script
   database_cleaner
   factory_girl_rails
@@ -396,6 +383,7 @@ DEPENDENCIES
   guard-bundler
   guard-rspec!
   guard-rubocop
+  local_time
   mysql2
   pdfkit
   poltergeist

@@ -7,9 +7,7 @@ gem 'mysql2'
 gem 'valhammer'
 gem 'accession'
 gem 'super-identity'
-gem 'aaf-lipstick',
-    git: 'https://github.com/ausaccessfed/aaf-lipstick.git',
-    branch: 'develop'
+gem 'aaf-lipstick'
 gem 'slim-rails'
 gem 'sass-rails', require: false
 gem 'uglifier', require: false
@@ -29,7 +27,7 @@ gem 'coffee-script'
 
 gem 'remotipart', github: 'mshibuya/remotipart', require: false
 gem 'rails_admin'
-gem 'ckeditor'
+gem 'local_time'
 
 group :production do
   gem 'aaf-secure_headers'

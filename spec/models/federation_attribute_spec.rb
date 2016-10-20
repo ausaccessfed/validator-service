@@ -51,9 +51,19 @@ RSpec.describe FederationAttribute, type: :model do
     end
   end
 
-  describe '#name' do
+  describe '#primary_alias_name' do
     it 'uses a primary alias' do
-      expect(federation_attribute.name).to eql(federation_attribute_alias.name)
+      expect(federation_attribute.primary_alias_name).to eql(
+        federation_attribute_alias.name
+      )
+    end
+  end
+
+  describe '#custom_label_method' do
+    it 'uses internal_alias and oid' do
+      expect(federation_attribute.custom_label_method).to eql(
+        federation_attribute_alias.name
+      )
     end
   end
 

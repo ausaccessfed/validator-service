@@ -1,11 +1,11 @@
 ol.breadcrumb
   li = link_to 'Documentation', documentation_path
   li = link_to 'Attributes', documentation_attributes_path
-  li.active = @federation_attribute.name
+  li.active = @federation_attribute.primary_alias_name
 
 dl.dl-horizontal
   dt Name
-  dd = @federation_attribute.name
+  dd = @federation_attribute.primary_alias_name
 
   - if @federation_attribute.aliases.count > 0
     dt Aliases
