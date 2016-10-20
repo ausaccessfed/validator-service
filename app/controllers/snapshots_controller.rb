@@ -5,6 +5,7 @@ class SnapshotsController < ApplicationController
   def latest
     eager_load
 
+    @snapshot = @snapshot_scope.where(subject: @subject).last
 
     show_actions
   end
