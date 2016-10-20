@@ -31,12 +31,14 @@ class SnapshotsController < ApplicationController
   end
 
   def eager
-    if subject.permits?('app:validator:admin:web_interface')
-      @subject = subject
-      @snapshot_scope = Snapshot.provisioned
-    else
-      @subject = Subject.includes(:snapshots).find_by(id: session[:subject_id])
-      @snapshot_scope = @subject.snapshots.provisioned
+    if subject
+      if subject.permits?('app:validator:admin:web_interface')
+        @subject = subject
+        @snapshot_scope = Snapshot.provisioned
+      else
+        @subject = Subject.includes(:snapshots).find_by(id: session[:subject_id])
+        @snapshot_scope = @subject.snapshots.provisioned
+      end
     end
   end
 end
