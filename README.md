@@ -26,4 +26,4 @@ limitations under the License.
 
 ## Documentation
 
-For installation and deployment instructions, please see the relevant [documentation](docs/index.md).
+For development, installation and deployment instructions, please see the relevant [documentation](docs/index.md).
