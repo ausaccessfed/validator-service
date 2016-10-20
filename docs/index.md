@@ -43,6 +43,17 @@ A shortcut for adding yourself as an Admin is the following:
 SubjectRole.create!(subject: Subject.last, role: Role.first)
 ```
 
+### AAF gems
+
+This project uses the following AAF gems:
+- [AAF Gumboot](https://github.com/ausaccessfed/aaf-gumboot)
+- [AAF Secure Headers](https://github.com/ausaccessfed/aaf-secure_headers)
+- [AAF Lipstick](https://github.com/ausaccessfed/aaf-lipstick)
+- [Shib Rack](https://github.com/ausaccessfed/shib-rack)
+- [Super Identity](https://github.com/ausaccessfed/super-identity)
+- [Accession](https://github.com/ausaccessfed/accession)
+- [Valhammer](https://github.com/ausaccessfed/valhammer)
+
 ## Production
 
 ### Setting up a production environment
