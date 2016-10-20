@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 class SnapshotsController < ApplicationController
   before_action :public_action
-  prepend_before_action :eager, only: [:latest, :show]
 
   def latest
-    @snapshot = @snapshot_scope.last
+    eager_load
+
 
     show_actions
   end
@@ -14,6 +14,8 @@ class SnapshotsController < ApplicationController
   end
 
   def show
+    eager_load
+
     @snapshot = @snapshot_scope.find(params[:id])
 
     @admin_viewer = @subject != @snapshot.subject
@@ -30,15 +32,12 @@ class SnapshotsController < ApplicationController
     render :show
   end
 
-  def eager
-    if subject
-      if subject.permits?('app:validator:admin:web_interface')
-        @subject = subject
-        @snapshot_scope = Snapshot.provisioned
-      else
-        @subject = Subject.includes(:snapshots).find_by(id: session[:subject_id])
-        @snapshot_scope = @subject.snapshots.provisioned
-      end
+  def eager_load
+    if subject.permits?('app:validator:admin:web_interface')
+      @snapshot_scope = Snapshot.provisioned
+    else
+      @subject = Subject.includes(:snapshots).find_by(id: session[:subject_id])
+      @snapshot_scope = @subject.snapshots.provisioned
     end
   end
 end
