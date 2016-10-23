@@ -1,6 +1,10 @@
-# Design and structure
+---
+title: Validator Service
+---
 
-## Snapshot flow
+## Design and structure
+
+### Snapshot flow
 
 1. The Validator is seeded with known attributes, but these can be extended and modified in the Admin interface.
 2. Attributes are passed from [ausaccessfed/shib-rack](https://github.com/ausaccessfed/shib-rack).
@@ -8,16 +12,18 @@
 4. Snapshots are presented to the Subject with attribute and category level validation applied to them.
 5. Edge cases, such as a changing Shared Token will be highlighted to the Subject.
 
-## Admin Interface
+### Admin Interface
 
 1. An Admin role is seeded with the entitlement of `urn:mace:aaf.edu.au:ide:internal:aaf-admin`.
 2. A Subject's entitlements are provisioned via an Identity Enhancement service (such as [AAF's IdE](https://ide.aaf.edu.au/)) when they login.
 3. An Admin tab is available on the main navigation bar if they have the correct role available.
 
-# Setup
-## All Environments
+## Setup
+
+### All Environments
 
 Make sure you have configured:
+
 - `config/deploy.yml`
 - `config/validator_service.yml`
 - `config/api-client.crt` <sup>`^`</sup>
@@ -25,15 +31,15 @@ Make sure you have configured:
 
 `^` For API authorization to your IdE Service.
 
-## Development
+### Development
 
-### Setting up a development environment
+#### Setting up a development environment
 
 1. Be using Ruby 2.3+.
 2. Run `bin/setup` (and read the output for any additional steps).
 3. Run `guard`.
 
-### Setting yourself up as an Admin user
+#### Setting yourself up as an Admin user
 
 A shortcut for adding yourself as an Admin is the following:
 
@@ -43,9 +49,10 @@ A shortcut for adding yourself as an Admin is the following:
 SubjectRole.create!(subject: Subject.last, role: Role.first)
 ```
 
-### AAF gems
+#### AAF gems
 
 This project uses the following AAF gems:
+
 - [AAF Gumboot](https://github.com/ausaccessfed/aaf-gumboot)
 - [AAF Secure Headers](https://github.com/ausaccessfed/aaf-secure_headers)
 - [AAF Lipstick](https://github.com/ausaccessfed/aaf-lipstick)
@@ -54,13 +61,14 @@ This project uses the following AAF gems:
 - [Accession](https://github.com/ausaccessfed/accession)
 - [Valhammer](https://github.com/ausaccessfed/valhammer)
 
-## Production
+### Production
 
-### Setting up a production environment
+#### Setting up a production environment
 
 `bin/setup` *SHOULD NOT* be used for configuring a production environment.
 
 Standard Rails deployment practices should be followed.  These include:
+
 - Setting the correct environmental variables:
   - `RAILS_ENV=production`
   - `VALIDATOR_DB_NAME`
