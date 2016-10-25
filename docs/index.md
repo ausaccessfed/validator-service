@@ -1,7 +1,3 @@
----
-title: Validator Service
----
-
 ## Design and structure
 
 ### Snapshot flow
