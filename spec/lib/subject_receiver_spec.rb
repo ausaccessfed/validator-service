@@ -67,7 +67,9 @@ RSpec.describe Authentication::SubjectReceiver do
       end
 
       expect(subject_receiver.receive({})).to eql(
-        [302, { 'Location' => '/?persistent_id_missing=true' }, []]
+        [302, {
+          'Location' => '/?persistent_id_missing=true&targeted_id=true'
+        }, []]
       )
     end
   end

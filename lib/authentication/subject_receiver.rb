@@ -11,11 +11,18 @@ module Authentication
     def receive(env)
       attrs = map_attributes(env)
 
-      return super if attrs[
-        FederationAttribute.find_by(internal_alias: :targeted_id).http_header
-      ]
+      missing = {}
 
-      finish(env, true)
+      [:targeted_id, :mail].each do |a|
+        unless attrs[FederationAttribute.find_by(internal_alias: a).http_header]
+               .present?
+          missing[a] = true
+        end
+      end
+
+      return super if missing.empty?
+
+      finish(env, missing)
     end
 
     def map_attributes(env)
@@ -38,9 +45,11 @@ module Authentication
       end
     end
 
-    def finish(_env, failed = false)
-      if failed
-        redirect_to(root_path(persistent_id_missing: true))
+    def finish(_env, missing = [])
+      if missing.present?
+        missing[:persistent_id_missing] = true
+
+        redirect_to(root_path(missing))
       else
         redirect_to(latest_snapshots_path)
       end
