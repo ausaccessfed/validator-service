@@ -43,6 +43,21 @@ RSpec.describe Authentication::SubjectReceiver do
       )
     end
 
+    it 'continues if it has no display name' do
+      allow(subject_receiver).to receive(:map_attributes) do
+        attrs = attributes_for(:shib_env)[:env]
+        attrs['HTTP_DISPLAYNAME'] = ''
+
+        attrs
+      end
+
+      env = { 'rack.session' => { 'subject_id' => 0 } }
+
+      expect(subject_receiver.receive(env)).to eql(
+        [302, { 'Location' => '/snapshots/latest' }, []]
+      )
+    end
+
     it 'redirects if it has no targeted ID' do
       allow(subject_receiver).to receive(:map_attributes) do
         envs = attributes_for(:shib_env)[:env]
