@@ -12,8 +12,16 @@
     | so we can assist.
     br
     br
-    | For IdP administrators: Your attribute release policy has not allowed the following to be released correctly to this service.
+    b For IdP administrators:
     br
+    | The AAF attribute validator requires a valid
+    i<> eduPersonTargetedID
+    | and
+    i<> mail
+    | attribute to establish a new session.
+    br
+    br
+    | Unfortunately the IdP has not supplied the following attributes to this service or they were not supplied in a valid format, preventing this session from continuing:
     ul
       - if params[:targeted_id]
         li
