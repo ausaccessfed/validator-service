@@ -58,19 +58,100 @@ RSpec.describe Authentication::SubjectReceiver do
       )
     end
 
-    it 'redirects if it has no targeted ID' do
-      allow(subject_receiver).to receive(:map_attributes) do
-        envs = attributes_for(:shib_env)[:env]
-        envs.delete('HTTP_TARGETED_ID')
+    describe 'required info' do
+      it 'redirects if it has no targeted ID' do
+        allow(subject_receiver).to receive(:map_attributes) do
+          envs = attributes_for(:shib_env)[:env]
+          envs.delete('HTTP_TARGETED_ID')
 
-        envs
+          envs
+        end
+
+        expect(subject_receiver.receive({})).to eql(
+          [302, {
+            'Location' => '/?persistent_id_missing=true&targeted_id=true'
+          }, []]
+        )
       end
 
-      expect(subject_receiver.receive({})).to eql(
-        [302, {
-          'Location' => '/?persistent_id_missing=true&targeted_id=true'
-        }, []]
-      )
+      it 'redirects if it has empty targeted ID' do
+        allow(subject_receiver).to receive(:map_attributes) do
+          envs = attributes_for(:shib_env)[:env]
+          envs['HTTP_TARGETED_ID'] = ''
+
+          envs
+        end
+
+        expect(subject_receiver.receive({})).to eql(
+          [302, {
+            'Location' => '/?persistent_id_missing=true&targeted_id=true'
+          }, []]
+        )
+      end
+
+      it 'redirects if it has no mail' do
+        allow(subject_receiver).to receive(:map_attributes) do
+          envs = attributes_for(:shib_env)[:env]
+          envs.delete('HTTP_MAIL')
+
+          envs
+        end
+
+        expect(subject_receiver.receive({})).to eql(
+          [302, {
+            'Location' => '/?mail=true&persistent_id_missing=true'
+          }, []]
+        )
+      end
+
+      it 'redirects if it has empty mail' do
+        allow(subject_receiver).to receive(:map_attributes) do
+          envs = attributes_for(:shib_env)[:env]
+          envs['HTTP_MAIL'] = ''
+
+          envs
+        end
+
+        expect(subject_receiver.receive({})).to eql(
+          [302, {
+            'Location' => '/?mail=true&persistent_id_missing=true'
+          }, []]
+        )
+      end
+
+      it 'redirects if it has no mail and targeted ID' do
+        allow(subject_receiver).to receive(:map_attributes) do
+          envs = attributes_for(:shib_env)[:env]
+          envs.delete('HTTP_TARGETED_ID')
+          envs.delete('HTTP_MAIL')
+
+          envs
+        end
+
+        expect(subject_receiver.receive({})).to eql(
+          [302, {
+            'Location' => '/?mail=true&persistent_id_missing=true' \
+              '&targeted_id=true'
+          }, []]
+        )
+      end
+
+      it 'redirects if it has empty mail and targeted ID' do
+        allow(subject_receiver).to receive(:map_attributes) do
+          envs = attributes_for(:shib_env)[:env]
+          envs['HTTP_TARGETED_ID'] = ''
+          envs['HTTP_MAIL'] = ''
+
+          envs
+        end
+
+        expect(subject_receiver.receive({})).to eql(
+          [302, {
+            'Location' => '/?mail=true&persistent_id_missing=true' \
+              '&targeted_id=true'
+          }, []]
+        )
+      end
     end
   end
 
