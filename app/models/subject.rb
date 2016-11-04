@@ -33,10 +33,14 @@ class Subject < ApplicationRecord
   end
 
   def subject_attributes(attrs)
-    self.name = Subject.best_guess_name(attrs)
+    n = FederationAttribute.find_by(internal_alias: :displayname).http_header
+
+    self.name = attrs[n].present? ? attrs[n] : 'Unknown Subject'
+
     self.mail = attrs[
       FederationAttribute.find_by(internal_alias: :mail).http_header
     ]
+
     self.targeted_id = attrs[
       FederationAttribute.find_by(internal_alias: :targeted_id).http_header
     ]
@@ -71,22 +75,6 @@ class Subject < ApplicationRecord
       subject.save!
 
       subject
-    end
-
-    def best_guess_name(attrs)
-      attrs[
-        FederationAttribute.find_by(internal_alias: :displayname).http_header
-      ] || attrs[
-        FederationAttribute.find_by(internal_alias: :cn).http_header
-      ] || combined_name
-    end
-
-    def combined_name(attrs)
-      "#{attrs[
-        FederationAttribute.find_by(internal_alias: :givenname).http_header
-      ]} #{attrs[
-        FederationAttribute.find_by(internal_alias: :sn).http_header
-      ]}".strip
     end
   end
 end

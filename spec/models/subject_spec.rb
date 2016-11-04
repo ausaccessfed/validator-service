@@ -94,47 +94,4 @@ RSpec.describe Subject, type: :model do
       expect(subject.valid_identifier_history?).to eql false
     end
   end
-
-  context 'class' do
-    let(:subject) { FactoryGirl.create(:subject) }
-
-    before :each do
-      create_federation_attributes
-    end
-
-    describe '.combined_name' do
-      let(:given_name) do
-        Faker::Name.first_name
-      end
-
-      let(:surname) do
-        Faker::Name.last_name
-      end
-
-      it 'has given' do
-        expect(Subject.combined_name('HTTP_GIVENNAME' => given_name)).to eql(
-          given_name
-        )
-      end
-
-      it 'has surname' do
-        expect(Subject.combined_name('HTTP_SN' => surname)).to eql(
-          surname
-        )
-      end
-
-      it 'has both' do
-        expect(Subject.combined_name('HTTP_GIVENNAME' => given_name,
-                                     'HTTP_SN' => surname)).to eql(
-                                       given_name + ' ' + surname
-                                     )
-      end
-
-      it 'has neither' do
-        expect(Subject.combined_name({})).to eql(
-          ''
-        )
-      end
-    end
-  end
 end

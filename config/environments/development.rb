@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   config.cache_classes = false
 
@@ -44,3 +45,4 @@ Rails.application.configure do
                          association: :federation_attribute
   end
 end
+# rubocop:enable Metrics/BlockLength
