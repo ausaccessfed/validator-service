@@ -33,11 +33,10 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    aaf-lipstick (2.1.0)
-      actionpack
-      activerecord
+    aaf-lipstick (3.0.0)
       erubis
       kramdown (~> 1.5)
+      rails (> 4.0, < 6.0)
       rmagick
       sprockets (~> 3.0)
       tilt
