@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   namespace :documentation do
     resources :attributes,
               only: [:index, :show],
-              id: /[A-Za-z0-9\.\:]+?/,
+              id: /[A-Za-z0-9\.\:\-]+?/,
               format: /json|csv|xml|yaml/
     resources :categories, only: [:index, :show]
   end
