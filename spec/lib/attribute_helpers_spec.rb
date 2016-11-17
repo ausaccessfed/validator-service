@@ -6,6 +6,7 @@ RSpec.describe Authentication::AttributeHelpers do
 
   let(:http_headers) do
     %w(
+      HTTP_PERSISTENT_ID
       HTTP_TARGETED_ID
       HTTP_AUEDUPERSONSHAREDTOKEN
       HTTP_DISPLAYNAME
