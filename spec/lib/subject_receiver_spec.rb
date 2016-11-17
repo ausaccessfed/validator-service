@@ -132,28 +132,27 @@ RSpec.describe Authentication::SubjectReceiver do
   describe '#subject' do
     context 'creating subject and associated records' do
       describe 'create a subject record with the correct attributes' do
-				let(:subject) { subject_receiver.subject({}, attrs) }
+        let(:subject) { subject_receiver.subject({}, attrs) }
 
-				context 'federated identifier' do
-					context 'when a persistent id is provided' do
-						it 'Sets federated id to persistent id' do
-							expect(subject.federated_id).to eql attrs['HTTP_PERSISTENT_ID']
-						end
-					end
+        context 'federated identifier' do
+          context 'when a persistent id is provided' do
+            it 'Sets federated id to persistent id' do
+              expect(subject.federated_id).to eql attrs['HTTP_PERSISTENT_ID']
+            end
+          end
 
-					context 'when only a targeted id is provided' do
-						before { attrs.delete('HTTP_PERSISTENT_ID') }
+          context 'when only a targeted id is provided' do
+            before { attrs.delete('HTTP_PERSISTENT_ID') }
 
-						it 'Sets federated id to targeted id' do
-							expect(subject.federated_id).to eql attrs['HTTP_TARGETED_ID']
-						end
-					end
-				end
+            it 'Sets federated id to targeted id' do
+              expect(subject.federated_id).to eql attrs['HTTP_TARGETED_ID']
+            end
+          end
+        end
 
-
-				it 'persists a subject record' do
-					expect(subject).to be_persisted
-				end
+        it 'persists a subject record' do
+          expect(subject).to be_persisted
+        end
 
         it 'has the correct name' do
           expect(subject.name).to eql attrs['HTTP_DISPLAYNAME']
@@ -178,56 +177,54 @@ RSpec.describe Authentication::SubjectReceiver do
         Subject.create(attributes_for(:subject))
       end
 
-			context 'with persistent id' do
-				before { attrs['HTTP_PERSISTENT_ID'] = subject.federated_id }
+      context 'with persistent id' do
+        before { attrs['HTTP_PERSISTENT_ID'] = subject.federated_id }
 
-				it 'does not create a new subject if one already exists' do
-					expect { subject_receiver.subject({}, attrs) }
-						.to change(Subject, :count).by(0)
-				end
+        it 'does not create a new subject if one already exists' do
+          expect { subject_receiver.subject({}, attrs) }
+            .to change(Subject, :count).by(0)
+        end
 
-				it 'updates the existing subject with the new name attributes' do
-					attrs.merge!('HTTP_DISPLAYNAME' => Faker::Name.name)
+        it 'updates the existing subject with the new name attributes' do
+          attrs['HTTP_DISPLAYNAME'] = Faker::Name.name
 
-					expect(subject_receiver.subject({}, attrs).name)
-						.to eql attrs['HTTP_DISPLAYNAME']
-				end
+          expect(subject_receiver.subject({}, attrs).name)
+            .to eql attrs['HTTP_DISPLAYNAME']
+        end
 
-				it 'updates the existing subject with the new mail attributes' do
-					attrs.merge!('HTTP_MAIL' => Faker::Internet.email
-					)
+        it 'updates the existing subject with the new mail attributes' do
+          attrs['HTTP_MAIL'] = Faker::Internet.email
 
-					expect(subject_receiver.subject({}, attrs).mail)
-						.to eql attrs['HTTP_MAIL']
-				end
-			end
+          expect(subject_receiver.subject({}, attrs).mail)
+            .to eql attrs['HTTP_MAIL']
+        end
+      end
 
-			context 'with targeted id' do
-				before do
-				  attrs.delete('HTTP_PERSISTENT_ID')
-					attrs['HTTP_TARGETED_ID'] = subject.federated_id
-				end
+      context 'with targeted id' do
+        before do
+          attrs.delete('HTTP_PERSISTENT_ID')
+          attrs['HTTP_TARGETED_ID'] = subject.federated_id
+        end
 
-				it 'does not create a new subject if one already exists' do
-					expect { subject_receiver.subject({}, attrs) }
-						.to change(Subject, :count).by(0)
-				end
+        it 'does not create a new subject if one already exists' do
+          expect { subject_receiver.subject({}, attrs) }
+            .to change(Subject, :count).by(0)
+        end
 
-				it 'updates the existing subject with the new name attributes' do
-					attrs.merge!('HTTP_DISPLAYNAME' => Faker::Name.name)
+        it 'updates the existing subject with the new name attributes' do
+          attrs['HTTP_DISPLAYNAME'] = Faker::Name.name
 
-					expect(subject_receiver.subject({}, attrs).name)
-						.to eql attrs['HTTP_DISPLAYNAME']
-				end
+          expect(subject_receiver.subject({}, attrs).name)
+            .to eql attrs['HTTP_DISPLAYNAME']
+        end
 
-				it 'updates the existing subject with the new mail attributes' do
-					attrs.merge!('HTTP_MAIL' => Faker::Internet.email
-					)
+        it 'updates the existing subject with the new mail attributes' do
+          attrs['HTTP_MAIL'] = Faker::Internet.email
 
-					expect(subject_receiver.subject({}, attrs).mail)
-						.to eql attrs['HTTP_MAIL']
-				end
-			end
+          expect(subject_receiver.subject({}, attrs).mail)
+            .to eql attrs['HTTP_MAIL']
+        end
+      end
     end
   end
 
@@ -236,7 +233,7 @@ RSpec.describe Authentication::SubjectReceiver do
       expect(subject_receiver
         .map_attributes(attributes_for(:shib_env)[:env]).keys).to eql(
           %w(
-						HTTP_PERSISTENT_ID
+            HTTP_PERSISTENT_ID
             HTTP_TARGETED_ID
             HTTP_AUEDUPERSONSHAREDTOKEN
             HTTP_DISPLAYNAME

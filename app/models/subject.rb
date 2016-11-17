@@ -34,15 +34,14 @@ class Subject < ApplicationRecord
 
   def subject_attributes(attrs)
     n = FederationAttribute.find_by(internal_alias: :displayname).http_header
-
-    self.name = attrs[n].present? ? attrs[n] : 'Unknown Subject'
+    self.name = attrs[n] ||= 'Unknown Subject'
 
     self.mail = attrs[
       FederationAttribute.find_by(internal_alias: :mail).http_header
     ]
 
-		pid = FederationAttribute.find_by(internal_alias: :persistent_id)
-		tid = FederationAttribute.find_by(internal_alias: :targeted_id)
+    pid = FederationAttribute.find_by(internal_alias: :persistent_id)
+    tid = FederationAttribute.find_by(internal_alias: :targeted_id)
     self.federated_id = attrs[pid.http_header] ||= attrs[tid.http_header]
   end
 
@@ -55,8 +54,8 @@ class Subject < ApplicationRecord
 
   class << self
     def find_from_attributes(attrs)
-			pid = FederationAttribute.find_by(internal_alias: :persistent_id)
-			tid = FederationAttribute.find_by(internal_alias: :targeted_id)
+      pid = FederationAttribute.find_by(internal_alias: :persistent_id)
+      tid = FederationAttribute.find_by(internal_alias: :targeted_id)
       Subject.find_by(
         federated_id: attrs[pid.http_header] ||= attrs[tid.http_header]
       )
