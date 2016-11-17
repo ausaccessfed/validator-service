@@ -8,7 +8,7 @@ module SubjectAdmin
       list do
         field :name
 
-        field :federated_id do
+        field :persistent_id do
           label 'Federated ID'
         end
       end
@@ -18,8 +18,8 @@ module SubjectAdmin
       field :enabled
       field :complete
 
-      field :federated_id do
-        label 'Federated ID'
+      field :persistent_id do
+        label 'Persistent ID'
       end
 
       show do

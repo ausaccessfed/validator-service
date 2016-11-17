@@ -7,7 +7,7 @@ FactoryGirl.define do
   factory :subject do
     name { Faker::Name.name }
     mail { Faker::Internet.email }
-    federated_id { "#{idp}!#{sp}!#{SecureRandom.uuid}" }
+    persistent_id { "#{idp}!#{sp}!#{SecureRandom.uuid}" }
 
     enabled { true }
     complete { true }

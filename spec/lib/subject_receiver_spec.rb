@@ -137,7 +137,7 @@ RSpec.describe Authentication::SubjectReceiver do
         context 'federated identifier' do
           context 'when a persistent id is provided' do
             it 'Sets federated id to persistent id' do
-              expect(subject.federated_id).to eql attrs['HTTP_PERSISTENT_ID']
+              expect(subject.persistent_id).to eql attrs['HTTP_PERSISTENT_ID']
             end
           end
 
@@ -145,7 +145,7 @@ RSpec.describe Authentication::SubjectReceiver do
             before { attrs.delete('HTTP_PERSISTENT_ID') }
 
             it 'Sets federated id to targeted id' do
-              expect(subject.federated_id).to eql attrs['HTTP_TARGETED_ID']
+              expect(subject.persistent_id).to eql attrs['HTTP_TARGETED_ID']
             end
           end
         end
@@ -178,7 +178,7 @@ RSpec.describe Authentication::SubjectReceiver do
       end
 
       context 'with persistent id' do
-        before { attrs['HTTP_PERSISTENT_ID'] = subject.federated_id }
+        before { attrs['HTTP_PERSISTENT_ID'] = subject.persistent_id }
 
         it 'does not create a new subject if one already exists' do
           expect { subject_receiver.subject({}, attrs) }
@@ -203,7 +203,7 @@ RSpec.describe Authentication::SubjectReceiver do
       context 'with targeted id' do
         before do
           attrs.delete('HTTP_PERSISTENT_ID')
-          attrs['HTTP_TARGETED_ID'] = subject.federated_id
+          attrs['HTTP_TARGETED_ID'] = subject.persistent_id
         end
 
         it 'does not create a new subject if one already exists' do
