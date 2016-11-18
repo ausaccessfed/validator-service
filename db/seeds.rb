@@ -568,7 +568,7 @@ The eduPerson specification requires that a value of eduPersonTargetedID once
 )
 
 faa = FederationAttributeAlias.create!(
-  name: 'Persistent NameID'
+  name: 'persistentNameID'
 )
 
 FederationAttribute.create!(
