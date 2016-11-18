@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# rubocop:disable Metrics/BlockLength
 source 'https://rubygems.org'
 
 gem 'rails', '>= 5.0.0', '< 5.1'
@@ -63,4 +62,3 @@ group :development, :test do
       git: 'https://github.com/ausaccessfed/aaf-gumboot',
       branch: 'feature/error-pages-compat'
 end
-# rubocop:enable Metrics/BlockLength
