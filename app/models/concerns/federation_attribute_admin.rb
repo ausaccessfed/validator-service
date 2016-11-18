@@ -14,7 +14,7 @@ module FederationAttributeAdmin
 
       list do
         field :primary_alias do
-          searchable [:primary_alias_name]
+          searchable [:name]
           queryable true
           label label.titleize
         end
@@ -59,6 +59,7 @@ module FederationAttributeAdmin
           label label.upcase
         end
 
+        field :internal_alias
         field :primary_alias
         field :federation_attribute_aliases
 
