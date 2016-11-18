@@ -13,9 +13,7 @@ gem 'sass-rails', require: false
 gem 'uglifier', require: false
 gem 'therubyracer', require: false
 gem 'torba-rails'
-gem 'shib-rack',
-    git: 'https://github.com/ausaccessfed/shib-rack',
-    branch: 'develop'
+gem 'shib-rack'
 
 gem 'puma', require: false
 gem 'god', require: false
@@ -58,7 +56,5 @@ group :development, :test do
       require: false
   gem 'guard-brakeman', require: false
   gem 'terminal-notifier-guard', require: false
-  gem 'aaf-gumboot',
-      git: 'https://github.com/ausaccessfed/aaf-gumboot',
-      branch: 'feature/error-pages-compat'
+  gem 'aaf-gumboot'
 end
