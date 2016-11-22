@@ -54,9 +54,9 @@ class Subject < ApplicationRecord
     def extract_persistent_id(attrs)
       pid = FederationAttribute.find_by(internal_alias: :persistent_id)
       tid = FederationAttribute.find_by(internal_alias: :targeted_id)
-      return attrs[tid.http_header] unless attrs[pid.http_header].present?
+      return attrs[pid.http_header] if pid && attrs[pid.http_header].present?
 
-      attrs[pid.http_header]
+      attrs[tid.http_header]
     end
 
     def find_from_attributes(attrs)
