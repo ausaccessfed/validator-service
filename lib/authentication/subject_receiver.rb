@@ -64,8 +64,8 @@ module Authentication
     end
 
     def attribute_provided?(attrs, ia)
-      header = FederationAttribute.find_by(internal_alias: ia).http_header
-      attrs[header].present?
+      fa = FederationAttribute.find_by(internal_alias: ia)
+      fa.present? && attrs[fa.http_header].present?
     end
 
     def assign_entitlements(subject, values)
