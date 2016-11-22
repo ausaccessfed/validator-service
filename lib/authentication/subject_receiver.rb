@@ -10,19 +10,9 @@ module Authentication
 
     def receive(env)
       attrs = map_attributes(env)
+      return super if minimally_viable_session?(attrs)
 
-      missing = {}
-
-      [:targeted_id, :mail].each do |a|
-        unless attrs[FederationAttribute.find_by(internal_alias: a).http_header]
-               .present?
-          missing[a] = true
-        end
-      end
-
-      return super if missing.empty?
-
-      finish(env, missing)
+      redirect_to(root_path(session_failed: true))
     end
 
     def map_attributes(env)
@@ -45,14 +35,8 @@ module Authentication
       end
     end
 
-    def finish(_env, missing = [])
-      if missing.present?
-        missing[:persistent_id_missing] = true
-
-        redirect_to(root_path(missing))
-      else
-        redirect_to(latest_snapshots_path)
-      end
+    def finish(_env)
+      redirect_to(latest_snapshots_path)
     end
 
     # :nocov:
@@ -62,6 +46,27 @@ module Authentication
     # :nocov:
 
     private
+
+    def minimally_viable_session?(attrs)
+      (persistent_id?(attrs) || targeted_id?(attrs)) && mail?(attrs)
+    end
+
+    def persistent_id?(attrs)
+      attribute_provided?(attrs, :persistent_id)
+    end
+
+    def targeted_id?(attrs)
+      attribute_provided?(attrs, :targeted_id)
+    end
+
+    def mail?(attrs)
+      attribute_provided?(attrs, :mail)
+    end
+
+    def attribute_provided?(attrs, ia)
+      header = FederationAttribute.find_by(internal_alias: ia).http_header
+      attrs[header].present?
+    end
 
     def assign_entitlements(subject, values)
       assigned = values.map do |value|

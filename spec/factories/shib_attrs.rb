@@ -50,6 +50,7 @@ FactoryGirl.define do
         'ORIGINAL_FULLPATH' => "/auth/login?identity=#{token}",
         'ORIGINAL_SCRIPT_NAME' => '',
         'ROUTES_70279169814040_SCRIPT_NAME' => '/auth',
+        'HTTP_PERSISTENT_ID' => "#{idp}!#{sp}!#{SecureRandom.uuid}",
         'HTTP_TARGETED_ID' => "#{idp}!#{sp}!#{SecureRandom.uuid}",
         'HTTP_AUEDUPERSONSHAREDTOKEN' => token,
         'HTTP_DISPLAYNAME' => name,

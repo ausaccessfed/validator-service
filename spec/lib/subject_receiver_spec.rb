@@ -31,65 +31,77 @@ RSpec.describe Authentication::SubjectReceiver do
   end
 
   describe '#receive' do
-    it 'continues if it has a targeted ID' do
-      allow(subject_receiver).to receive(:map_attributes) do
-        attributes_for(:shib_env)[:env]
-      end
-
-      env = { 'rack.session' => { 'subject_id' => 0 } }
-
-      expect(subject_receiver.receive(env)).to eql(
-        [302, { 'Location' => '/snapshots/latest' }, []]
-      )
-    end
-
-    it 'continues if it has no display name' do
-      allow(subject_receiver).to receive(:map_attributes) do
-        attrs = attributes_for(:shib_env)[:env]
-        attrs['HTTP_DISPLAYNAME'] = ''
-
-        attrs
-      end
-
-      env = { 'rack.session' => { 'subject_id' => 0 } }
-
-      expect(subject_receiver.receive(env)).to eql(
-        [302, { 'Location' => '/snapshots/latest' }, []]
-      )
-    end
-
     describe 'required info' do
-      it 'redirects if it has no targeted ID' do
+      it 'valid with targeted id and Mail' do
         allow(subject_receiver).to receive(:map_attributes) do
           envs = attributes_for(:shib_env)[:env]
           envs.delete('HTTP_TARGETED_ID')
+          envs
+        end
 
+        env = { 'rack.session' => { 'subject_id' => 0 } }
+
+        expect(subject_receiver.receive(env)).to eql(
+          [302, { 'Location' => '/snapshots/latest' }, []]
+        )
+      end
+
+      it 'valid with persistent id and Mail' do
+        allow(subject_receiver).to receive(:map_attributes) do
+          envs = attributes_for(:shib_env)[:env]
+          envs.delete('HTTP_TARGETED_ID')
+          envs
+        end
+
+        env = { 'rack.session' => { 'subject_id' => 0 } }
+
+        expect(subject_receiver.receive(env)).to eql(
+          [302, { 'Location' => '/snapshots/latest' }, []]
+        )
+      end
+
+      it 'valid with persistent id, targeted id and Mail' do
+        allow(subject_receiver).to receive(:map_attributes) do
+          envs = attributes_for(:shib_env)[:env]
+          envs.delete('HTTP_TARGETED_ID')
+          envs
+        end
+
+        env = { 'rack.session' => { 'subject_id' => 0 } }
+
+        expect(subject_receiver.receive(env)).to eql(
+          [302, { 'Location' => '/snapshots/latest' }, []]
+        )
+      end
+
+      it 'fails without persistent id or targeted id' do
+        allow(subject_receiver).to receive(:map_attributes) do
+          envs = attributes_for(:shib_env)[:env]
+          envs.delete('HTTP_PERSISTENT_ID')
+          envs.delete('HTTP_TARGETED_ID')
           envs
         end
 
         expect(subject_receiver.receive({})).to eql(
-          [302, {
-            'Location' => '/?persistent_id_missing=true&targeted_id=true'
-          }, []]
+          [302, { 'Location' => '/?session_failed=true' }, []]
         )
       end
 
-      it 'redirects if it has empty targeted ID' do
+      it 'fails with empty persistent id and targeted id' do
         allow(subject_receiver).to receive(:map_attributes) do
           envs = attributes_for(:shib_env)[:env]
+          envs['HTTP_PERSISTENT_ID'] = ''
           envs['HTTP_TARGETED_ID'] = ''
 
           envs
         end
 
         expect(subject_receiver.receive({})).to eql(
-          [302, {
-            'Location' => '/?persistent_id_missing=true&targeted_id=true'
-          }, []]
+          [302, { 'Location' => '/?session_failed=true' }, []]
         )
       end
 
-      it 'redirects if it has no mail' do
+      it 'fails without mail' do
         allow(subject_receiver).to receive(:map_attributes) do
           envs = attributes_for(:shib_env)[:env]
           envs.delete('HTTP_MAIL')
@@ -98,13 +110,11 @@ RSpec.describe Authentication::SubjectReceiver do
         end
 
         expect(subject_receiver.receive({})).to eql(
-          [302, {
-            'Location' => '/?mail=true&persistent_id_missing=true'
-          }, []]
+          [302, { 'Location' => '/?session_failed=true' }, []]
         )
       end
 
-      it 'redirects if it has empty mail' do
+      it 'fails with empty mail' do
         allow(subject_receiver).to receive(:map_attributes) do
           envs = attributes_for(:shib_env)[:env]
           envs['HTTP_MAIL'] = ''
@@ -113,43 +123,7 @@ RSpec.describe Authentication::SubjectReceiver do
         end
 
         expect(subject_receiver.receive({})).to eql(
-          [302, {
-            'Location' => '/?mail=true&persistent_id_missing=true'
-          }, []]
-        )
-      end
-
-      it 'redirects if it has no mail and targeted ID' do
-        allow(subject_receiver).to receive(:map_attributes) do
-          envs = attributes_for(:shib_env)[:env]
-          envs.delete('HTTP_TARGETED_ID')
-          envs.delete('HTTP_MAIL')
-
-          envs
-        end
-
-        expect(subject_receiver.receive({})).to eql(
-          [302, {
-            'Location' => '/?mail=true&persistent_id_missing=true' \
-              '&targeted_id=true'
-          }, []]
-        )
-      end
-
-      it 'redirects if it has empty mail and targeted ID' do
-        allow(subject_receiver).to receive(:map_attributes) do
-          envs = attributes_for(:shib_env)[:env]
-          envs['HTTP_TARGETED_ID'] = ''
-          envs['HTTP_MAIL'] = ''
-
-          envs
-        end
-
-        expect(subject_receiver.receive({})).to eql(
-          [302, {
-            'Location' => '/?mail=true&persistent_id_missing=true' \
-              '&targeted_id=true'
-          }, []]
+          [302, { 'Location' => '/?session_failed=true' }, []]
         )
       end
     end
@@ -157,15 +131,27 @@ RSpec.describe Authentication::SubjectReceiver do
 
   describe '#subject' do
     context 'creating subject and associated records' do
-      let(:subject) { subject_receiver.subject({}, attrs) }
-
-      it 'persists a subject record' do
-        expect(subject).to be_persisted
-      end
-
       describe 'create a subject record with the correct attributes' do
-        it 'has the correct targeted_id' do
-          expect(subject.targeted_id).to eql attrs['HTTP_TARGETED_ID']
+        let(:subject) { subject_receiver.subject({}, attrs) }
+
+        context 'federated identifier' do
+          context 'when a persistent id is provided' do
+            it 'Sets federated id to persistent id' do
+              expect(subject.persistent_id).to eql attrs['HTTP_PERSISTENT_ID']
+            end
+          end
+
+          context 'when only a targeted id is provided' do
+            before { attrs.delete('HTTP_PERSISTENT_ID') }
+
+            it 'Sets federated id to targeted id' do
+              expect(subject.persistent_id).to eql attrs['HTTP_TARGETED_ID']
+            end
+          end
+        end
+
+        it 'persists a subject record' do
+          expect(subject).to be_persisted
         end
 
         it 'has the correct name' do
@@ -191,31 +177,53 @@ RSpec.describe Authentication::SubjectReceiver do
         Subject.create(attributes_for(:subject))
       end
 
-      it 'does not create a new subject if one already exists' do
-        attrs['HTTP_TARGETED_ID'] = subject.targeted_id
+      context 'with persistent id' do
+        before { attrs['HTTP_PERSISTENT_ID'] = subject.persistent_id }
 
-        expect { subject_receiver.subject({}, attrs) }
-          .to change(Subject, :count).by(0)
+        it 'does not create a new subject if one already exists' do
+          expect { subject_receiver.subject({}, attrs) }
+            .to change(Subject, :count).by(0)
+        end
+
+        it 'updates the existing subject with the new name attributes' do
+          attrs['HTTP_DISPLAYNAME'] = Faker::Name.name
+
+          expect(subject_receiver.subject({}, attrs).name)
+            .to eql attrs['HTTP_DISPLAYNAME']
+        end
+
+        it 'updates the existing subject with the new mail attributes' do
+          attrs['HTTP_MAIL'] = Faker::Internet.email
+
+          expect(subject_receiver.subject({}, attrs).mail)
+            .to eql attrs['HTTP_MAIL']
+        end
       end
 
-      it 'updates the existing subject with the new name attributes' do
-        attrs.merge!(
-          'HTTP_TARGETED_ID' => subject.targeted_id,
-          'HTTP_DISPLAYNAME' => Faker::Name.name
-        )
+      context 'with targeted id' do
+        before do
+          attrs.delete('HTTP_PERSISTENT_ID')
+          attrs['HTTP_TARGETED_ID'] = subject.persistent_id
+        end
 
-        expect(subject_receiver.subject({}, attrs).name)
-          .to eql attrs['HTTP_DISPLAYNAME']
-      end
+        it 'does not create a new subject if one already exists' do
+          expect { subject_receiver.subject({}, attrs) }
+            .to change(Subject, :count).by(0)
+        end
 
-      it 'updates the existing subject with the new mail attributes' do
-        attrs.merge!(
-          'HTTP_TARGETED_ID' => subject.targeted_id,
-          'HTTP_MAIL' => Faker::Internet.email
-        )
+        it 'updates the existing subject with the new name attributes' do
+          attrs['HTTP_DISPLAYNAME'] = Faker::Name.name
 
-        expect(subject_receiver.subject({}, attrs).mail)
-          .to eql attrs['HTTP_MAIL']
+          expect(subject_receiver.subject({}, attrs).name)
+            .to eql attrs['HTTP_DISPLAYNAME']
+        end
+
+        it 'updates the existing subject with the new mail attributes' do
+          attrs['HTTP_MAIL'] = Faker::Internet.email
+
+          expect(subject_receiver.subject({}, attrs).mail)
+            .to eql attrs['HTTP_MAIL']
+        end
       end
     end
   end
@@ -225,6 +233,7 @@ RSpec.describe Authentication::SubjectReceiver do
       expect(subject_receiver
         .map_attributes(attributes_for(:shib_env)[:env]).keys).to eql(
           %w(
+            HTTP_PERSISTENT_ID
             HTTP_TARGETED_ID
             HTTP_AUEDUPERSONSHAREDTOKEN
             HTTP_DISPLAYNAME

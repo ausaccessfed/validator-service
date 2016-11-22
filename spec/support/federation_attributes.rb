@@ -28,6 +28,7 @@ module FederationAttributes
   # rubocop:disable Metrics/MethodLength
   def oids
     {
+      persistent_id: 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
       auedupersonsharedtoken: 'oid:1.3.6.1.4.1.27856.1.2.5',
       cn: 'oid:2.5.4.3',
       displayname: 'oid:2.16.840.1.113730.3.1.241',
