@@ -33,14 +33,23 @@ class Subject < ApplicationRecord
   end
 
   def subject_attributes(attrs)
-    n = FederationAttribute.find_by(internal_alias: :displayname).http_header
-    self.name = attrs[n] ||= 'Unknown Subject'
-
-    self.mail = attrs[
-      FederationAttribute.find_by(internal_alias: :mail).http_header
-    ]
-
+    self.name = subject_name(attrs)
+    self.mail = subject_mail(attrs)
     self.persistent_id = Subject.extract_persistent_id(attrs)
+  end
+
+  def subject_name(attrs)
+    fn = FederationAttribute.find_by(internal_alias: :displayname)
+    return 'Unknown Subject' unless fn.present?
+
+    attrs[fn.http_header]
+  end
+
+  def subject_mail(attrs)
+    fm = FederationAttribute.find_by(internal_alias: :mail)
+    return nil unless fm.present?
+
+    attrs[fm.http_header]
   end
 
   def shared_token
