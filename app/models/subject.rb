@@ -21,33 +21,47 @@ class Subject < ApplicationRecord
   end
 
   def valid_identifier_history?
-    snapshots.map do |snapshot|
-      snapshot.attribute_values
-              .find_by(
-                federation_attribute_id:
-                FederationAttribute.find_by(
-                  internal_alias: :auedupersonsharedtoken
-                ).id
-              )
-    end.compact.uniq(&:value).size == 1
+    identifier_history.compact.uniq(&:value).size == 1
   end
 
   def subject_attributes(attrs)
-    n = FederationAttribute.find_by(internal_alias: :displayname).http_header
-    self.name = attrs[n] ||= 'Unknown Subject'
-
-    self.mail = attrs[
-      FederationAttribute.find_by(internal_alias: :mail).http_header
-    ]
-
+    self.name = subject_name(attrs)
+    self.mail = subject_mail(attrs)
     self.persistent_id = Subject.extract_persistent_id(attrs)
   end
 
   def shared_token
-    snapshots.last.attribute_values.find_by(
-      federation_attribute_id:
-        FederationAttribute.find_by(internal_alias: :auedupersonsharedtoken).id
-    ).try(:value)
+    fst = FederationAttribute.find_by(internal_alias: :auedupersonsharedtoken)
+    return nil unless fst
+
+    lastest_snapshot_values = snapshots.last.attribute_values
+    sst = lastest_snapshot_values.find_by(federation_attribute_id: fst.id)
+    sst.try(:value)
+  end
+
+  private
+
+  def identifier_history
+    fst = FederationAttribute.find_by(internal_alias: :auedupersonsharedtoken)
+    return nil unless fst
+
+    snapshots.map do |snapshot|
+      snapshot.attribute_values.find_by(federation_attribute_id: fst.id)
+    end
+  end
+
+  def subject_name(attrs)
+    fn = FederationAttribute.find_by(internal_alias: :displayname)
+    return 'Unknown Subject' unless fn.present?
+
+    attrs[fn.http_header]
+  end
+
+  def subject_mail(attrs)
+    fm = FederationAttribute.find_by(internal_alias: :mail)
+    return nil unless fm.present?
+
+    attrs[fm.http_header]
   end
 
   class << self
