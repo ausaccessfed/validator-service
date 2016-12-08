@@ -1,0 +1,16 @@
+h2
+  | My Snapshot History
+
+table.table
+  thead
+    tr
+      th Name
+      th Taken At
+  tbody
+    - @snapshots.each do |snapshot|
+      tr
+        td
+          = link_to snapshot.name(snapshot.subject), snapshot_path(snapshot)
+        td
+          = local_time(snapshot.created_at, :validator_date_format)
+

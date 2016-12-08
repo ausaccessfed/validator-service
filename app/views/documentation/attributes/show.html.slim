@@ -1,0 +1,54 @@
+ol.breadcrumb
+  li = link_to 'Documentation', documentation_path
+  li = link_to 'Attributes', documentation_attributes_path
+  li.active = @federation_attribute.primary_alias_name
+
+dl.dl-horizontal
+  dt Name
+  dd = @federation_attribute.primary_alias_name
+
+  - if @federation_attribute.aliases.count > 0
+    dt Aliases
+    dd
+      - if @federation_attribute.aliases.count > 1
+        ul
+          - @federation_attribute.aliases.map do |a|
+            li = a.name
+      - else
+        = @federation_attribute.aliases.first.name
+
+  dt Categories
+  dd
+    - if @federation_attribute.aliases.count > 1
+      ul
+        - @attribute_categories.map do |name, path|
+          li == link_to(name, path)
+    - else
+      - @attribute_categories.map do |name, path|
+        == link_to(name, path)
+
+  br
+
+  dt Number of values
+  dd = @federation_attribute.singular ? 'One' : 'One or more'
+
+  dt Description
+  dd == @federation_attribute.description
+
+  - if @federation_attribute.notes_on_format?
+    br
+
+    dt Format
+    dd == @federation_attribute.notes_on_format
+
+  - if @federation_attribute.notes_on_usage?
+    br
+
+    dt Notes on usage
+    dd == @federation_attribute.notes_on_usage
+
+  - if @federation_attribute.notes_on_privacy?
+    br
+
+    dt Notes on privacy
+    dd == @federation_attribute.notes_on_privacy

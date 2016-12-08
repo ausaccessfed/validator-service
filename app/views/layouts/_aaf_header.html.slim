@@ -1,0 +1,13 @@
+- auth = @subject ? :logout : :login
+= aaf_header(title: 'AAF Validator Service', environment: Rails.application.config.validator_service.environment_string, auth: auth) do
+  = nav_bar do
+    - if @subject
+      = nav_first_item('My Snapshot History', main_app.snapshots_path)
+    - else
+      = nav_first_item('Welcome', main_app.root_path)
+    = nav_collapsing_items do
+      - if @subject
+        = nav_item('My Latest Snapshot', main_app.latest_snapshots_path)
+      = nav_item('Documentation', main_app.documentation_path)
+      - if @subject && @subject.permits?('app:validator:admin:web_interface')
+        = nav_item('Admin', rails_admin.dashboard_path)

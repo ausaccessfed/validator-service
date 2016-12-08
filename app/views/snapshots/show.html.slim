@@ -1,0 +1,73 @@
+h2
+  = @snapshot.name(@snapshot.subject)
+  small
+    | Taken on #{local_time(@snapshot.created_at, :validator_date_format)}
+
+- if @admin_viewer
+  .alert.alert-warning role="alert"
+    | Note:  This is not your snapshot.  You are viewing this snapshot as an admin.
+- unless @snapshot.latest?(@snapshot.subject)
+  .alert.alert-warning role="alert"
+    | This is not your most recent snapshot.
+    =< link_to 'View your most recent attributes in your latest snapshot.', snapshot_path(Snapshot.latest(@snapshot.subject))
+- unless @snapshot.subject.valid_identifier_history?
+  .alert.alert-danger role="alert"
+    | Warning: Your
+    =<> link_to 'auEduPersonSharedToken', documentation_attribute_path('oid:1.3.6.1.4.1.27856.1.2.5'), target: '_blank'
+    | is changing over time.
+
+p
+  input type="search" id="search" class="form-control hidden-print" placeholder="Search..."
+
+- @categories.each do |category|
+  .panel.panel-default
+    .panel-heading
+      h4 = category.name
+    .panel-body
+      table.table.table-striped.snapshot-table
+        thead
+          tr
+            th Attribute
+            th Supplied Value
+            th.text-center Status
+            th.text-center.hidden-print Details
+        tbody
+          - category.validation_order(@attribute_values).each do |grouping_state, attributes|
+            - attributes.each do |attribute, values|
+              tr
+                td.col-xs-2 = attribute.primary_alias_name
+                td.col-xs-9
+                  - values.each do |value|
+                    .hidden-print
+                      - if value
+                        pre
+                          code
+                            = value
+                      - else
+                        i Not supplied
+                    .visible-print-block.word-break
+                      - if value
+                        = value
+                      - else
+                        i Not supplied
+                    .clearfix
+
+                td.text-center
+                  - values.each do |value|
+                    - state = AttributeValue.validation_state(category, attribute, value)
+                    .hidden-print
+                      i class="#{state[:icon_classes].join(' ')}" data-toggle="tooltip" title="#{state[:message]}"
+                    .visible-print-block
+                      =< state[:state].titleize
+                    .clearfix
+
+                td
+                  .text-center.hidden-print
+                    = link_to documentation_attribute_path(attribute.oid), target: '_blank'
+                      i.glyphicon.glyphicon-book
+
+.hidden-print
+  = link_to snapshot_path(@snapshot, format: 'pdf'), class: 'btn btn-primary' do
+    i.glyphicon.glyphicon-download-alt
+    | &nbsp;&nbsp; Export as a PDF
+  end

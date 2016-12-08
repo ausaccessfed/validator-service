@@ -1,0 +1,17 @@
+default: &default
+  adapter: mysql2
+  username: <%= ENV['MYSQL_USER'] %>
+  password: <%= ENV['MYSQL_PASSWORD'] %>
+  host: 127.0.0.1
+  pool: 5
+  encoding: utf8
+  collation: utf8_bin
+  socket: /var/run/mysqld/mysqld.sock
+
+development:
+  <<: *default
+  database: development<%= ENV['TEST_ENV_NUMBER'] %>
+
+test:
+  <<: *default
+  database: test<%= ENV['TEST_ENV_NUMBER'] %>

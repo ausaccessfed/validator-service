@@ -1,0 +1,17 @@
+ol.breadcrumb
+  li = link_to 'Documentation', documentation_path
+  li = link_to 'Categories', documentation_categories_path
+  li.active = @federation_category.name
+
+dl.dl-horizontal
+  dt Name
+  dd = @federation_category.name
+
+  dt Description
+  dd = @federation_category.description
+
+  dt Attributes
+  dd
+    ul
+      - @category_attributes.map do |name, path|
+        li == link_to(name, path)
