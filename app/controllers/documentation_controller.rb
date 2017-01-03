@@ -4,6 +4,5 @@ class DocumentationController < ApplicationController
 
   before_action :public_action, :subject
 
-  def index
-  end
+  def index; end
 end
