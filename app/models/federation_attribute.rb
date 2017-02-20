@@ -34,9 +34,11 @@ class FederationAttribute < ApplicationRecord
                                   { id: primary_alias_id })
   end
 
+  # rubocop:disable Rails/SkipsModelValidations
   def sync_name
     update_attribute(:primary_alias_name, primary_alias.name)
   end
+  # rubocop:enable Rails/SkipsModelValidations
 
   def custom_label_method
     primary_alias_name

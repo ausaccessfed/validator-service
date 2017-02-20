@@ -1,9 +1,22 @@
-Rails:
-  Enabled: true
 AllCops:
+  TargetRubyVersion: 2.3
   Exclude:
     - db/migrate/*
     - db/schema.rb
-  TargetRubyVersion: 2.3
-Documentation:
+
+Rails:
+  Enabled: true
+
+Style/Documentation:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - config/routes.rb
+    - config/initializers/app_config.rb
+    - spec/**/*.rb
+    - lib/tasks/*
+
+Rails/Output:
+  Exclude:
+  - db/seeds.rb

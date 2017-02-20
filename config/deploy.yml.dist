@@ -1,3 +1,5 @@
 ---
 puma:
-  port: 3000
+  bind: tcp://localhost:3000
+  stdout: tmp/logs/puma-stdout.log
+  stderr: tmp/logs/puma-stderr.log

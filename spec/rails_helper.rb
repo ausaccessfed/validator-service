@@ -11,7 +11,8 @@ require 'factory_girl_rails'
 
 ActiveRecord::Migration.maintain_test_schema!
 
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+supporting_files = %w(spec support ** *.rb)
+Dir[Rails.root.join(*supporting_files)].each { |f| require f }
 
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

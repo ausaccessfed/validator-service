@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'yaml'
+
 config = YAML.load_file(File.expand_path('../deploy.yml', __FILE__))
 puma_config = config['puma']
 env = ENV.fetch('RAILS_ENV') { 'development' }
@@ -7,7 +9,8 @@ env = ENV.fetch('RAILS_ENV') { 'development' }
 preload_app!
 daemonize unless env == 'development'
 
-port puma_config['port']
+bind puma_config['bind']
+
 environment env
 workers 2
 threads 8, 32
