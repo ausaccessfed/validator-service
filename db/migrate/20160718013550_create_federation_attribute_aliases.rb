@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateFederationAttributeAliases < ActiveRecord::Migration[5.0]
   def change
     create_table :federation_attribute_aliases do |t|
@@ -12,6 +13,6 @@ class CreateFederationAttributeAliases < ActiveRecord::Migration[5.0]
     add_column :federation_attributes, :oid, :string
     add_index :federation_attributes, :oid, unique: true
 
-    remove_column :federation_attributes, :name
+    remove_column :federation_attributes, :name, :string
   end
 end

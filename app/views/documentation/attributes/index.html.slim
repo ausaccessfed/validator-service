@@ -2,7 +2,17 @@ ol.breadcrumb
   li = link_to 'Documentation', documentation_path
   li.active Attributes
 
-ul
-  - @federation_attributes.each do |federation_attribute|
-    - aliases = federation_attribute.aliases.count > 0 ? "(#{federation_attribute.aliases.map(&:name).join(', ')})" : ''
-    li = link_to "#{federation_attribute.primary_alias_name} #{aliases}", documentation_attribute_path(federation_attribute.oid)
+table.table
+  thead
+    tr
+      th Primary Alias
+      th Other Aliases
+      th OID
+      th Extra Information
+  tbody
+    - @federation_attributes.each do |federation_attribute|
+      tr
+        td = federation_attribute.primary_alias_name
+        td = federation_attribute.aliases.count > 0 ? "#{federation_attribute.aliases.map(&:name).join(', ')}" : ''
+        td = federation_attribute.oid
+        td = link_to "Documentation", documentation_attribute_path(federation_attribute.oid)
