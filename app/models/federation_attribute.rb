@@ -35,7 +35,10 @@ class FederationAttribute < ApplicationRecord
   end
 
   def sync_name
-    update!(:primary_alias_name, primary_alias.name)
+    # This uses `#update_attribute` due to the `after_commit` hook
+    # rubocop:disable Rails/SkipsModelValidations
+    update_attribute(:primary_alias_name, primary_alias.name)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   def custom_label_method
