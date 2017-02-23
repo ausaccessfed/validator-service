@@ -35,7 +35,7 @@ class FederationAttribute < ApplicationRecord
   end
 
   def sync_name
-    update_attribute(:primary_alias_name, primary_alias.name)
+    update!(:primary_alias_name, primary_alias.name)
   end
 
   def custom_label_method

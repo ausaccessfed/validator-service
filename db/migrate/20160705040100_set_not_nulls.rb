@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SetNotNulls < ActiveRecord::Migration[5.0]
   def change
     change_column_null :category_attributes, :presence, false
