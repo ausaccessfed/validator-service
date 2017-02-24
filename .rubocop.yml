@@ -1,2 +1,2 @@
 inherit_from:
-  - https://raw.githubusercontent.com/ausaccessfed/aaf-gumboot/db0e76f81aa3ec71cb09ce7d1cd8d86da44b295e/aaf-rubocop.yml
+  - https://raw.githubusercontent.com/ausaccessfed/aaf-gumboot/develop/aaf-rubocop.yml
