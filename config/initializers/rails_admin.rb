@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 # :nocov:
-# rubocop:disable Metrics/BlockLength
 RailsAdmin.config do |config|
   config.parent_controller = '::ApplicationController'
 
