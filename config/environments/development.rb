@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   config.cache_classes = false
 
@@ -7,7 +6,7 @@ Rails.application.configure do
 
   config.consider_all_requests_local = true
 
-  if Rails.root.join('tmp/caching-dev.txt').exist?
+  if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
     config.cache_store = :memory_store

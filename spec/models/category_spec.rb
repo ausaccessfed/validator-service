@@ -166,7 +166,7 @@ RSpec.describe Category, type: :model do
         regexp: '[a-zA-Z]+',
         regexp_triggers_failure: false
       )
-      second_attribute_value.update_attribute(:value, 123)
+      second_attribute_value.update!(value: 123)
 
       expect(category.grouped_attributes(attribute_values)).to(
         eql(

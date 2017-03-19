@@ -1,9 +1,2 @@
-Rails:
-  Enabled: true
-AllCops:
-  Exclude:
-    - db/migrate/*
-    - db/schema.rb
-  TargetRubyVersion: 2.3
-Documentation:
-  Enabled: false
+inherit_from:
+  - https://raw.githubusercontent.com/ausaccessfed/aaf-gumboot/develop/aaf-rubocop.yml

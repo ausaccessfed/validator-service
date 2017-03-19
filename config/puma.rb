@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'yaml'
+
 config = YAML.load_file(File.expand_path('../deploy.yml', __FILE__))
 puma_config = config['puma']
 env = ENV.fetch('RAILS_ENV') { 'development' }
