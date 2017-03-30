@@ -25,7 +25,7 @@ gem 'coffee-script'
 
 gem 'local_time'
 gem 'rails_admin'
-gem 'remotipart', github: 'mshibuya/remotipart', require: false
+gem 'remotipart', git: 'https://github.com/mshibuya/remotipart', require: false
 
 group :production do
   gem 'aaf-secure_headers'
