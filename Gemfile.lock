@@ -19,7 +19,7 @@ GEM
   specs:
     aaf-gumboot (1.0.0.pre.alpha.2)
       accession (~> 1.0)
-    aaf-lipstick (3.0.1)
+    aaf-lipstick (3.0.2)
       erubis
       kramdown (~> 1.5)
       rails (> 4.0, < 6.0)
