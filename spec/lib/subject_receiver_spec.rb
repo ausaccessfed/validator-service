@@ -19,6 +19,10 @@ RSpec.describe Authentication::SubjectReceiver do
       .federation_attributes(attributes_for(:shib_env)[:env])
   end
 
+  let(:rack_env) do
+    { 'rack.session' => {} }
+  end
+
   before do
     allow(subject_receiver).to receive(:ide_config).and_return(ide_config)
 
@@ -40,9 +44,9 @@ RSpec.describe Authentication::SubjectReceiver do
           envs
         end
 
-        env = { 'rack.session' => { 'subject_id' => 0 } }
+        rack_env['rack.session']['subject_id'] = 0
 
-        expect(subject_receiver.receive(env)).to eql(
+        expect(subject_receiver.receive(rack_env)).to eql(
           [302, { 'Location' => '/snapshots/latest' }, []]
         )
       end
@@ -54,9 +58,9 @@ RSpec.describe Authentication::SubjectReceiver do
           envs
         end
 
-        env = { 'rack.session' => { 'subject_id' => 0 } }
+        rack_env['rack.session']['subject_id'] = 0
 
-        expect(subject_receiver.receive(env)).to eql(
+        expect(subject_receiver.receive(rack_env)).to eql(
           [302, { 'Location' => '/snapshots/latest' }, []]
         )
       end
@@ -68,9 +72,9 @@ RSpec.describe Authentication::SubjectReceiver do
           envs
         end
 
-        env = { 'rack.session' => { 'subject_id' => 0 } }
+        rack_env['rack.session']['subject_id'] = 0
 
-        expect(subject_receiver.receive(env)).to eql(
+        expect(subject_receiver.receive(rack_env)).to eql(
           [302, { 'Location' => '/snapshots/latest' }, []]
         )
       end
@@ -83,8 +87,8 @@ RSpec.describe Authentication::SubjectReceiver do
           envs
         end
 
-        expect(subject_receiver.receive({})).to eql(
-          [302, { 'Location' => '/?session_failed=true' }, []]
+        expect(subject_receiver.receive(rack_env)).to eql(
+          [302, { 'Location' => '/snapshots/failed' }, []]
         )
       end
 
@@ -97,8 +101,8 @@ RSpec.describe Authentication::SubjectReceiver do
           envs
         end
 
-        expect(subject_receiver.receive({})).to eql(
-          [302, { 'Location' => '/?session_failed=true' }, []]
+        expect(subject_receiver.receive(rack_env)).to eql(
+          [302, { 'Location' => '/snapshots/failed' }, []]
         )
       end
 
@@ -110,8 +114,8 @@ RSpec.describe Authentication::SubjectReceiver do
           envs
         end
 
-        expect(subject_receiver.receive({})).to eql(
-          [302, { 'Location' => '/?session_failed=true' }, []]
+        expect(subject_receiver.receive(rack_env)).to eql(
+          [302, { 'Location' => '/snapshots/failed' }, []]
         )
       end
 
@@ -123,8 +127,8 @@ RSpec.describe Authentication::SubjectReceiver do
           envs
         end
 
-        expect(subject_receiver.receive({})).to eql(
-          [302, { 'Location' => '/?session_failed=true' }, []]
+        expect(subject_receiver.receive(rack_env)).to eql(
+          [302, { 'Location' => '/snapshots/failed' }, []]
         )
       end
     end

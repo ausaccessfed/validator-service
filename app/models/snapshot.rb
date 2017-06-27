@@ -38,7 +38,10 @@ class Snapshot < ApplicationRecord
       snapshot = Snapshot.new
       subject.snapshots << snapshot
 
-      assign_attributes(attrs, snapshot).save!
+      snapshot = assign_attributes(attrs, snapshot)
+      snapshot.save!
+
+      snapshot
     end
 
     def assign_attributes(attrs, snapshot)
