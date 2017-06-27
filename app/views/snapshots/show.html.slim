@@ -1,39 +1,43 @@
 h2
-  = @snapshot.name(@snapshot.subject)
+  - if @failed
+    | Failed login
+  - else
+    = @snapshot.name(@snapshot.subject)
   small
     | Taken on #{local_time(@snapshot.created_at, :validator_date_format)}
 
-- if @admin_viewer
-  .alert.alert-warning role="alert"
-    | Note:  This is not your snapshot.  You are viewing this snapshot as an admin.
-- unless @snapshot.latest?(@snapshot.subject)
-  .alert.alert-warning role="alert"
-    | This is not&nbsp;
-    - if @admin_viewer
-      = @snapshot.subject.name
-      | 's (
-      = @snapshot.subject.mail
-      | )&nbsp;
-    - else
-      | your&nbsp;
-    | most recent snapshot.
-    =< link_to snapshot_path(Snapshot.latest(@snapshot.subject)) do
-      | View&nbsp;
+- unless @failed
+  - if @admin_viewer
+    .alert.alert-warning role="alert"
+      | Note:  This is not your snapshot.  You are viewing this snapshot as an admin.
+  - unless @snapshot.latest?(@snapshot.subject)
+    .alert.alert-warning role="alert"
+      | This is not&nbsp;
       - if @admin_viewer
-        | their
+        = @snapshot.subject.name
+        | 's (
+        = @snapshot.subject.mail
+        | )&nbsp;
       - else
-        | your
-      | &nbsp;most recent attributes in&nbsp;
-      - if @admin_viewer
-        | their
-      - else
-        | your
-      | &nbsp;latest snapshot.
-- unless @snapshot.subject.valid_identifier_history?
-  .alert.alert-danger role="alert"
-    | Warning: Your
-    =<> link_to 'auEduPersonSharedToken', documentation_attribute_path('oid:1.3.6.1.4.1.27856.1.2.5'), target: '_blank'
-    | is changing over time.
+        | your&nbsp;
+      | most recent snapshot.
+      =< link_to snapshot_path(Snapshot.latest(@snapshot.subject)) do
+        | View&nbsp;
+        - if @admin_viewer
+          | their
+        - else
+          | your
+        | &nbsp;most recent attributes in&nbsp;
+        - if @admin_viewer
+          | their
+        - else
+          | your
+        | &nbsp;latest snapshot.
+  - unless @snapshot.subject.valid_identifier_history?
+    .alert.alert-danger role="alert"
+      | Warning: Your
+      =<> link_to 'auEduPersonSharedToken', documentation_attribute_path('oid:1.3.6.1.4.1.27856.1.2.5'), target: '_blank'
+      | is changing over time.
 
 p
   input type="search" id="search" class="form-control hidden-print" placeholder="Search..."
@@ -86,7 +90,8 @@ p
                       i.glyphicon.glyphicon-book
 
 .hidden-print
-  = link_to snapshot_path(@snapshot, format: 'pdf'), class: 'btn btn-primary' do
-    i.glyphicon.glyphicon-download-alt
-    | &nbsp;&nbsp; Export as a PDF
-  end
+  - unless @failed
+    = link_to snapshot_path(@snapshot, format: 'pdf'), class: 'btn btn-primary' do
+      i.glyphicon.glyphicon-download-alt
+      | &nbsp;&nbsp; Export as a PDF
+    end

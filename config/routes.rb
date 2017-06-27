@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :snapshots, only: %i[index show] do
     collection do
       get 'latest'
+      get 'failed'
     end
   end
 
