@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Authentication::AttributeHelpers do
   subject { Authentication::AttributeHelpers }
 
   let(:http_headers) do
-    %w(
+    %w[
       HTTP_PERSISTENT_ID
       HTTP_TARGETED_ID
       HTTP_AUEDUPERSONSHAREDTOKEN
@@ -18,7 +19,7 @@ RSpec.describe Authentication::AttributeHelpers do
       HTTP_HOMEORGANIZATIONTYPE
       HTTP_UNSCOPED_AFFILIATION
       HTTP_SCOPED_AFFILIATION
-    )
+    ]
   end
 
   let(:shib_env) { attributes_for(:shib_env)[:env] }

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Migration to create subject_roles table and relevant fields
 class CreateSubjectRoles < ActiveRecord::Migration
   def change

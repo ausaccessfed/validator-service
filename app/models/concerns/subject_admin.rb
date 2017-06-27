@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module SubjectAdmin
   extend ActiveSupport::Concern
 

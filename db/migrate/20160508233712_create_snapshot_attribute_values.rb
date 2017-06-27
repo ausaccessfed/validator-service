@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateSnapshotAttributeValues < ActiveRecord::Migration
   def change
     create_table :snapshot_attribute_values do |t|

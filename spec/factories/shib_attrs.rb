@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryGirl.define do
   idp_domain = Faker::Internet.domain_name
   idp = "https://idp.#{idp_domain}/idp/shibboleth"

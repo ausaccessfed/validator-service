@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FederationAttributesExtraDetails < ActiveRecord::Migration[5.0]
   def change
     add_column :federation_attributes, :notes_on_format, :text

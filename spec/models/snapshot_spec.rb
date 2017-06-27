@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Snapshot, type: :model do
@@ -45,7 +46,7 @@ RSpec.describe Snapshot, type: :model do
     end
 
     before :each do
-      create_federation_attributes([:targeted_id, :mail, :displayname])
+      create_federation_attributes(%i[targeted_id mail displayname])
     end
 
     let(:subject) { Subject.create(attributes_for(:subject)) }

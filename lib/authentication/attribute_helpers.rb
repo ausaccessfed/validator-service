@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 module Authentication
   class AttributeHelpers
-    GENERIC_HTTP_HEADERS = %w(
+    GENERIC_HTTP_HEADERS = %w[
       HTTP_ACCEPT
       HTTP_ACCEPT_CHARSET
       HTTP_ACCEPT_ENCODING
@@ -22,7 +23,7 @@ module Authentication
       HTTP_UPGRADE_INSECURE_REQUESTS
       HTTP_USER_AGENT
       HTTP_VERSION
-    ).uniq.freeze
+    ].uniq.freeze
 
     class << self
       def federation_attributes(env)

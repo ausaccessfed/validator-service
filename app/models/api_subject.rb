@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'accession'
 class APISubject < ApplicationRecord
   include Accession::Principal

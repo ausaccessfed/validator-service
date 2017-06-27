@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module FederationAttributes
   def create_federation_attributes(attributes = nil)
     attributes ||= oids.keys

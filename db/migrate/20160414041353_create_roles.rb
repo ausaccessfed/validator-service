@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Migration to create roles table and relevant fields
 class CreateRoles < ActiveRecord::Migration
   def change

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AddForeignKeys < ActiveRecord::Migration
   def change
     add_foreign_key :permissions, :roles

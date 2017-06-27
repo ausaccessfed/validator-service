@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe FederationAttribute, type: :model do
@@ -113,11 +114,11 @@ RSpec.describe FederationAttribute, type: :model do
       it 'grabs headers from the db' do
         has_existing_attributes
 
-        expect(subject.existing_headers).to eq(%w(
+        expect(subject.existing_headers).to eq(%w[
                                                  HTTP_CN
                                                  HTTP_DISPLAYNAME
                                                  HTTP_O
-                                               ))
+                                               ])
       end
     end
 
@@ -157,7 +158,7 @@ RSpec.describe FederationAttribute, type: :model do
         has_existing_attributes
 
         expect(subject.new_attributes(with_new_attributes).keys).to eql(
-          %w(HTTP_HOMEORGANIZATIONTYPE HTTP_SCOPED_AFFILIATION)
+          %w[HTTP_HOMEORGANIZATIONTYPE HTTP_SCOPED_AFFILIATION]
         )
       end
 
