@@ -58,6 +58,36 @@ RSpec.describe SnapshotsController, type: :controller do
     end
   end
 
+  describe '#failed' do
+    context 'when the user is logged in' do
+      before do
+        session[:subject_id] = subject.id
+        session[:attributes] = attrs
+
+        get :failed
+      end
+
+      it 'should render ok' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'assigns' do
+        expect(Snapshot.all.size).to eq 0
+        expect(assigns(:snapshot)).to be_instance_of(Snapshot)
+
+        expect(AttributeValue.all.size).to eq 0
+        expect(assigns(:attribute_values).size).to eql 3
+        expect(assigns(:attribute_values).first)
+          .to be_instance_of(AttributeValue)
+
+        expect(assigns(:categories).size).to eql 1
+        expect(assigns(:categories).first).to be_instance_of(Category)
+      end
+
+      it { is_expected.to render_template('snapshots/show') }
+    end
+  end
+
   describe '#show' do
     context 'when the user is logged in' do
       before do
