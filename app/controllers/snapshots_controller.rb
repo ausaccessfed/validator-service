@@ -8,7 +8,7 @@ class SnapshotsController < ApplicationController
     return redirect_to(root_path) unless session[:attributes]
 
     @failed = true
-    @snapshot = Snapshot.new(created_at: DateTime.now)
+    @snapshot = Snapshot.new(created_at: DateTime.current)
     @snapshot = Snapshot.assign_attributes(session[:attributes], @snapshot)
 
     show_actions
