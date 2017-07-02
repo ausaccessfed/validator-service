@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Authentication::SubjectReceiver do
@@ -232,7 +233,7 @@ RSpec.describe Authentication::SubjectReceiver do
     it 'gets federation attributes' do
       expect(subject_receiver
         .map_attributes(attributes_for(:shib_env)[:env]).keys).to eql(
-          %w(
+          %w[
             HTTP_PERSISTENT_ID
             HTTP_TARGETED_ID
             HTTP_AUEDUPERSONSHAREDTOKEN
@@ -245,7 +246,7 @@ RSpec.describe Authentication::SubjectReceiver do
             HTTP_HOMEORGANIZATIONTYPE
             HTTP_UNSCOPED_AFFILIATION
             HTTP_SCOPED_AFFILIATION
-          )
+          ]
         )
     end
   end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Documentation
   class CategoriesController < ApplicationController
     skip_before_action :ensure_authenticated

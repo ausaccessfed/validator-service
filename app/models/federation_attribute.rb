@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FederationAttribute < ApplicationRecord
   include FederationAttributeAdmin
 
@@ -12,7 +13,7 @@ class FederationAttribute < ApplicationRecord
 
   valhammer
 
-  after_commit :sync_name, on: [:create, :update]
+  after_commit :sync_name, on: %i[create update]
 
   scope :fuzzy_lookup, lambda { |id|
     alias_lookup(id) + where(oid: id)

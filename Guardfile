@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 guard 'brakeman', run_on_start: true do
   watch(%r{^app/.+\.(erb|haml|rhtml|rb)$})
   watch(%r{^config/.+\.rb$})
@@ -24,7 +25,7 @@ guard :rspec, cmd: 'bundle exec rspec' do
   watch(rspec.spec_files)
   ruby = dsl.ruby
   dsl.watch_spec_files_for(ruby.lib_files)
-  rails = dsl.rails(view_extensions: %w(erb haml slim))
+  rails = dsl.rails(view_extensions: %w[erb haml slim])
   dsl.watch_spec_files_for(rails.app_files)
   dsl.watch_spec_files_for(rails.views)
 

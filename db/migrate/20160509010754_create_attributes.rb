@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateAttributes < ActiveRecord::Migration
   def change
     create_table :federation_attributes do |t|

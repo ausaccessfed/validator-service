@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Migration to create api_subject_roles table and relevant fields
 class CreateAPISubjectRoles < ActiveRecord::Migration
   def change

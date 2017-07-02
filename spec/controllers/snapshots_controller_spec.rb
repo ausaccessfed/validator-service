@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe SnapshotsController, type: :controller do
@@ -26,7 +27,7 @@ RSpec.describe SnapshotsController, type: :controller do
   end
 
   before(:each) do
-    create_federation_attributes([:targeted_id, :mail, :displayname])
+    create_federation_attributes(%i[targeted_id mail displayname])
   end
 
   describe '#latest' do

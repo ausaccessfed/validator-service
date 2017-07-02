@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # :nocov:
 if Rails.env.production?
   app_config = Rails.application.config.validator_service

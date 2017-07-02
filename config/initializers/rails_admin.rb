@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # :nocov:
 RailsAdmin.config do |config|
   config.parent_controller = '::ApplicationController'
@@ -7,12 +8,12 @@ RailsAdmin.config do |config|
     dashboard                     # mandatory
     index                         # mandatory
     new do
-      only %w(
+      only %w[
         Category
         CategoryAttribute
         FederationAttribute
         FederationAttributeAlias
-      )
+      ]
     end
     edit
     export
@@ -29,7 +30,7 @@ RailsAdmin.config do |config|
   end
 
   # Note: These are strings to stop `bin/setup`, etc. from crashing.
-  config.included_models = %w(
+  config.included_models = %w[
     AttributeValue
     Category
     CategoryAttribute
@@ -38,7 +39,7 @@ RailsAdmin.config do |config|
     SnapshotAttributeValue
     Snapshot
     Subject
-  )
+  ]
 end
 
 if Rails.env.production?

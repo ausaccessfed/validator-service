@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class SnapshotsController < ApplicationController
   before_action :public_action
 

@@ -107,10 +107,10 @@ e.g. urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport',
 -os.pdf" target="_blank">here</a> in the SAML 2 specification.'
 )
 
-faas = %w(
+faas = %w[
   cn
   commonName
-).map do |name|
+].map do |name|
   FederationAttributeAlias.create!(name: name)
 end
 
@@ -633,10 +633,10 @@ aspects of its
    attribute.'
 )
 
-faas = %w(
+faas = %w[
   mail
   email
-).map do |name|
+].map do |name|
   FederationAttributeAlias.create!(
     name: name
   )
@@ -665,10 +665,10 @@ FederationAttribute.create!(
   provides user contact information.'
 )
 
-faas = %w(
+faas = %w[
   o
   organizationName
-).map do |name|
+].map do |name|
   FederationAttributeAlias.create!(
     name: name
   )
@@ -855,10 +855,10 @@ FederationAttribute.create!(
   notes_on_privacy: ''
 )
 
-faas = %w(
+faas = %w[
   surname
   sn
-).map do |name|
+].map do |name|
   FederationAttributeAlias.create!(name: name)
 end
 
@@ -938,10 +938,10 @@ FederationAttribute.create!(
   notes_on_privacy: ''
 )
 
-faas = %w(
+faas = %w[
   homeOrganization
   schacHomeOrganization
-).map do |name|
+].map do |name|
   FederationAttributeAlias.create!(
     name: name
   )
@@ -962,10 +962,10 @@ FederationAttribute.create!(
   notes_on_privacy: ''
 )
 
-faas = %w(
+faas = %w[
   homeOrganizationType
   schacHomeOrganizationType
-).map do |name|
+].map do |name|
   FederationAttributeAlias.create!(
     name: name
   )
@@ -986,10 +986,10 @@ FederationAttribute.create!(
   notes_on_privacy: ''
 )
 
-faas = %w(
+faas = %w[
   organizationalUnit
   ou
-).map do |name|
+].map do |name|
   FederationAttributeAlias.create!(
     name: name
   )
