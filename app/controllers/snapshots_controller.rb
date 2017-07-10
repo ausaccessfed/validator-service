@@ -2,6 +2,19 @@
 
 class SnapshotsController < ApplicationController
   before_action :public_action
+  skip_before_action :ensure_authenticated, only: [:failed]
+
+  def failed
+    return redirect_to(root_path) unless session[:attributes]
+
+    @failed = true
+    @snapshot = Snapshot.new(created_at: DateTime.current)
+    @snapshot = Snapshot.assign_attributes(session[:attributes], @snapshot)
+
+    show_actions
+
+    request.env['rack.session'].clear
+  end
 
   def latest
     eager_load

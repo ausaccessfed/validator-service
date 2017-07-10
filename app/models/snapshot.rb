@@ -38,7 +38,10 @@ class Snapshot < ApplicationRecord
       snapshot = Snapshot.new
       subject.snapshots << snapshot
 
-      assign_attributes(attrs, snapshot)
+      snapshot = assign_attributes(attrs, snapshot)
+      snapshot.save!
+
+      snapshot
     end
 
     def assign_attributes(attrs, snapshot)
@@ -46,7 +49,7 @@ class Snapshot < ApplicationRecord
         parse_attribute_values(db_attr, attrs).each do |value|
           next if value.blank?
 
-          snapshot.attribute_values << AttributeValue.create!(
+          snapshot.attribute_values << AttributeValue.new(
             value: value,
             federation_attribute: db_attr
           )
