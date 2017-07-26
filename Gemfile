@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'mysql2'
 gem 'rails', '>= 5.0.0', '< 5.1'
+gem 'redis-rails'
 
 gem 'aaf-lipstick'
 gem 'accession'
