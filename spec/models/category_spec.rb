@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
   let(:category) { create(:category) }
 
-  let(:federation_attributes) { [:targeted_id, :mail, :o, :displayname] }
+  let(:federation_attributes) { %i[targeted_id mail o displayname] }
 
   before :each do
     create_federation_attributes(federation_attributes)

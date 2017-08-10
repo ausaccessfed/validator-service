@@ -12,7 +12,8 @@ module Authentication
       attrs = map_attributes(env)
       return super if minimally_viable_session?(attrs)
 
-      redirect_to(root_path(session_failed: true))
+      env['rack.session']['attributes'] = attrs
+      redirect_to(failed_snapshots_path)
     end
 
     def map_attributes(env)

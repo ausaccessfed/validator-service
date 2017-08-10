@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AttributeValue < ApplicationRecord
   has_many :snapshot_attribute_values
   belongs_to :federation_attribute

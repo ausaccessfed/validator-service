@@ -1,8 +1,10 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 gem 'mysql2'
 gem 'rails', '>= 5.0.0', '< 5.1'
+gem 'redis-rails'
 
 gem 'aaf-lipstick'
 gem 'accession'
@@ -25,7 +27,6 @@ gem 'coffee-script'
 
 gem 'local_time'
 gem 'rails_admin'
-gem 'remotipart', github: 'mshibuya/remotipart', require: false
 
 group :production do
   gem 'aaf-secure_headers'

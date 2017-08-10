@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Subject < ApplicationRecord
   include Accession::Principal
   include SubjectAdmin
@@ -52,14 +53,14 @@ class Subject < ApplicationRecord
 
   def subject_name(attrs)
     fn = FederationAttribute.find_by(internal_alias: :displayname)
-    return 'Unknown Subject' unless fn.present?
+    return 'Unknown Subject' if fn.blank?
 
     attrs[fn.http_header]
   end
 
   def subject_mail(attrs)
     fm = FederationAttribute.find_by(internal_alias: :mail)
-    return nil unless fm.present?
+    return nil if fm.blank?
 
     attrs[fm.http_header]
   end

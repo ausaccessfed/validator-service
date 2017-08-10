@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'api_constraints'
 
 Rails.application.routes.draw do
@@ -10,17 +11,18 @@ Rails.application.routes.draw do
   get '/welcome' => 'welcome#index'
   get '/documentation' => 'documentation#index'
 
-  resources :snapshots, only: [:index, :show] do
+  resources :snapshots, only: %i[index show] do
     collection do
       get 'latest'
+      get 'failed'
     end
   end
 
   namespace :documentation do
     resources :attributes,
-              only: [:index, :show],
+              only: %i[index show],
               id: /[A-Za-z0-9\.\:\-]+?/,
               format: /json|csv|xml|yaml/
-    resources :categories, only: [:index, :show]
+    resources :categories, only: %i[index show]
   end
 end

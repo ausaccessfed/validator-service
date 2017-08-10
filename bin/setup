@@ -14,15 +14,15 @@ require 'gumboot/strap'
 include Gumboot::Strap
 
 puts "\n== Installing configuration files =="
-link_global_configuration %w(api-client.crt api-client.key)
-update_local_configuration %w(validator_service.yml deploy.yml)
+link_global_configuration %w[api-client.crt api-client.key]
+update_local_configuration %w[validator_service.yml deploy.yml]
 
 puts "\n== Loading Rails environment =="
 require_relative '../config/environment'
 
 system('rake db:drop:all') unless Rails.env.production?
 
-ensure_activerecord_databases(%w(test development))
+ensure_activerecord_databases(%w[test development])
 maintain_activerecord_schema
 load_seeds
 

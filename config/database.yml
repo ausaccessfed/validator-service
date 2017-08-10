@@ -20,3 +20,5 @@ production:
   username: <%= ENV['VALIDATOR_DB_USERNAME'] %>
   password: <%= ENV['VALIDATOR_DB_PASSWORD'] %>
   database: <%= ENV['VALIDATOR_DB_NAME'] %>
+  host: <%= ENV['VALIDATOR_DB_HOST'] %>
+  port: <%= ENV['VALIDATOR_DB_PORT'] %>

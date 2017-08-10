@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateFederationAttributeAliases < ActiveRecord::Migration[5.0]
   def change
     create_table :federation_attribute_aliases do |t|
