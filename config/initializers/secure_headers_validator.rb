@@ -7,6 +7,8 @@ AAF::SecureHeaders.development_mode! if Rails.env.development?
 app_config = Rails.application.config.validator_service
 
 SecureHeaders::Configuration.override(:default) do |config|
+  config.csp[:object_src] = ["'self'"]
+
   config.csp[:script_src] = config.csp[:script_src] + [
     'https://www.google.com/',
     "'unsafe-inline'",
