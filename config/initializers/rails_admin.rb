@@ -42,15 +42,20 @@ RailsAdmin.config do |config|
   ]
 end
 
-if Rails.env.production?
-  SecureHeaders::Configuration.override(:rails_admin) do |config|
-    config.csp[:style_src] << "'unsafe-inline'"
-    config.csp[:connect_src] = ["'self'"]
-    config.csp[:script_src] = config.csp[:script_src] + [
-      "'sha256-73+D8uQwNyLmkFjvaILshPLBcTjapyK9P5FGfkepYxE='",
-      "'unsafe-eval'"
-    ]
-  end
+AAF::SecureHeaders.development_mode! if Rails.env.development?
+
+SecureHeaders::Configuration.override(:rails_admin) do |config|
+  config.csp[:style_src] << "'unsafe-inline'"
+  config.csp[:connect_src] = ["'self'"]
+  config.csp[:script_src] = config.csp[:script_src] + [
+    "'unsafe-eval'",
+    "'sha256-2IZ3eH4vQ4iO/yUXEJx3CWqGvsT1mFTk9j1WeznailE='"
+    # <script>
+    #   jQuery(function($) {
+    #
+    #   });
+    # </script>
+  ]
 end
 # rubocop:enable Metrics/BlockLength
 # :nocov:

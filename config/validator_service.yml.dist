@@ -8,4 +8,7 @@ ide:
     - urn:mace:aaf.edu.au:ide:internal:aaf-admin
 url_options:
   base_url: 'http://localhost:3000'
+secure_headers:
+  csp:
+    report_uri: nil
 time_zone: Australia/Brisbane

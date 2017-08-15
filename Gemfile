@@ -7,6 +7,7 @@ gem 'rails', '>= 5.0.0', '< 5.1'
 gem 'redis-rails'
 
 gem 'aaf-lipstick'
+gem 'aaf-secure_headers'
 gem 'accession'
 gem 'sass-rails', require: false
 gem 'shib-rack'
@@ -28,9 +29,6 @@ gem 'coffee-script'
 gem 'local_time'
 gem 'rails_admin'
 
-group :production do
-  gem 'aaf-secure_headers'
-end
 
 group :development, :test do
   gem 'aaf-gumboot'
