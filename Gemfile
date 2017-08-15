@@ -6,6 +6,8 @@ gem 'mysql2'
 gem 'rails', '>= 5.0.0', '< 5.1'
 gem 'redis-rails'
 
+gem 'local_time'
+
 gem 'aaf-lipstick'
 gem 'aaf-secure_headers'
 gem 'accession'
@@ -26,9 +28,8 @@ gem 'wkhtmltopdf-binary'
 
 gem 'coffee-script'
 
-gem 'local_time'
 gem 'rails_admin'
-
+gem 'rails_admin_aaf_theme'
 
 group :development, :test do
   gem 'aaf-gumboot'

@@ -57,5 +57,10 @@ SecureHeaders::Configuration.override(:rails_admin) do |config|
     # </script>
   ]
 end
+
+Kaminari.configure do |config|
+  config.page_method_name = :per_page_kaminari
+end
+
 # rubocop:enable Metrics/BlockLength
 # :nocov:

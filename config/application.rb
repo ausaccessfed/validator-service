@@ -7,6 +7,8 @@ require 'torba/rails'
 
 Bundler.require(*Rails.groups)
 
+ENV['RAILS_ADMIN_THEME'] = 'aaf_theme'
+
 module ValidatorService
   class Application < Rails::Application
     config.autoload_paths << Rails.root.join('lib')
