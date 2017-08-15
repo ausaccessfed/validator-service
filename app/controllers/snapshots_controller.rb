@@ -25,7 +25,7 @@ class SnapshotsController < ApplicationController
   end
 
   def index
-    @snapshots = @subject.snapshots.includes(:subject).order(id: :desc)
+    @snapshots = @subject.snapshots.order(id: :desc)
   end
 
   def show
