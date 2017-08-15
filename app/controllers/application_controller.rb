@@ -6,16 +6,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :ensure_authenticated
   after_action :ensure_access_checked
-  before_action :apply_rails_admin_csp
+  before_action :apply_rails_admin_csp, if: :rails_admin_controller?
 
   # :nocov:
   def apply_rails_admin_csp
-    rails_admin_controller = defined?(rails_admin_controller?) &&
-                             rails_admin_controller?
-
-    return false if !Rails.env.production? || !rails_admin_controller
-
     use_secure_headers_override(:rails_admin)
+  end
+
+  def rails_admin_controller?
+    false
   end
   # :nocov:
 
