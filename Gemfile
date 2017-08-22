@@ -3,10 +3,13 @@
 source 'https://rubygems.org'
 
 gem 'mysql2'
-gem 'rails', '>= 5.0.0', '< 5.1'
+gem 'rails', '5.0.4'
 gem 'redis-rails'
 
+gem 'local_time'
+
 gem 'aaf-lipstick'
+gem 'aaf-secure_headers'
 gem 'accession'
 gem 'sass-rails', require: false
 gem 'shib-rack'
@@ -25,12 +28,8 @@ gem 'wkhtmltopdf-binary'
 
 gem 'coffee-script'
 
-gem 'local_time'
 gem 'rails_admin'
-
-group :production do
-  gem 'aaf-secure_headers'
-end
+gem 'rails_admin_aaf_theme'
 
 group :development, :test do
   gem 'aaf-gumboot'
