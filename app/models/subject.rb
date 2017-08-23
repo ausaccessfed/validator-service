@@ -52,10 +52,12 @@ class Subject < ApplicationRecord
   end
 
   def subject_name(attrs)
-    fn = FederationAttribute.find_by(internal_alias: :displayname)
-    return 'Unknown Subject' if fn.blank?
+    dn = FederationAttribute.find_by(internal_alias: :displayname).http_header
+    cn = FederationAttribute.find_by(internal_alias: :cn).http_header
 
-    attrs[fn.http_header]
+    return 'Unknown Subject' if attrs[dn].blank? && attrs[cn].blank?
+
+    attrs[dn].blank? ? attrs[cn] : attrs[dn]
   end
 
   def subject_mail(attrs)
