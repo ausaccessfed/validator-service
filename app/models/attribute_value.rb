@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AttributeValue < ApplicationRecord
-  has_many :snapshot_attribute_values
+  has_many :snapshot_attribute_values, dependent: :destroy
   belongs_to :federation_attribute
 
   valhammer

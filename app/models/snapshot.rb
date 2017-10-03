@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class Snapshot < ApplicationRecord
-  has_many :snapshot_attribute_values
-  has_many :attribute_values, through: :snapshot_attribute_values
+  has_many :snapshot_attribute_values, dependent: :destroy
+  has_many :attribute_values,
+           through: :snapshot_attribute_values,
+           dependent: :destroy
   belongs_to :subject
 
   valhammer
