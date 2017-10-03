@@ -14,7 +14,7 @@ Rails.application.load_tasks
 RuboCop::RakeTask.new if defined? RuboCop
 
 task :brakeman do
-  result = Brakeman.run app_path: '.', print_report: true
+  result = Brakeman.run app_path: '.', print_report: true, pager: false
 
   unless result.filtered_warnings.empty?
     puts "Brakeman found #{result.filtered_warnings.count} warnings"
