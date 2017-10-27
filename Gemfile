@@ -20,7 +20,6 @@ gem 'torba-rails'
 gem 'uglifier', require: false
 gem 'valhammer'
 
-gem 'god', require: false
 gem 'puma', require: false
 
 gem 'pdfkit'
