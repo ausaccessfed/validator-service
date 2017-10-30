@@ -7,7 +7,6 @@ puma_config = config['puma']
 env = ENV.fetch('RAILS_ENV') { 'development' }
 
 preload_app!
-daemonize unless env == 'development'
 
 port puma_config['port']
 environment env
