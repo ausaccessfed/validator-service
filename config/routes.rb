@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   root to: 'welcome#index'
 
   get '/welcome' => 'welcome#index'
-  get '/logout' => 'welcome#logout'
   get '/documentation' => 'documentation#index'
 
   resources :snapshots, only: %i[index show] do
