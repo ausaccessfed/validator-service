@@ -40,13 +40,15 @@ module Authentication
       redirect_to(latest_snapshots_path)
     end
 
+    # :nocov:
     def logout(env)
-      return redirect_to("/logout") if Rails.env.development?
+      env['rack.session'].clear
 
-      redirect_to("/Shibboleth.sso/Logout?return=https://#{env['HTTP_HOST']}/logout")
+      return redirect_to('/') if !Rails.env.production?
+
+      redirect_to('/Shibboleth.sso/Logout?return=/')
     end
 
-    # :nocov:
     def ide_config
       Rails.application.config.validator_service.ide
     end

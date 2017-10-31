@@ -6,11 +6,4 @@ class WelcomeController < ApplicationController
   def index
     public_action
   end
-
-  def logout
-    public_action
-
-    env['rack.session'].clear
-    redirect_to('/')
-  end
 end
