@@ -44,7 +44,7 @@ module Authentication
     def logout(env)
       env['rack.session'].clear
 
-      return redirect_to('/') if !Rails.env.production?
+      return redirect_to('/') unless Rails.env.production?
 
       redirect_to('/Shibboleth.sso/Logout?return=/')
     end
