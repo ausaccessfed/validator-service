@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'mysql2'
-gem 'rails', '5.0.4'
+gem 'rails', '>= 5.0.0', '< 5.1'
 gem 'redis-rails'
 
 gem 'local_time'
@@ -20,7 +20,6 @@ gem 'torba-rails'
 gem 'uglifier', require: false
 gem 'valhammer'
 
-gem 'god', require: false
 gem 'puma', require: false
 
 gem 'pdfkit'
@@ -41,10 +40,7 @@ group :development, :test do
   gem 'guard', require: false
   gem 'guard-brakeman', require: false
   gem 'guard-bundler', require: false
-  gem 'guard-rspec',
-      git: 'https://github.com/guard/guard-rspec',
-      branch: 'rails-5-support',
-      require: false
+  gem 'guard-rspec', require: false
   gem 'guard-rubocop', require: false
   gem 'poltergeist', require: false
   gem 'pry'

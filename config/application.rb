@@ -3,6 +3,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'rake'
 require 'torba/rails'
 
 Bundler.require(*Rails.groups)

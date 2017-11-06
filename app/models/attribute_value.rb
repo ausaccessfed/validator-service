@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AttributeValue < ApplicationRecord
-  has_many :snapshot_attribute_values
+  has_many :snapshot_attribute_values, dependent: :destroy
   belongs_to :federation_attribute
 
   valhammer
@@ -17,7 +17,7 @@ class AttributeValue < ApplicationRecord
 
     def valid_response(federation_attribute, attribute_value)
       if federation_attribute.regexp
-        unless Regexp.new(federation_attribute.regexp).match(attribute_value)
+        unless Regexp.new(federation_attribute.regexp).match?(attribute_value)
           if federation_attribute.regexp_triggers_failure?
             return ApplicationHelper::ResponseFor.invalid_attribute
           end

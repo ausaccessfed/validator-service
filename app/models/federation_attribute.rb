@@ -3,11 +3,11 @@
 class FederationAttribute < ApplicationRecord
   include FederationAttributeAdmin
 
-  has_many :category_attributes
-  has_many :categories, through: :category_attributes
+  has_many :category_attributes, dependent: :destroy
+  has_many :categories, through: :category_attributes, dependent: :destroy
 
-  has_many :federation_attribute_aliases
-  has_many :attribute_values
+  has_many :federation_attribute_aliases, dependent: :destroy
+  has_many :attribute_values, dependent: :destroy
 
   belongs_to :primary_alias, class_name: FederationAttributeAlias
 

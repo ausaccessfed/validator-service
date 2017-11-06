@@ -4,10 +4,10 @@ class Subject < ApplicationRecord
   include Accession::Principal
   include SubjectAdmin
 
-  has_many :subject_roles
-  has_many :roles, through: :subject_roles
+  has_many :subject_roles, dependent: :destroy
+  has_many :roles, through: :subject_roles, dependent: :destroy
 
-  has_many :snapshots
+  has_many :snapshots, dependent: :destroy
 
   valhammer
 
