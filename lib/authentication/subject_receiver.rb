@@ -41,6 +41,14 @@ module Authentication
     end
 
     # :nocov:
+    def logout(env)
+      env['rack.session'].clear
+
+      return redirect_to('/') unless Rails.env.production?
+
+      redirect_to('/Shibboleth.sso/Logout?return=/')
+    end
+
     def ide_config
       Rails.application.config.validator_service.ide
     end
