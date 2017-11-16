@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161117215256) do
+ActiveRecord::Schema.define(version: 20171116012009) do
 
   create_table "api_subject_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer  "role_id",        null: false
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20161117215256) do
     t.boolean  "regexp_triggers_failure",               default: true, null: false
     t.text     "description",             limit: 65535
     t.boolean  "singular",                              default: true, null: false
-    t.string   "http_header",                                          null: false
+    t.string   "http_header",                           default: "",   null: false
     t.text     "notes_on_format",         limit: 65535
     t.text     "notes_on_usage",          limit: 65535
     t.text     "notes_on_privacy",        limit: 65535
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 20161117215256) do
     t.integer  "primary_alias_id",                                     null: false
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
-    t.string   "internal_alias",                                       null: false
+    t.string   "internal_alias",                        default: "",   null: false
     t.string   "primary_alias_name"
     t.index ["http_header"], name: "index_federation_attributes_on_http_header", unique: true, using: :btree
     t.index ["internal_alias"], name: "index_federation_attributes_on_internal_alias", unique: true, using: :btree
@@ -100,10 +100,10 @@ ActiveRecord::Schema.define(version: 20161117215256) do
   end
 
   create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.string   "name",        null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "entitlement", null: false
+    t.string   "name",                     null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "entitlement", default: "", null: false
     t.index ["entitlement"], name: "index_roles_on_entitlement", unique: true, using: :btree
   end
 
@@ -130,13 +130,13 @@ ActiveRecord::Schema.define(version: 20161117215256) do
   end
 
   create_table "subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.string   "name",          null: false
-    t.string   "mail",          null: false
-    t.boolean  "enabled",       null: false
-    t.boolean  "complete",      null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "persistent_id", null: false
+    t.string   "name",                       null: false
+    t.string   "mail",                       null: false
+    t.boolean  "enabled",                    null: false
+    t.boolean  "complete",                   null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "persistent_id", default: "", null: false
     t.index ["persistent_id"], name: "index_subjects_on_persistent_id", unique: true, using: :btree
   end
 
