@@ -5,7 +5,10 @@ class Subject < ApplicationRecord
   include SubjectAdmin
 
   has_many :subject_roles, dependent: :destroy
-  has_many :roles, through: :subject_roles, dependent: :destroy
+  has_many :roles,
+           through: :subject_roles,
+           dependent: :destroy,
+           inverse_of: false
 
   has_many :snapshots, dependent: :destroy
 
