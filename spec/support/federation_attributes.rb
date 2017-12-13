@@ -17,11 +17,11 @@ module FederationAttributes
 
   def create_federation_attribute(name, http_header, faa)
     FactoryBot.create(:federation_attribute,
-                       http_header: http_header,
-                       internal_alias: name,
-                       oid: oids[name],
-                       federation_attribute_aliases: [faa],
-                       primary_alias: faa)
+                      http_header: http_header,
+                      internal_alias: name,
+                      oid: oids[name],
+                      federation_attribute_aliases: [faa],
+                      primary_alias: faa)
   end
 
   private
