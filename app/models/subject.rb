@@ -57,7 +57,7 @@ class Subject < ApplicationRecord
 
     return 'Unknown Subject' if attrs[dn].blank? && attrs[cn].blank?
 
-    attrs[dn].blank? ? attrs[cn] : attrs[dn]
+    attrs[dn].presence || attrs[cn]
   end
 
   def subject_mail(attrs)
