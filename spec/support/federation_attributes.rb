@@ -16,7 +16,7 @@ module FederationAttributes
   end
 
   def create_federation_attribute(name, http_header, faa)
-    FactoryGirl.create(:federation_attribute,
+    FactoryBot.create(:federation_attribute,
                        http_header: http_header,
                        internal_alias: name,
                        oid: oids[name],

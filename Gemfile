@@ -35,7 +35,7 @@ group :development, :test do
   gem 'bullet'
   gem 'capybara', require: false
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'guard', require: false
   gem 'guard-brakeman', require: false

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :api_subject do
     x509_cn { Faker::Lorem.words.join }
     description { Faker::Lorem.paragraph }

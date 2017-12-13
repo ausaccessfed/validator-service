@@ -29,7 +29,7 @@ RSpec.describe Authentication::SubjectReceiver do
     create_federation_attributes
 
     entitlement = 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
-    FactoryGirl.create(:role, entitlement: entitlement)
+    FactoryBot.create(:role, entitlement: entitlement)
 
     stub_ide(shared_token: attrs['HTTP_AUEDUPERSONSHAREDTOKEN'],
              entitlements: [entitlement])
@@ -264,10 +264,10 @@ RSpec.describe Authentication::SubjectReceiver do
   end
 
   describe '#assign_entitlements' do
-    let(:subject) { FactoryGirl.create(:subject) }
+    let(:subject) { FactoryBot.create(:subject) }
 
     before :each do
-      FactoryGirl.create(:permission, value: 'app:validator:admin:*')
+      FactoryBot.create(:permission, value: 'app:validator:admin:*')
     end
 
     it 'assigns roles' do
