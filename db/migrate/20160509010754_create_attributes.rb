@@ -2,6 +2,7 @@
 
 class CreateAttributes < ActiveRecord::Migration
   def change
+    # rubocop:disable Rails/CreateTableWithTimestamps
     create_table :federation_attributes do |t|
       t.string :name, null: false
       t.string :regexp
@@ -10,5 +11,6 @@ class CreateAttributes < ActiveRecord::Migration
       t.string :documentation_url
       t.boolean :singular, default: true, null: false
     end
+    # rubocop:enable Rails/CreateTableWithTimestamps
   end
 end

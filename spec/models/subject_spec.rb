@@ -8,9 +8,9 @@ RSpec.describe Subject, type: :model do
   include_examples 'Subjects'
 
   context 'subject#permissions' do
-    let(:subject) { FactoryGirl.create(:subject) }
-    let(:permission) { FactoryGirl.create(:permission) }
-    let(:role) { FactoryGirl.create(:role) }
+    let(:subject) { FactoryBot.create(:subject) }
+    let(:permission) { FactoryBot.create(:permission) }
+    let(:role) { FactoryBot.create(:role) }
 
     it 'subject with no permissions' do
       expect(subject.permissions).to eq []
@@ -28,9 +28,9 @@ RSpec.describe Subject, type: :model do
     context 'subjects with multiple roles and permissions' do
       before do
         rand(1..10).times do
-          r = FactoryGirl.build(:role)
+          r = FactoryBot.build(:role)
           rand(1..10).times do
-            r.permissions << FactoryGirl.build(:permission)
+            r.permissions << FactoryBot.build(:permission)
           end
           subject.roles << r
         end
@@ -50,7 +50,7 @@ RSpec.describe Subject, type: :model do
   end
 
   context 'subject#functioning?' do
-    let(:subject) { FactoryGirl.create(:subject) }
+    let(:subject) { FactoryBot.create(:subject) }
     context 'subject is functioning' do
       it 'is functioning' do
         expect(subject.functioning?).to eq true
