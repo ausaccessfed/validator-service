@@ -8,9 +8,9 @@ RSpec.describe APISubject, type: :model do
   include_examples 'API Subjects'
 
   context 'api_subject#permissions' do
-    let(:api_subject) { FactoryGirl.create(:api_subject) }
-    let(:permission) { FactoryGirl.create(:permission) }
-    let(:role) { FactoryGirl.create(:role) }
+    let(:api_subject) { FactoryBot.create(:api_subject) }
+    let(:permission) { FactoryBot.create(:permission) }
+    let(:role) { FactoryBot.create(:role) }
 
     it 'api subject with no permissions' do
       expect(api_subject.permissions).to eq []
@@ -28,9 +28,9 @@ RSpec.describe APISubject, type: :model do
     context 'api subjects with multiple roles and permissions' do
       before do
         rand(1..10).times do
-          r = FactoryGirl.create(:role)
+          r = FactoryBot.create(:role)
           rand(1..10).times do
-            r.permissions << FactoryGirl.create(:permission)
+            r.permissions << FactoryBot.create(:permission)
           end
           api_subject.roles << r
         end
@@ -50,7 +50,7 @@ RSpec.describe APISubject, type: :model do
   end
 
   context 'api_subject#functioning?' do
-    let(:api_subject) { FactoryGirl.create(:api_subject) }
+    let(:api_subject) { FactoryBot.create(:api_subject) }
 
     context 'api subject is functioning' do
       it 'is functioning' do

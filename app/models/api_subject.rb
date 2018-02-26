@@ -5,7 +5,10 @@ class APISubject < ApplicationRecord
   include Accession::Principal
 
   has_many :api_subject_roles, dependent: :destroy
-  has_many :roles, through: :api_subject_roles, dependent: :destroy
+  has_many :roles,
+           through: :api_subject_roles,
+           dependent: :destroy,
+           inverse_of: false
 
   valhammer
   validates :x509_cn, format: { with: /\A[\w-]+\z/ }

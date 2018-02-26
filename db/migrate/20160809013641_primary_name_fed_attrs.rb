@@ -2,7 +2,7 @@
 
 class PrimaryNameFedAttrs < ActiveRecord::Migration[5.0]
   def change
-    add_column :federation_attributes, :primary_alias_id, :integer, null: false, default: ''
+    add_column :federation_attributes, :primary_alias_id, :integer, null: false
     add_index :federation_attributes, :primary_alias_id, unique: true
 
     add_index :federation_attribute_aliases, %i[federation_attribute_id name], name: :index_faa_on_faid_and_name

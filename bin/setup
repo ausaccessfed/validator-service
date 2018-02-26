@@ -11,7 +11,7 @@ system 'bundle exec torba pack'
 require 'bundler/setup'
 require 'gumboot/strap'
 
-include Gumboot::Strap
+include Gumboot::Strap # rubocop:disable Style/MixinUsage
 
 puts "\n== Installing configuration files =="
 link_global_configuration %w[api-client.crt api-client.key]

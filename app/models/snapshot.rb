@@ -4,7 +4,8 @@ class Snapshot < ApplicationRecord
   has_many :snapshot_attribute_values, dependent: :destroy
   has_many :attribute_values,
            through: :snapshot_attribute_values,
-           dependent: :destroy
+           dependent: :destroy,
+           inverse_of: false
   belongs_to :subject
 
   valhammer

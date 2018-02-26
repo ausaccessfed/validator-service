@@ -7,5 +7,7 @@ Rails.application.configure do
     config.validator_service.environment_string = 'Test'
   end
 
+  # rubocop:disable Style/FormatStringToken
   Time::DATE_FORMATS[:validator_date_format] = '%A, %d %B at %H:%M:%S %Z'
+  # rubocop:enable Style/FormatStringToken
 end

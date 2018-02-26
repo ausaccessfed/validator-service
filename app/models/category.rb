@@ -4,7 +4,8 @@ class Category < ApplicationRecord
   has_many :category_attributes, dependent: :destroy
   has_many :federation_attributes,
            through: :category_attributes,
-           dependent: :destroy
+           dependent: :destroy,
+           inverse_of: false
 
   scope :enabled, -> { where(enabled: true) }
 

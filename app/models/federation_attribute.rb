@@ -4,7 +4,11 @@ class FederationAttribute < ApplicationRecord
   include FederationAttributeAdmin
 
   has_many :category_attributes, dependent: :destroy
-  has_many :categories, through: :category_attributes, dependent: :destroy
+
+  has_many :categories,
+           through: :category_attributes,
+           dependent: :destroy,
+           inverse_of: false
 
   has_many :federation_attribute_aliases, dependent: :destroy
   has_many :attribute_values, dependent: :destroy
