@@ -44,7 +44,6 @@ FederationAttribute.create!(
   description: 'A unique identifier enabling federation spanning services such
  as Grid and Repositories. Values of the identifier are generated using a set
  formula. The value has the following qualities:
-
 <ul>
   <li>unique</li>
   <li>opaque</li>
