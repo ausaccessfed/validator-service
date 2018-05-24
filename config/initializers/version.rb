@@ -2,6 +2,6 @@
 
 module ValidatorService
   class Application
-    VERSION = '1.5.0'
+    VERSION = '1.6.0'
   end
 end
