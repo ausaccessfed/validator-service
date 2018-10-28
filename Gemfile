@@ -27,7 +27,9 @@ gem 'wkhtmltopdf-binary'
 
 gem 'coffee-script'
 
-gem 'rails_admin'
+# https://github.com/sferik/rails_admin/issues/3076
+gem 'rails_admin', git: 'https://github.com/sferik/rails_admin',
+                   ref: 'e68c75c6'
 gem 'rails_admin_aaf_theme'
 
 group :development, :test do
