@@ -42,6 +42,7 @@ group :development, :test do
   gem 'guard-bundler', require: false
   gem 'guard-rspec', require: false
   gem 'guard-rubocop', require: false
+  gem 'nokogiri', '1.8.2'
   gem 'poltergeist', require: false
   gem 'pry'
   gem 'rails-controller-testing'
