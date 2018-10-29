@@ -45,4 +45,3 @@ Rails.application.configure do
                          association: :federation_attribute
   end
 end
-# rubocop:enable Metrics/BlockLength

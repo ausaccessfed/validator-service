@@ -72,8 +72,8 @@ module Authentication
       attribute_provided?(attrs, :mail)
     end
 
-    def attribute_provided?(attrs, ia)
-      fa = FederationAttribute.find_by(internal_alias: ia)
+    def attribute_provided?(attrs, alias_)
+      fa = FederationAttribute.find_by(internal_alias: alias_)
       fa.present? && attrs[fa.http_header].present?
     end
 
