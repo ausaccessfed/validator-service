@@ -27,7 +27,9 @@ gem 'wkhtmltopdf-binary'
 
 gem 'coffee-script'
 
-gem 'rails_admin'
+# https://github.com/sferik/rails_admin/issues/3076
+gem 'rails_admin', git: 'https://github.com/sferik/rails_admin',
+                   ref: 'e68c75c6'
 gem 'rails_admin_aaf_theme'
 
 group :development, :test do
@@ -42,6 +44,7 @@ group :development, :test do
   gem 'guard-bundler', require: false
   gem 'guard-rspec', require: false
   gem 'guard-rubocop', require: false
+  gem 'nokogiri', '1.8.2'
   gem 'poltergeist', require: false
   gem 'pry'
   gem 'rails-controller-testing'
