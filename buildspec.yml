@@ -22,7 +22,6 @@ phases:
       - "[ -e .ruby-version ] && rbenv install $(cat .ruby-version) --skip-existing"
 
       - gem install bundler
-      - bundle config build.nokogiri --use-system-libraries
       - bundle install
       - bundle exec torba pack || true
 
