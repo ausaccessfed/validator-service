@@ -9,7 +9,7 @@ phases:
 
       - mysqld_safe & disown -h
       - sleep 5
-      - mysql -e "grant all privileges on *.* to 'hostedidp_app'@'%' identified by 'password';"
+      - mysql -e "grant all privileges on *.* to 'validator_app'@'%' identified by 'password';"
 
       - redis-server & disown -h
 
