@@ -11,6 +11,7 @@ gem 'local_time'
 gem 'aaf-lipstick'
 gem 'aaf-secure_headers'
 gem 'accession'
+gem 'rmagick', '~> 2.16'
 gem 'sass-rails', require: false
 gem 'shib-rack'
 gem 'slim-rails'
