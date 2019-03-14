@@ -1,2 +1,5 @@
 inherit_from:
   - https://raw.githubusercontent.com/ausaccessfed/aaf-gumboot/develop/aaf-rubocop.yml
+
+Rails/BulkChangeTable:
+  Enabled: false

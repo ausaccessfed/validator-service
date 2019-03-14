@@ -12,10 +12,7 @@ class FederationAttribute < ApplicationRecord
 
   has_many :federation_attribute_aliases, dependent: :destroy
   has_many :attribute_values, dependent: :destroy
-
-  # rubocop:disable Rails/InverseOf
-  belongs_to :primary_alias, class_name: FederationAttributeAlias
-  # rubocop:enable Rails/InverseOf
+  belongs_to :primary_alias, class_name: 'FederationAttributeAlias'
 
   valhammer
 

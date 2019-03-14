@@ -11,6 +11,7 @@ gem 'local_time'
 gem 'aaf-lipstick'
 gem 'aaf-secure_headers'
 gem 'accession'
+gem 'rmagick', '~> 2.16'
 gem 'sass-rails', require: false
 gem 'shib-rack'
 gem 'slim-rails'
@@ -27,7 +28,9 @@ gem 'wkhtmltopdf-binary'
 
 gem 'coffee-script'
 
-gem 'rails_admin'
+# https://github.com/sferik/rails_admin/issues/3076
+gem 'rails_admin', git: 'https://github.com/sferik/rails_admin',
+                   ref: 'e68c75c6'
 gem 'rails_admin_aaf_theme'
 
 group :development, :test do
@@ -35,13 +38,14 @@ group :development, :test do
   gem 'bullet'
   gem 'capybara', require: false
   gem 'database_cleaner'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '~> 4.11'
   gem 'faker'
   gem 'guard', require: false
   gem 'guard-brakeman', require: false
   gem 'guard-bundler', require: false
   gem 'guard-rspec', require: false
   gem 'guard-rubocop', require: false
+  gem 'nokogiri', '>= 1.8.5'
   gem 'poltergeist', require: false
   gem 'pry'
   gem 'rails-controller-testing'

@@ -53,6 +53,7 @@ module API
 
     def check_access!(action)
       raise(Forbidden) unless @subject.permits?(action)
+
       @access_checked = true
     end
 
