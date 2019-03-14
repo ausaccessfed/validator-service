@@ -11,6 +11,7 @@ gem 'local_time'
 gem 'aaf-lipstick'
 gem 'aaf-secure_headers'
 gem 'accession'
+gem 'rmagick', '~> 2.16'
 gem 'sass-rails', require: false
 gem 'shib-rack'
 gem 'slim-rails'
@@ -37,7 +38,7 @@ group :development, :test do
   gem 'bullet'
   gem 'capybara', require: false
   gem 'database_cleaner'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '~> 4.11'
   gem 'faker'
   gem 'guard', require: false
   gem 'guard-brakeman', require: false

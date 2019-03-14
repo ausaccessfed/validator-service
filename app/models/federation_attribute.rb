@@ -12,7 +12,7 @@ class FederationAttribute < ApplicationRecord
 
   has_many :federation_attribute_aliases, dependent: :destroy
   has_many :attribute_values, dependent: :destroy
-  belongs_to :primary_alias, class_name: FederationAttributeAlias
+  belongs_to :primary_alias, class_name: 'FederationAttributeAlias'
 
   valhammer
 
