@@ -346,7 +346,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    super-identity (0.1.0)
     temple (0.8.1)
     terminal-notifier-guard (1.7.0)
     therubyracer (0.12.3)
@@ -427,7 +426,6 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   slim-rails
-  super-identity
   terminal-notifier-guard
   therubyracer
   timecop
