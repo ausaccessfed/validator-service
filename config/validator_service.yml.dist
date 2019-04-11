@@ -1,5 +1,10 @@
 ---
 environment_string: Development
+admins:
+  "shared_token_value":
+    - "urn:mace:aaf.edu.au:ide:internal:aaf-admin"
+  "shared_token_value2":
+    - "urn:mace:aaf.edu.au:ide:internal:aaf-admin"
 url_options:
   base_url: 'http://localhost:3000'
 secure_headers:
