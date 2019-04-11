@@ -306,6 +306,8 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.4.0)
+    rubocop-rspec (1.32.0)
+      rubocop (>= 0.60.0)
     ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
     safe_yaml (1.0.5)
@@ -421,6 +423,7 @@ DEPENDENCIES
   rmagick (~> 2.16)
   rspec-rails (~> 3.5.0.beta4)
   rubocop
+  rubocop-rspec
   sass-rails
   shib-rack
   shoulda-matchers

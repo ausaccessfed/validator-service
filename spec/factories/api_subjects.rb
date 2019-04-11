@@ -10,7 +10,7 @@ FactoryBot.define do
   end
 
   trait :authorized do
-    transient { permission '*' }
+    transient { permission { '*' } }
 
     after(:create) do |api_subject, attrs|
       role = create :role
