@@ -20,7 +20,6 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.include FactoryBot::Syntax::Methods
 
-  config.include SuperIdentity::TestStub
   config.include FederationAttributes
 
   %i[controller view request].each do |type|

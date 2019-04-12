@@ -14,7 +14,7 @@ FactoryBot.define do
     complete { true }
 
     trait :authorized do
-      transient { permission '*' }
+      transient { permission { '*' } }
 
       after(:create) do |subject, attrs|
         role = create :role
@@ -26,7 +26,7 @@ FactoryBot.define do
 
     # :nocov:
     trait :admin do
-      transient { permission 'app:validator:admin:*' }
+      transient { permission { 'app:validator:admin:*' } }
 
       after(:create) do |subject, attrs|
         role = create(

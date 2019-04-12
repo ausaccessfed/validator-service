@@ -15,7 +15,6 @@ gem 'rmagick', '~> 2.16'
 gem 'sass-rails', require: false
 gem 'shib-rack'
 gem 'slim-rails'
-gem 'super-identity'
 gem 'therubyracer', require: false
 gem 'torba-rails'
 gem 'uglifier', require: false
@@ -51,6 +50,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.5.0.beta4'
   gem 'rubocop', require: false
+  gem 'rubocop-rspec', require: false
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'terminal-notifier-guard', require: false
