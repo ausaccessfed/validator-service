@@ -5,15 +5,6 @@ require 'rails_helper'
 RSpec.describe Authentication::SubjectReceiver do
   let(:subject_receiver) { Authentication::SubjectReceiver.new }
 
-  let(:ide_config) do
-    {
-      host: 'ide.example.edu',
-      cert: 'spec/api.crt',
-      key: 'spec/api.key',
-      admin_entitlements: ['urn:mace:aaf.edu.au:ide:internal:aaf-admin']
-    }
-  end
-
   let(:attrs) do
     Authentication::AttributeHelpers
       .federation_attributes(attributes_for(:shib_env)[:env])
@@ -24,15 +15,10 @@ RSpec.describe Authentication::SubjectReceiver do
   end
 
   before do
-    allow(subject_receiver).to receive(:ide_config).and_return(ide_config)
-
     create_federation_attributes
 
     entitlement = 'urn:mace:aaf.edu.au:ide:internal:aaf-admin'
     FactoryBot.create(:role, entitlement: entitlement)
-
-    stub_ide(shared_token: attrs['HTTP_AUEDUPERSONSHAREDTOKEN'],
-             entitlements: [entitlement])
   end
 
   describe '#receive' do

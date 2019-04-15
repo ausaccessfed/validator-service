@@ -5,7 +5,6 @@ require 'authentication/attribute_helpers'
 module Authentication
   class SubjectReceiver
     include ShibRack::DefaultReceiver
-    include SuperIdentity::Client
     include Rails.application.routes.url_helpers
 
     def receive(env)
@@ -27,10 +26,9 @@ module Authentication
         subject = Subject.create_from_receiver(existing_attributes)
         Snapshot.create_from_receiver(subject, existing_attributes)
 
-        assign_entitlements(
-          subject,
-          entitlements(subject.shared_token)
-        )
+        admins = Rails.application.config.validator_service.admins
+        entitlements = admins.fetch(subject.shared_token.to_sym, [])
+        assign_entitlements(subject, entitlements)
 
         subject
       end
@@ -47,10 +45,6 @@ module Authentication
       return redirect_to('/') unless Rails.env.production?
 
       redirect_to('/Shibboleth.sso/Logout?return=/')
-    end
-
-    def ide_config
-      Rails.application.config.validator_service.ide
     end
     # :nocov:
 
