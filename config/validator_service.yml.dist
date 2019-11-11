@@ -9,5 +9,5 @@ url_options:
   base_url: 'http://localhost:3000'
 secure_headers:
   csp:
-    report_uri: nil
+    report_uri: null
 time_zone: Australia/Brisbane
