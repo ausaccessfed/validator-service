@@ -15,10 +15,10 @@ module ApplicationHelper
           state: 'error',
           order: 1,
           message: 'This attribute is required for this category.',
-          icon_classes: [
-            'glyphicon',
-            'glyphicon-remove-sign',
-            'validator-error'
+          icon_classes: %w[
+            glyphicon
+            glyphicon-remove-sign
+            validator-error
           ]
         }
       end
@@ -28,10 +28,10 @@ module ApplicationHelper
           state: 'invalid',
           order: 2,
           message: 'This attribute is invalid.',
-          icon_classes: [
-            'glyphicon',
-            'glyphicon-remove-sign',
-            'validator-error'
+          icon_classes: %w[
+            glyphicon
+            glyphicon-remove-sign
+            validator-error
           ]
         }
       end
@@ -41,10 +41,10 @@ module ApplicationHelper
           state: 'valid',
           order: 4,
           message: 'This attribute fulfils all requirements.',
-          icon_classes: [
-            'glyphicon',
-            'glyphicon-ok-sign',
-            'validator-success'
+          icon_classes: %w[
+            glyphicon
+            glyphicon-ok-sign
+            validator-success
           ]
         }
       end
@@ -54,10 +54,10 @@ module ApplicationHelper
           state: 'not_supplied',
           order: 5,
           message: 'This attribute has not been supplied.',
-          icon_classes: [
-            'glyphicon',
-            'glyphicon-exclamation-sign',
-            'validator-warning'
+          icon_classes: %w[
+            glyphicon
+            glyphicon-exclamation-sign
+            validator-warning
           ]
         }
       end
@@ -67,10 +67,10 @@ module ApplicationHelper
           state: 'imperfect',
           order: 3,
           message: 'This attribute is not valid, but allowable.',
-          icon_classes: [
-            'glyphicon',
-            'glyphicon-exclamation-sign',
-            'validator-warning'
+          icon_classes: %w[
+            glyphicon
+            glyphicon-exclamation-sign
+            validator-warning
           ]
         }
       end

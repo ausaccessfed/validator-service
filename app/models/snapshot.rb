@@ -73,7 +73,6 @@ class Snapshot < ApplicationRecord
   end
 
   # :nocov:
-  # rubocop:disable Metrics/BlockLength
   rails_admin do
     list do
       field :id do
@@ -112,6 +111,6 @@ class Snapshot < ApplicationRecord
       end
     end
   end
-  # rubocop:enable Metrics/BlockLength
+
   # :nocov:
 end
