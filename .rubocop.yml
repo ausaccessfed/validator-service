@@ -5,3 +5,9 @@ inherit_from:
 
 Rails/BulkChangeTable:
   Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
