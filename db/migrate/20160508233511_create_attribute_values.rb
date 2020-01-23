@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateAttributeValues < ActiveRecord::Migration
+class CreateAttributeValues < ActiveRecord::Migration[4.2]
   def change
     create_table :attribute_values do |t|
       t.text :value, null: false
