@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Migration to create permissions table and relevant fields
-class CreatePermissions < ActiveRecord::Migration
+class CreatePermissions < ActiveRecord::Migration[4.2]
   def change
     create_table :permissions do |t|
       t.string :value, null: false

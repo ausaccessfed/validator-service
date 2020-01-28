@@ -13,7 +13,7 @@ Rails.application.load_tasks
 
 RuboCop::RakeTask.new if defined? RuboCop
 
-task :brakeman do
+task brakeman: :environment do
   result = Brakeman.run app_path: '.', print_report: true, pager: false
 
   unless result.filtered_warnings.empty?

@@ -4,7 +4,6 @@ module FederationAttributeAdmin
   extend ActiveSupport::Concern
 
   # :nocov:
-  # rubocop:disable Metrics/BlockLength
   included do
     rails_admin do
       object_label_method do
@@ -86,6 +85,6 @@ module FederationAttributeAdmin
       end
     end
   end
-  # rubocop:enable Metrics/BlockLength
+
   # :nocov:
 end

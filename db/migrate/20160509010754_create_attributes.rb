@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateAttributes < ActiveRecord::Migration
+class CreateAttributes < ActiveRecord::Migration[4.2]
   def change
     # rubocop:disable Rails/CreateTableWithTimestamps
     create_table :federation_attributes do |t|

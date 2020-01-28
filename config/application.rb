@@ -18,7 +18,7 @@ module ValidatorService
     config.shib_rack.error_handler = 'Authentication::ErrorHandler'
 
     app_config = YAML.safe_load(Rails.root.join(
-      'config', 'validator_service.yml'
+      'config/validator_service.yml'
     ).read)
     config.validator_service = OpenStruct.new(app_config.deep_symbolize_keys)
 
@@ -29,6 +29,7 @@ module ValidatorService
                             page_size: 'A4',
                             print_media_type: true
                           },
+                          disposition: 'attachment',
                           only: '/snapshots'
   end
 end
