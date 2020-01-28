@@ -22,7 +22,8 @@ gem 'valhammer'
 
 gem 'puma', require: false
 
-gem 'pdfkit'
+gem 'pdfkit', git: 'https://github.com/pdfkit/pdfkit',
+              ref: 'eca19322ae7d74d4a95d22062f6812dd1e5147f5'
 gem 'wkhtmltopdf-binary'
 
 gem 'coffee-script'

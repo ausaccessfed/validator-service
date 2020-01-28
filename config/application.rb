@@ -29,6 +29,7 @@ module ValidatorService
                             page_size: 'A4',
                             print_media_type: true
                           },
+                          disposition: 'attachment',
                           only: '/snapshots'
   end
 end
