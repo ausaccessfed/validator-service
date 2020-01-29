@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'mysql2'
-gem 'rails', '>= 5.0.0', '<= 5.2'
+gem 'rails', '>= 5', '< 6'
 gem 'redis-rails'
 
 gem 'local_time'
