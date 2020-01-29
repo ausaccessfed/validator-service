@@ -27,7 +27,8 @@ module ValidatorService
     config.middleware.use PDFKit::Middleware,
                           {
                             page_size: 'A4',
-                            print_media_type: true
+                            print_media_type: true,
+                            zoom: 2
                           },
                           disposition: 'attachment',
                           only: '/snapshots'
