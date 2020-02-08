@@ -34,7 +34,12 @@ module Authentication
       end
     end
 
-    def finish(_env)
+    def finish(env)
+      url = env['rack.session']['return_url'].to_s
+      env['rack.session'].delete('return_url')
+
+      return redirect_to(url) if url.present?
+
       redirect_to(latest_snapshots_path)
     end
 
