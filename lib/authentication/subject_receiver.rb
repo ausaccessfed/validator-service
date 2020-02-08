@@ -40,7 +40,7 @@ module Authentication
 
     # :nocov:
     def logout(env)
-      env['rack.session'].clear
+      env['rack.session'].destroy
 
       return redirect_to('/') unless Rails.env.production?
 
