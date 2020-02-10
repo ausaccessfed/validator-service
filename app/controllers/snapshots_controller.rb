@@ -13,7 +13,7 @@ class SnapshotsController < ApplicationController
 
     show_actions
 
-    request.env['rack.session'].clear
+    request.env['rack.session'].destroy
   end
 
   def latest
