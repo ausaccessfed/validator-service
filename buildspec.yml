@@ -21,7 +21,7 @@ phases:
 
       - "[ -e .ruby-version ] && rbenv install $(cat .ruby-version) --skip-existing"
 
-      - gem install bundler
+      - gem install bundler -v 1.17.2
       - bundle install
       - bundle exec torba pack || true
 
