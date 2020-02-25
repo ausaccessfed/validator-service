@@ -3,6 +3,8 @@
 FactoryBot.define do
   factory :role do
     name { Faker::Lorem.word }
-    entitlement { "urn:mace:x-aaf:dev:ide:#{Faker::Lorem.words(4).join(':')}" }
+    entitlement do
+      "urn:mace:x-aaf:dev:ide:#{Faker::Lorem.words(number: 4).join(':')}"
+    end
   end
 end

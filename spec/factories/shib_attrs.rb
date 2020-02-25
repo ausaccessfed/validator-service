@@ -5,15 +5,15 @@ FactoryBot.define do
   idp = "https://idp.#{idp_domain}/idp/shibboleth"
   sp = "https://sp.#{Faker::Internet.domain_name}/shibboleth"
   name = Faker::Name.name
-  valid_affiliations = [
-    'faculty',
-    'student',
-    'staff',
-    'employee',
-    'member',
-    'affiliate',
-    'alum',
-    'library-walk-in'
+  valid_affiliations = %w[
+    faculty
+    student
+    staff
+    employee
+    member
+    affiliate
+    alum
+    library-walk-in
   ]
   token = SecureRandom.urlsafe_base64(20)
 

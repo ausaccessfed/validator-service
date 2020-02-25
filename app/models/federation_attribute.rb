@@ -16,7 +16,7 @@ class FederationAttribute < ApplicationRecord
 
   valhammer
 
-  after_commit :sync_name, on: %i[create update]
+  after_save :sync_name, on: %i[create update]
 
   scope :fuzzy_lookup, lambda { |id|
     alias_lookup(id) + where(oid: id)
@@ -39,9 +39,8 @@ class FederationAttribute < ApplicationRecord
   end
 
   def sync_name
-    # This uses `#update_attribute` due to the `after_commit` hook
     # rubocop:disable Rails/SkipsModelValidations
-    update_attribute(:primary_alias_name, primary_alias.name)
+    update_column(:primary_alias_name, primary_alias.name)
     # rubocop:enable Rails/SkipsModelValidations
   end
 

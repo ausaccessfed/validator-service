@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'mysql2'
-gem 'rails', '>= 5.0.0', '< 5.1'
+gem 'rails', '>= 5', '< 6'
 gem 'redis-rails'
 
 gem 'local_time'
@@ -22,14 +22,13 @@ gem 'valhammer'
 
 gem 'puma', require: false
 
-gem 'pdfkit'
-gem 'wkhtmltopdf-binary'
+gem 'pdfkit', git: 'https://github.com/pdfkit/pdfkit',
+              ref: 'eca19322ae7d74d4a95d22062f6812dd1e5147f5'
+gem 'wkhtmltopdf-binary', '0.12.4'
 
 gem 'coffee-script'
 
-# https://github.com/sferik/rails_admin/issues/3076
-gem 'rails_admin', git: 'https://github.com/sferik/rails_admin',
-                   ref: 'e68c75c6'
+gem 'rails_admin'
 gem 'rails_admin_aaf_theme'
 
 group :development, :test do
@@ -50,6 +49,8 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.5.0.beta4'
   gem 'rubocop', require: false
+  gem 'rubocop-faker', require: false
+  gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'shoulda-matchers'
   gem 'simplecov', require: false

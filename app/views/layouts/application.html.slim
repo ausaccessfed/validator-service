@@ -20,7 +20,7 @@ html lang='en'
 
     section.content
       - if notice
-        = warning_message do
+        = warning_message('Warning') do
           == notice
       main= yield
 
