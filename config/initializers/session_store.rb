@@ -10,5 +10,5 @@ Rails.application.config
                         namespace: 'validator_session'
                       }
                     ],
-                    expire_in: 90.minutes,
+                    expire_after: 90.minutes,
                     key: '_validator_session'
