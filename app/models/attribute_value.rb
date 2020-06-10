@@ -18,9 +18,7 @@ class AttributeValue < ApplicationRecord
     def valid_response(federation_attribute, attribute_value)
       if federation_attribute.regexp
         unless Regexp.new(federation_attribute.regexp).match?(attribute_value)
-          if federation_attribute.regexp_triggers_failure?
-            return ApplicationHelper::ResponseFor.invalid_attribute
-          end
+          return ApplicationHelper::ResponseFor.invalid_attribute if federation_attribute.regexp_triggers_failure?
 
           return ApplicationHelper::ResponseFor.imperfect_attribute
         end
