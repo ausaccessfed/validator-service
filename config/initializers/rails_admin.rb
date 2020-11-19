@@ -49,6 +49,9 @@ SecureHeaders::Configuration.override(:rails_admin) do |config|
   config.csp[:connect_src] = ["'self'"]
   config.csp[:script_src] = config.csp[:script_src] + [
     "'unsafe-eval'",
+    "'sha256-47mKTaMaEn1L3m5DAz9muidMqw636xxw7EFAK/YnPdg='",
+    # sha256 of "t" to cover
+    # div.setAttribute( eventName, "t" );
     "'sha256-73+D8uQwNyLmkFjvaILshPLBcTjapyK9P5FGfkepYxE='",
     "'sha256-2IZ3eH4vQ4iO/yUXEJx3CWqGvsT1mFTk9j1WeznailE='"
     # <script>
