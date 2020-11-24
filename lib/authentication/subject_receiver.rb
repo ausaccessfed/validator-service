@@ -27,7 +27,7 @@ module Authentication
         Snapshot.create_from_receiver(subject, existing_attributes)
 
         admins = Rails.application.config.validator_service.admins
-        entitlements = admins.fetch(subject.shared_token.to_sym, [])
+        entitlements = admins.fetch(subject.shared_token&.to_sym, [])
         assign_entitlements(subject, entitlements)
 
         subject
