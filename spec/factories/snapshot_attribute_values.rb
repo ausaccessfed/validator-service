@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :snapshot_attribute_values do
-  end
+  factory :snapshot_attribute_values
 end

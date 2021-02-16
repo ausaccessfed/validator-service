@@ -4,7 +4,7 @@ require 'yaml'
 
 config = YAML.load_file(File.expand_path('deploy.yml', __dir__))
 puma_config = config['puma']
-env = ENV.fetch('RAILS_ENV') { 'development' }
+env = ENV.fetch('RAILS_ENV', 'development')
 
 preload_app!
 

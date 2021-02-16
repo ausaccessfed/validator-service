@@ -60,7 +60,7 @@ class FederationAttribute < ApplicationRecord
     def new_attributes(attrs)
       headers = existing_headers
 
-      attrs.keep_if { |k, _v| !headers.include?(k) }
+      attrs.keep_if { |k, _v| headers.exclude?(k) }
     end
 
     def existing_attributes(attrs)
