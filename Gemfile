@@ -10,6 +10,7 @@ gem 'local_time'
 
 gem 'aaf-lipstick'
 gem 'aaf-secure_headers'
+gem 'secure_headers', '6.3.0'
 gem 'accession'
 gem 'rmagick', '~> 2.16'
 gem 'sass-rails', require: false

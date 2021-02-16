@@ -344,7 +344,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    secure_headers (6.3.2)
+    secure_headers (6.3.0)
     shellany (0.0.1)
     shib-rack (0.4.0)
       rack
@@ -413,6 +413,7 @@ GEM
 PLATFORMS
   ruby
   x86_64-darwin-19
+  x86_64-darwin-20
 
 DEPENDENCIES
   aaf-gumboot
@@ -449,6 +450,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   sass-rails
+  secure_headers (= 6.3.0)
   shib-rack
   shoulda-matchers
   simplecov
