@@ -29,7 +29,7 @@ RailsAdmin.config do |config|
     check_access!('app:validator:admin:web_interface')
   end
 
-  # Note: These are strings to stop `bin/setup`, etc. from crashing.
+  # NOTE: These are strings to stop `bin/setup`, etc. from crashing.
   config.included_models = %w[
     AttributeValue
     Category

@@ -30,7 +30,7 @@ module Authentication
         env.select do |header|
           header.starts_with?('HTTP_') &&
             !header.starts_with?('HTTP_X_') &&
-            !GENERIC_HTTP_HEADERS.include?(header)
+            GENERIC_HTTP_HEADERS.exclude?(header)
         end
       end
     end

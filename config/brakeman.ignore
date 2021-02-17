@@ -1,16 +1,28 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Cross Site Scripting",
+      "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "2a55078132bfc21d5d8226618ef0f6247e6317dbd7ce5776088b56cdd5b5ef1b",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/documentation/attributes/show.html.slim",
       "line": 54,
-      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "FederationAttribute.find(FederationAttribute.fuzzy_lookup(params[:id]).first.id).notes_on_privacy",
-      "render_path": [{"type":"controller","class":"Documentation::AttributesController","method":"show","line":16,"file":"app/controllers/documentation/attributes_controller.rb"}],
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Documentation::AttributesController",
+          "method": "show",
+          "line": 16,
+          "file": "app/controllers/documentation/attributes_controller.rb",
+          "rendered": {
+            "name": "documentation/attributes/show",
+            "file": "app/views/documentation/attributes/show.html.slim"
+          }
+        }
+      ],
       "location": {
         "type": "template",
         "template": "documentation/attributes/show"
@@ -20,16 +32,28 @@
       "note": ""
     },
     {
-      "warning_type": "Cross Site Scripting",
+      "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "6170e7212837a561df649e22ad752a6f4e61614605cb5f4b514f411e324ad9a3",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/documentation/attributes/show.html.slim",
       "line": 48,
-      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "FederationAttribute.find(FederationAttribute.fuzzy_lookup(params[:id]).first.id).notes_on_usage",
-      "render_path": [{"type":"controller","class":"Documentation::AttributesController","method":"show","line":16,"file":"app/controllers/documentation/attributes_controller.rb"}],
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Documentation::AttributesController",
+          "method": "show",
+          "line": 16,
+          "file": "app/controllers/documentation/attributes_controller.rb",
+          "rendered": {
+            "name": "documentation/attributes/show",
+            "file": "app/views/documentation/attributes/show.html.slim"
+          }
+        }
+      ],
       "location": {
         "type": "template",
         "template": "documentation/attributes/show"
@@ -39,16 +63,28 @@
       "note": ""
     },
     {
-      "warning_type": "Cross Site Scripting",
+      "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "9dc0a7dfdabdff9ad5df331467020f0a92c0fbbee21b103382e4c4d2c1dc2d49",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/documentation/attributes/show.html.slim",
       "line": 36,
-      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "FederationAttribute.find(FederationAttribute.fuzzy_lookup(params[:id]).first.id).description",
-      "render_path": [{"type":"controller","class":"Documentation::AttributesController","method":"show","line":16,"file":"app/controllers/documentation/attributes_controller.rb"}],
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Documentation::AttributesController",
+          "method": "show",
+          "line": 16,
+          "file": "app/controllers/documentation/attributes_controller.rb",
+          "rendered": {
+            "name": "documentation/attributes/show",
+            "file": "app/views/documentation/attributes/show.html.slim"
+          }
+        }
+      ],
       "location": {
         "type": "template",
         "template": "documentation/attributes/show"
@@ -58,35 +94,28 @@
       "note": ""
     },
     {
-      "warning_type": "Cross-Site Request Forgery",
-      "warning_code": 86,
-      "fingerprint": "a73d1de52677d83f3b78c2a3d9cf7ab1580ac865a50ba186615f49a59757762b",
-      "check_name": "ForgerySetting",
-      "message": "protect_from_forgery should be configured with 'with: :exception'",
-      "file": "app/controllers/api/api_controller.rb",
-      "line": 15,
-      "link": "http://brakemanscanner.org/docs/warning_types/cross-site_request_forgery/",
-      "code": "protect_from_forgery(:with => :null_session)",
-      "render_path": null,
-      "location": {
-        "type": "controller",
-        "controller": "API::APIController"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Cross Site Scripting",
+      "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "ecee68d8b613437e43ce47c02bc1c295eec544cfdc70a8ab4a353d76ce01688d",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/documentation/attributes/show.html.slim",
       "line": 42,
-      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "FederationAttribute.find(FederationAttribute.fuzzy_lookup(params[:id]).first.id).notes_on_format",
-      "render_path": [{"type":"controller","class":"Documentation::AttributesController","method":"show","line":16,"file":"app/controllers/documentation/attributes_controller.rb"}],
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Documentation::AttributesController",
+          "method": "show",
+          "line": 16,
+          "file": "app/controllers/documentation/attributes_controller.rb",
+          "rendered": {
+            "name": "documentation/attributes/show",
+            "file": "app/views/documentation/attributes/show.html.slim"
+          }
+        }
+      ],
       "location": {
         "type": "template",
         "template": "documentation/attributes/show"
@@ -94,8 +123,28 @@
       "user_input": null,
       "confidence": "High",
       "note": ""
+    },
+    {
+      "warning_type": "HTTP Verb Confusion",
+      "warning_code": 118,
+      "fingerprint": "faaa73976c289f44a09986d4890899d15099eab07bb32124fff57ff402bd7955",
+      "check_name": "VerbConfusion",
+      "message": "Potential HTTP verb confusion. `HEAD` is routed like `GET` but `request.get?` will return `false`",
+      "file": "app/controllers/application_controller.rb",
+      "line": 56,
+      "link": "https://brakemanscanner.org/docs/warning_types/http_verb_confusion/",
+      "code": "session[:return_url] = request.url if request.get?",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ApplicationController",
+        "method": "force_authentication"
+      },
+      "user_input": "request.get?",
+      "confidence": "Weak",
+      "note": ""
     }
   ],
-  "updated": "2017-08-14 14:58:51 +1000",
-  "brakeman_version": "3.6.2"
+  "updated": "2021-02-16 16:08:14 +1000",
+  "brakeman_version": "5.0.0"
 }
