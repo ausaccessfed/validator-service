@@ -1398,3 +1398,93 @@ FederationAttribute.create!(
   notes_on_usage: '',
   notes_on_privacy: ''
 )
+
+faa = FederationAttributeAlias.create!(
+  name: 'samlSubjectID'
+)
+
+FederationAttribute.create!(
+  oid: 'urn:oasis:names:tc:SAML:attribute:subject-id',
+  internal_alias: 'samlsubjectid',
+  http_header: 'HTTP_SUBJECT_ID',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  regexp:
+    '\A[\dA-Za-z][-=\dA-Za-z]{0,126}@[\dA-Za-z][-.\dA-Za-z]{0,126}\z',
+  regexp_triggers_failure: true,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: 'A long-lived, non-reassignable, omni-directional identifier suitable for use as a globally-unique
+    external key. Its value for a given subject is independent of the relying party to whom it is given.
+<br /><br />
+    The authoritative definition for this attribute can be found
+    <a href="https://docs.oasis-open.org/security/saml-subject-id-attr/v1.0/cs01/saml-subject-id-attr-v1.0-cs01.html#'\
+   '_Toc536097226" target="_blank">here</a> in the SAML V2.0 Subject Identifier Attributes Profile Version 1.0',
+  notes_on_format: '&lt;uniqueID&gt; "@" &lt;scope&gt;, where:
+    <ul>
+      <li>The unique ID consists of 1 to 127 ASCII characters, each of which is either an alphanumeric ASCII character,
+   an equals sign (ASCII 61), or a hyphen (ASCII 45). The first character MUST be alphanumeric.</li>
+      <li>The scope consists of 1 to 127 ASCII characters, each of which is either an alphanumeric ASCII character,
+   a hyphen (ASCII 45), or a period (ASCII 46). The first character MUST be alphanumeric.</li>
+    </ul>',
+  notes_on_usage: 'Value comparison MUST be performed case-insensitively (that is,
+    values that differ only by case are the same, and MUST refer to the same subject).
+    <br /><br />
+    A value MUST NOT be assigned to more than a single subject over its lifetime of use under any circumstances.',
+  notes_on_privacy: 'This attribute is not a privacy preserving identifier and should not be used
+    where services are intended to be provided anonymously.  The value may or may not be opaque, and the same value
+    will be issued to all services receiving this attribute.'
+)
+
+faa = FederationAttributeAlias.create!(
+  name: 'samlPairwiseID'
+)
+
+FederationAttribute.create!(
+  oid: 'urn:oasis:names:tc:SAML:attribute:pairwise-id',
+  internal_alias: 'samlpairwiseid',
+  http_header: 'HTTP_PAIRWISE_ID',
+  federation_attribute_aliases: [faa],
+  primary_alias: faa,
+  regexp:
+    '\A[\dA-Za-z][-=\dA-Za-z]{0,126}@[\dA-Za-z][-.\dA-Za-z]{0,126}\z',
+  regexp_triggers_failure: true,
+  category_attributes: [
+    CategoryAttribute.new(presence: false, category: optional)
+  ],
+  description: 'A long-lived, non-reassignable, uni-directional identifier suitable for
+    use as a unique external key specific to a particular relying party.
+    Its value for a given subject depends upon the relying party to whom it is given,
+    thus preventing unrelated systems from using it as a basis for correlation.
+<br /><br />
+    The authoritative definition for this attribute can be found
+    <a href="https://docs.oasis-open.org/security/saml-subject-id-attr/v1.0/cs01/saml-subject-id-attr-v1.0-cs01.html#'\
+   '_Toc536097230" target="_blank">here</a> in the SAML V2.0 Subject Identifier Attributes Profile Version 1.0',
+  notes_on_format: '&lt;uniqueID&gt; "@" &lt;scope&gt;, where:
+    <ul>
+      <li>The unique ID consists of 1 to 127 ASCII characters, each of which is either an alphanumeric ASCII character,
+   an equals sign (ASCII 61), or a hyphen (ASCII 45). The first character MUST be alphanumeric.</li>
+      <li>The scope consists of 1 to 127 ASCII characters, each of which is either an alphanumeric ASCII character,
+   a hyphen (ASCII 45), or a period (ASCII 46). The first character MUST be alphanumeric.</li>
+    </ul>',
+  notes_on_usage: 'Service Providers should use this attribute to support aspects of its
+    service that depend on recognising the same user from session to session.
+    The most common use is to enable service personalisation, to record user
+    preferences such as stored search expressions across user sessions. A secondary
+    use is to enable tracking of user activity, to make it easier to detect
+    systematic downloading of content or other suspected breaches of licence conditions.
+    <br /><br />
+    The attribute enables an organisation to provide a persistent, opaque, user
+    identifier to a service provider. For each user, the identity provider presents
+    a different value to each service provider to which the attribute is released.
+    <br /><br />
+    Value comparison MUST be performed case-insensitively (that is,
+    values that differ only by case are the same, and MUST refer to the same subject).
+    <br /><br />
+    A value MUST NOT be assigned to more than a single subject over its lifetime of use under any circumstances.
+    <br /><br />
+    The value MUST NOT be mappable by a relying party into a non-pairwise identifier
+    for the subject through ordinary effort.',
+  notes_on_privacy: 'This attribute is intended to be a privacy-preserving attribute.'
+)
