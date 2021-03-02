@@ -2,5 +2,4 @@
 
 require 'rails_helper'
 
-RSpec.describe FederationAttributeAlias, type: :model do
-end
+RSpec.describe FederationAttributeAlias, type: :model
